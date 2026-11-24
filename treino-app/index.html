@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meus Treinos</title>
+  <style>
+    :root {
+      --bg: #f5f6f8;
+      --card: #ffffff;
+      --text: #1d1f24;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --danger: #dc2626;
+      --border: #e2e5ea;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111318;
+        --card: #1b1e25;
+        --text: #eceef2;
+        --muted: #9aa3b2;
+        --accent: #60a5fa;
+        --danger: #f87171;
+        --border: #2c313b;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #111318;
+      --card: #1b1e25;
+      --text: #eceef2;
+      --muted: #9aa3b2;
+      --accent: #60a5fa;
+      --danger: #f87171;
+      --border: #2c313b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 16px;
+      max-width: 640px;
+      margin-inline: auto;
+    }
+    h1 { font-size: 1.5rem; margin: 8px 0 16px; }
+    h2 { font-size: 1.1rem; margin: 0; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .between { justify-content: space-between; }
+    .muted { color: var(--muted); font-size: 0.9rem; }
+    input, select {
+      font: inherit;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 10px;
+      min-width: 0;
+    }
+    input[type="text"] { flex: 1 1 160px; }
+    input[type="number"] { width: 72px; }
+    button {
+      font: inherit;
+      border: 0;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+    }
+    button.ghost {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+    button.danger { background: transparent; color: var(--danger); border: 1px solid var(--border); }
+    button.small { padding: 4px 8px; font-size: 0.85rem; }
+    ul { list-style: none; padding: 0; margin: 10px 0 0; }
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 0;
+      border-top: 1px solid var(--border);
+    }
+    .empty { text-align: center; color: var(--muted); padding: 24px 0; }
+    .hidden { display: none; }
+    .add-form { margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <h1>Meus Treinos</h1>
+
+  <!-- Criar treino -->
+  <div class="card">
+    <form id="form-treino" class="row">
+      <input type="text" id="novo-treino" placeholder="Nome do treino (ex: Treino A)" required>
+      <button type="submit">Criar treino</button>
+    </form>
+  </div>
+
+  <!-- Lista de treinos -->
+  <div id="lista-treinos"></div>
+
+  <!-- Detalhe do treino -->
+  <div id="detalhe" class="hidden"></div>
+
+<script>
+  // ---------- Armazenamento ----------
+  const CHAVE = 'meus-treinos-v1';
+
+  function carregar() {
+    try {
+      return JSON.parse(localStorage.getItem(CHAVE)) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function salvar(treinos) {
+    try {
+      localStorage.setItem(CHAVE, JSON.stringify(treinos));
+    } catch (e) {
+      alert('Não foi possível salvar neste navegador.');
+    }
+  }
+
+  let treinos = carregar();
+  let treinoAberto = null; // id do treino em detalhe
+
+  function novoId() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  }
+
+  function escapar(texto) {
+    const div = document.createElement('div');
+    div.textContent = texto;
+    return div.innerHTML;
+  }
+
+  // ---------- Renderização ----------
+  function render() {
+    const lista = document.getElementById('lista-treinos');
+    const detalhe = document.getElementById('detalhe');
+
+    if (treinoAberto) {
+      lista.classList.add('hidden');
+      detalhe.classList.remove('hidden');
+      renderDetalhe();
+      return;
+    }
+
+    detalhe.classList.add('hidden');
+    lista.classList.remove('hidden');
+
+    if (treinos.length === 0) {
+      lista.innerHTML = '<div class="empty">Nenhum treino ainda. Crie o primeiro acima.</div>';
+      return;
+    }
+
+    lista.innerHTML = treinos.map(t => `
+      <div class="card row between">
+        <div>
+          <h2>${escapar(t.nome)}</h2>
+          <div class="muted">${t.exercicios.length} exercício(s)</div>
+        </div>
+        <div class="row">
+          <button class="ghost small" onclick="abrir('${t.id}')">Abrir</button>
+          <button class="danger small" onclick="excluirTreino('${t.id}')">Excluir</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderDetalhe() {
+    const t = treinos.find(x => x.id === treinoAberto);
+    const detalhe = document.getElementById('detalhe');
+    if (!t) { treinoAberto = null; render(); return; }
+
+    const exercicios = t.exercicios.length
+      ? `<ul>${t.exercicios.map(e => `
+          <li>
+            <div>
+              <strong>${escapar(e.nome)}</strong>
+              <div class="muted">${e.series} série(s) × ${e.repeticoes} rep${e.carga ? ' · ' + escapar(e.carga) : ''}</div>
+            </div>
+            <button class="danger small" onclick="excluirExercicio('${t.id}','${e.id}')">Remover</button>
+          </li>`).join('')}</ul>`
+      : '<div class="empty">Nenhum exercício ainda.</div>';
+
+    detalhe.innerHTML = `
+      <div class="row between">
+        <h1>${escapar(t.nome)}</h1>
+        <button class="ghost" onclick="fechar()">← Voltar</button>
+      </div>
+
+      <div class="card">
+        ${exercicios}
+        <form id="form-exercicio" class="add-form row">
+          <input type="text" id="ex-nome" placeholder="Exercício (ex: Supino)" required>
+          <input type="number" id="ex-series" placeholder="Séries" min="1" value="3" required>
+          <input type="number" id="ex-reps" placeholder="Reps" min="1" value="10" required>
+          <input type="text" id="ex-carga" placeholder="Carga (opcional, ex: 20kg)">
+          <button type="submit">Adicionar</button>
+        </form>
+      </div>
+    `;
+
+    document.getElementById('form-exercicio').addEventListener('submit', e => {
+      e.preventDefault();
+      const nome = document.getElementById('ex-nome').value.trim();
+      if (!nome) return;
+      t.exercicios.push({
+        id: novoId(),
+        nome,
+        series: Number(document.getElementById('ex-series').value) || 1,
+        repeticoes: Number(document.getElementById('ex-reps').value) || 1,
+        carga: document.getElementById('ex-carga').value.trim()
+      });
+      salvar(treinos);
+      render();
+      document.getElementById('ex-nome')?.focus();
+    });
+  }
+
+  // ---------- Ações ----------
+  function abrir(id) { treinoAberto = id; render(); window.scrollTo(0, 0); }
+  function fechar() { treinoAberto = null; render(); }
+
+  function excluirTreino(id) {
+    const t = treinos.find(x => x.id === id);
+    if (!t || !confirm(`Excluir o treino "${t.nome}"?`)) return;
+    treinos = treinos.filter(x => x.id !== id);
+    salvar(treinos);
+    render();
+  }
+
+  function excluirExercicio(treinoId, exId) {
+    const t = treinos.find(x => x.id === treinoId);
+    if (!t) return;
+    t.exercicios = t.exercicios.filter(e => e.id !== exId);
+    salvar(treinos);
+    render();
+  }
+
+  document.getElementById('form-treino').addEventListener('submit', e => {
+    e.preventDefault();
+    const input = document.getElementById('novo-treino');
+    const nome = input.value.trim();
+    if (!nome) return;
+    treinos.push({ id: novoId(), nome, exercicios: [] });
+    salvar(treinos);
+    input.value = '';
+    render();
+  });
+
+  render();
+</script>
+</body>
+</html>
