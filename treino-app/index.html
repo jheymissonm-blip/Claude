@@ -46,6 +46,7 @@
     }
     h1 { font-size: 1.5rem; margin: 8px 0 16px; }
     h2 { font-size: 1.1rem; margin: 0; }
+    h3 { font-size: 1rem; margin: 0 0 8px; }
     .card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -65,7 +66,7 @@
       padding: 8px 10px;
       min-width: 0;
     }
-    input[type="text"] { flex: 1 1 160px; }
+    input[type="text"] { flex: 1 1 140px; }
     input[type="number"] { width: 72px; }
     button {
       font: inherit;
@@ -95,10 +96,39 @@
     .empty { text-align: center; color: var(--muted); padding: 24px 0; }
     .hidden { display: none; }
     .add-form { margin-top: 12px; }
+
+    /* Cronômetro */
+    #timer { position: sticky; top: 0; z-index: 5; }
+    #timer-display { font-size: 2.2rem; font-variant-numeric: tabular-nums; font-weight: 700; }
+    #timer.alerta #timer-display { color: var(--danger); }
+    .sugestao { padding: 8px 0; border-top: 1px solid var(--border); }
+    .sugestao:first-of-type { border-top: 0; }
   </style>
 </head>
 <body>
   <h1>Meus Treinos</h1>
+
+  <!-- Cronômetro de descanso -->
+  <div id="timer" class="card">
+    <div class="row between">
+      <div>
+        <div class="muted">Descanso</div>
+        <div id="timer-display">00:00</div>
+      </div>
+      <div class="row">
+        <button class="ghost small" data-seg="30">30s</button>
+        <button class="ghost small" data-seg="60">60s</button>
+        <button class="ghost small" data-seg="90">90s</button>
+        <button class="ghost small" data-seg="120">2min</button>
+        <button class="ghost small" data-seg="180">3min</button>
+      </div>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button id="timer-toggle">Iniciar</button>
+      <button class="ghost" id="timer-mais">+15s</button>
+      <button class="danger" id="timer-zerar">Zerar</button>
+    </div>
+  </div>
 
   <!-- Criar treino -->
   <div class="card">
@@ -115,9 +145,56 @@
   <div id="detalhe" class="hidden"></div>
 
 <script>
-  // ---------- Armazenamento ----------
+  // ---------- Constantes ----------
   const CHAVE = 'meus-treinos-v1';
+  const GRUPOS = ['Peito', 'Costas', 'Pernas', 'Ombros', 'Bíceps', 'Tríceps', 'Abdômen'];
 
+  // Exercícios sem equipamento, por grupo muscular
+  const SEM_EQUIPAMENTO = {
+    'Peito': [
+      ['Flexão de braço', '3 × 8–15'],
+      ['Flexão com pés elevados (declinada)', '3 × 8–12'],
+      ['Flexão com mãos em apoio elevado (inclinada)', '3 × 10–15'],
+      ['Flexão com mãos afastadas', '3 × 6–10']
+    ],
+    'Costas': [
+      ['Superman (deitado de bruços)', '3 × 12–15'],
+      ['Remada com toalha presa na porta', '3 × 10–12'],
+      ['Remada invertida embaixo de mesa firme', '3 × 6–10'],
+      ['Puxada de toalha (remada isométrica)', '3 × 20–30 s']
+    ],
+    'Pernas': [
+      ['Agachamento livre', '3 × 15–20'],
+      ['Agachamento búlgaro (pé de trás apoiado)', '3 × 8–12 por perna'],
+      ['Avanço (passada)', '3 × 10–12 por perna'],
+      ['Ponte de glúteos', '3 × 15–20'],
+      ['Elevação de panturrilha no degrau', '3 × 15–25']
+    ],
+    'Ombros': [
+      ['Flexão pike (ombros)', '3 × 6–10'],
+      ['Elevação lateral com garrafas de água', '3 × 12–15'],
+      ['Elevação frontal com garrafa', '3 × 10–12']
+    ],
+    'Bíceps': [
+      ['Rosca com mochila cheia de livros', '3 × 10–12'],
+      ['Rosca com garrafas de água', '3 × 12–15'],
+      ['Isometria com toalha sob os pés', '3 × 20–30 s']
+    ],
+    'Tríceps': [
+      ['Mergulho em cadeira ou banco', '3 × 8–15'],
+      ['Flexão diamante (mãos juntas)', '3 × 6–10'],
+      ['Extensão de tríceps com garrafa acima da cabeça', '3 × 10–12']
+    ],
+    'Abdômen': [
+      ['Prancha', '3 × 20–40 s'],
+      ['Abdominal supra', '3 × 15–20'],
+      ['Abdominal bicicleta', '3 × 20 (total)'],
+      ['Elevação de pernas deitado', '3 × 10–15'],
+      ['Dead bug', '3 × 8–10 por lado']
+    ]
+  };
+
+  // ---------- Armazenamento ----------
   function carregar() {
     try {
       return JSON.parse(localStorage.getItem(CHAVE)) || [];
@@ -135,7 +212,8 @@
   }
 
   let treinos = carregar();
-  let treinoAberto = null; // id do treino em detalhe
+  let treinoAberto = null;   // id do treino em detalhe
+  let grupoSugestao = 'Peito';
 
   function novoId() {
     return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
@@ -143,9 +221,117 @@
 
   function escapar(texto) {
     const div = document.createElement('div');
-    div.textContent = texto;
+    div.textContent = texto == null ? '' : String(texto);
     return div.innerHTML;
   }
+
+  // ---------- Cronômetro de descanso ----------
+  // Usa horário de término (Date.now), então continua certo mesmo com a aba em segundo plano.
+  const timerEl = document.getElementById('timer');
+  const timerDisplay = document.getElementById('timer-display');
+  const timerToggle = document.getElementById('timer-toggle');
+  let restanteMs = 0;     // tempo restante quando pausado
+  let fimMs = null;       // horário de término quando rodando
+  let intervalo = null;
+  let audioCtx = null;
+
+  function formatar(ms) {
+    const total = Math.ceil(ms / 1000);
+    const m = String(Math.floor(total / 60)).padStart(2, '0');
+    const s = String(total % 60).padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  function atualizarTimer() {
+    const ms = fimMs !== null ? Math.max(0, fimMs - Date.now()) : restanteMs;
+    timerDisplay.textContent = formatar(ms);
+    if (fimMs !== null && ms <= 0) terminou();
+  }
+
+  function tocarAlerta() {
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      [0, 0.4, 0.8].forEach(t => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.frequency.value = 880;
+        gain.gain.value = 0.3;
+        osc.connect(gain).connect(audioCtx.destination);
+        osc.start(audioCtx.currentTime + t);
+        osc.stop(audioCtx.currentTime + t + 0.2);
+      });
+    } catch (e) { /* sem áudio: segue só com vibração */ }
+    if (navigator.vibrate) navigator.vibrate([300, 150, 300, 150, 300]);
+  }
+
+  function terminou() {
+    pararIntervalo();
+    fimMs = null;
+    restanteMs = 0;
+    timerEl.classList.add('alerta');
+    timerToggle.textContent = 'Iniciar';
+    timerDisplay.textContent = '00:00';
+    tocarAlerta();
+  }
+
+  function pararIntervalo() {
+    clearInterval(intervalo);
+    intervalo = null;
+  }
+
+  function iniciarOuPausar() {
+    timerEl.classList.remove('alerta');
+    if (fimMs !== null) {
+      // pausar
+      restanteMs = Math.max(0, fimMs - Date.now());
+      fimMs = null;
+      pararIntervalo();
+      timerToggle.textContent = 'Continuar';
+    } else {
+      if (restanteMs <= 0) return;
+      // ao iniciar com um toque, o navegador libera o áudio
+      try {
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        audioCtx.resume();
+      } catch (e) {}
+      fimMs = Date.now() + restanteMs;
+      intervalo = setInterval(atualizarTimer, 250);
+      timerToggle.textContent = 'Pausar';
+    }
+    atualizarTimer();
+  }
+
+  function definirTempo(seg) {
+    pararIntervalo();
+    fimMs = null;
+    restanteMs = seg * 1000;
+    timerEl.classList.remove('alerta');
+    timerToggle.textContent = 'Iniciar';
+    atualizarTimer();
+  }
+
+  function somarTempo(seg) {
+    if (fimMs !== null) fimMs += seg * 1000;
+    else restanteMs += seg * 1000;
+    timerEl.classList.remove('alerta');
+    atualizarTimer();
+  }
+
+  function zerarTimer() {
+    pararIntervalo();
+    fimMs = null;
+    restanteMs = 0;
+    timerEl.classList.remove('alerta');
+    timerToggle.textContent = 'Iniciar';
+    atualizarTimer();
+  }
+
+  timerToggle.addEventListener('click', iniciarOuPausar);
+  document.getElementById('timer-mais').addEventListener('click', () => somarTempo(15));
+  document.getElementById('timer-zerar').addEventListener('click', zerarTimer);
+  document.querySelectorAll('[data-seg]').forEach(b =>
+    b.addEventListener('click', () => definirTempo(Number(b.dataset.seg)))
+  );
 
   // ---------- Renderização ----------
   function render() {
@@ -191,11 +377,16 @@
           <li>
             <div>
               <strong>${escapar(e.nome)}</strong>
-              <div class="muted">${e.series} série(s) × ${e.repeticoes} rep${e.carga ? ' · ' + escapar(e.carga) : ''}</div>
+              <div class="muted">${escapar(e.grupo || 'Sem grupo')} · ${e.series} série(s) × ${e.repeticoes} rep${e.carga ? ' · ' + escapar(e.carga) : ''}</div>
             </div>
-            <button class="danger small" onclick="excluirExercicio('${t.id}','${e.id}')">Remover</button>
+            <div class="row">
+              <button class="ghost small" onclick="verSugestoes('${e.grupo || ''}')">Sem equipamento?</button>
+              <button class="danger small" onclick="excluirExercicio('${t.id}','${e.id}')">Remover</button>
+            </div>
           </li>`).join('')}</ul>`
       : '<div class="empty">Nenhum exercício ainda.</div>';
+
+    const opcoesGrupo = GRUPOS.map(g => `<option>${g}</option>`).join('');
 
     detalhe.innerHTML = `
       <div class="row between">
@@ -207,13 +398,29 @@
         ${exercicios}
         <form id="form-exercicio" class="add-form row">
           <input type="text" id="ex-nome" placeholder="Exercício (ex: Supino)" required>
+          <select id="ex-grupo">${opcoesGrupo}</select>
           <input type="number" id="ex-series" placeholder="Séries" min="1" value="3" required>
           <input type="number" id="ex-reps" placeholder="Reps" min="1" value="10" required>
           <input type="text" id="ex-carga" placeholder="Carga (opcional, ex: 20kg)">
           <button type="submit">Adicionar</button>
         </form>
       </div>
+
+      <div class="card">
+        <h3>Sugestões sem equipamento</h3>
+        <div class="row">
+          <select id="sel-grupo">${opcoesGrupo}</select>
+        </div>
+        <div id="sugestoes"></div>
+      </div>
     `;
+
+    document.getElementById('sel-grupo').value = grupoSugestao;
+    document.getElementById('sel-grupo').addEventListener('change', e => {
+      grupoSugestao = e.target.value;
+      renderSugestoes();
+    });
+    renderSugestoes();
 
     document.getElementById('form-exercicio').addEventListener('submit', e => {
       e.preventDefault();
@@ -222,19 +429,38 @@
       t.exercicios.push({
         id: novoId(),
         nome,
+        grupo: document.getElementById('ex-grupo').value,
         series: Number(document.getElementById('ex-series').value) || 1,
         repeticoes: Number(document.getElementById('ex-reps').value) || 1,
         carga: document.getElementById('ex-carga').value.trim()
       });
       salvar(treinos);
       render();
-      document.getElementById('ex-nome')?.focus();
     });
+  }
+
+  function renderSugestoes() {
+    const alvo = document.getElementById('sugestoes');
+    if (!alvo) return;
+    const lista = SEM_EQUIPAMENTO[grupoSugestao] || [];
+    alvo.innerHTML = lista.map(([nome, sugestao]) => `
+      <div class="sugestao">
+        <strong>${escapar(nome)}</strong>
+        <div class="muted">Sugestão: ${escapar(sugestao)}</div>
+      </div>
+    `).join('');
   }
 
   // ---------- Ações ----------
   function abrir(id) { treinoAberto = id; render(); window.scrollTo(0, 0); }
   function fechar() { treinoAberto = null; render(); }
+
+  // Botão "Sem equipamento?" de um exercício: mostra as alternativas do grupo dele
+  function verSugestoes(grupo) {
+    if (GRUPOS.includes(grupo)) grupoSugestao = grupo;
+    renderDetalhe();
+    document.getElementById('sugestoes')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 
   function excluirTreino(id) {
     const t = treinos.find(x => x.id === id);
