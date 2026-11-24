@@ -200,6 +200,29 @@
     ]
   };
 
+
+  // Exercícios de academia, por grupo: usados para trocar um exercício por outro disponível na sua academia
+  const CATALOGO = {
+    'Peito': ['Supino reto com barra', 'Supino reto com halteres', 'Supino reto na máquina',
+              'Supino inclinado com barra', 'Supino inclinado com halteres', 'Supino inclinado na máquina',
+              'Crucifixo com halteres', 'Crucifixo inclinado com halteres', 'Crucifixo na máquina (peck deck)',
+              'Crossover na polia', 'Flexão de braço'],
+    'Pernas': ['Leg press 45°', 'Leg press horizontal', 'Leg press com pés altos', 'Hack machine',
+               'Agachamento no Smith', 'Agachamento livre com barra', 'Cadeira extensora',
+               'Cadeira flexora', 'Mesa flexora', 'Stiff com barra', 'Stiff com halteres',
+               'Cadeira abdutora', 'Cadeira adutora', 'Panturrilha sentado', 'Panturrilha em pé na máquina'],
+    'Costas': ['Puxada frontal', 'Puxada triângulo', 'Remada baixa na polia', 'Remada curvada com barra',
+               'Remada na máquina', 'Pulldown com corda'],
+    'Ombros': ['Desenvolvimento com halteres', 'Desenvolvimento na máquina', 'Elevação lateral com halteres',
+               'Elevação lateral no cabo', 'Elevação frontal com halteres', 'Crucifixo inverso na máquina'],
+    'Bíceps': ['Rosca direta com barra', 'Rosca alternada com halteres', 'Rosca Scott na máquina',
+               'Rosca na polia', 'Rosca martelo'],
+    'Tríceps': ['Tríceps corda na polia', 'Tríceps testa com barra', 'Tríceps francês com halter',
+                'Mergulho no banco', 'Tríceps coice'],
+    'Abdômen': ['Abdominal na máquina', 'Abdominal no solo', 'Prancha', 'Elevação de pernas',
+                'Abdominal na polia (corda)']
+  };
+
   // ---------- Armazenamento ----------
   function carregar() {
     try {
@@ -220,6 +243,7 @@
   let treinos = carregar();
   let treinoAberto = null;   // id do treino em detalhe
   let grupoSugestao = 'Peito';
+  let trocando = null; // {treinoId, exId} do exercício que está sendo trocado
 
   function novoId() {
     return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
@@ -386,6 +410,7 @@
               <div class="muted">${escapar(e.grupo || 'Sem grupo')} · ${e.series} série(s) × ${e.repeticoes} rep${e.carga ? ' · ' + escapar(e.carga) : ''}</div>
             </div>
             <div class="row">
+              <button class="ghost small" onclick="iniciarTroca('${t.id}','${e.id}')">Trocar</button>
               <button class="ghost small" onclick="verSugestoes('${e.grupo || ''}')">Sem equipamento?</button>
               <button class="danger small" onclick="excluirExercicio('${t.id}','${e.id}')">Remover</button>
             </div>
@@ -400,6 +425,7 @@
         <button class="ghost" onclick="fechar()">← Voltar</button>
       </div>
 
+      ${painelTroca(t)}
       <div class="card">
         ${exercicios}
         <form id="form-exercicio" class="add-form row">
@@ -457,9 +483,57 @@
     `).join('');
   }
 
+
+  // ---------- Trocar exercício por outro da academia ----------
+  function alternativasDe(ex) {
+    return (CATALOGO[ex.grupo] || []).filter(n => n !== ex.nome);
+  }
+
+  function painelTroca(t) {
+    if (!trocando || trocando.treinoId !== t.id) return '';
+    const ex = t.exercicios.find(x => x.id === trocando.exId);
+    if (!ex) { trocando = null; return ''; }
+    const alternativas = alternativasDe(ex);
+    const botoes = alternativas.length
+      ? `<div class="chips" style="margin-top:12px">${alternativas.map((n, i) =>
+          `<button onclick="aplicarTroca(${i})">${escapar(n)}</button>`).join('')}</div>`
+      : '<div class="muted" style="margin-top:12px">Não há alternativas cadastradas para este grupo.</div>';
+    return `
+      <div class="card" id="painel-troca">
+        <h3>Trocar "${escapar(ex.nome)}" por:</h3>
+        <div class="muted">Exercícios do grupo ${escapar(ex.grupo || 'sem grupo')}. Escolha o que tem na sua academia; séries e repetições são mantidas.</div>
+        ${botoes}
+        <div class="row" style="margin-top:14px"><button class="ghost small" onclick="cancelarTroca()">Cancelar</button></div>
+      </div>`;
+  }
+
+  function iniciarTroca(treinoId, exId) {
+    trocando = { treinoId, exId };
+    renderDetalhe();
+    document.getElementById('painel-troca')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function cancelarTroca() {
+    trocando = null;
+    renderDetalhe();
+  }
+
+  function aplicarTroca(i) {
+    if (!trocando) return;
+    const t = treinos.find(x => x.id === trocando.treinoId);
+    const ex = t && t.exercicios.find(x => x.id === trocando.exId);
+    if (!ex) { trocando = null; renderDetalhe(); return; }
+    const alternativas = alternativasDe(ex);
+    if (alternativas[i] == null) return;
+    ex.nome = alternativas[i];
+    trocando = null;
+    salvar(treinos);
+    renderDetalhe();
+  }
+
   // ---------- Ações ----------
   function abrir(id) { treinoAberto = id; render(); window.scrollTo(0, 0); }
-  function fechar() { treinoAberto = null; render(); }
+  function fechar() { treinoAberto = null; trocando = null; render(); }
 
   // Botão "Sem equipamento?" de um exercício: mostra as alternativas do grupo dele
   function verSugestoes(grupo) {
