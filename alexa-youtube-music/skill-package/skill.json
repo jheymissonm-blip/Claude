@@ -1,0 +1,14 @@
+{
+  "manifest": {
+    "publishingInformation": {
+      "locales": { "pt-BR": { "name": "Minha Música do YouTube",
+        "summary": "Busca músicas no YouTube Music e envia o link pro seu celular.",
+        "description": "Diga o nome da música ou artista; a skill encontra no YouTube Music e manda o link para o app Alexa.",
+        "examplePhrases": ["Alexa, abrir minha música do youtube", "Alexa, pede pra minha música do youtube tocar Anitta"],
+        "keywords": ["música", "youtube"] } },
+      "isAvailableWorldwide": false, "distributionCountries": ["BR"], "category": "MUSIC_AND_AUDIO"
+    },
+    "apis": { "custom": { "endpoint": { "uri": "arn:aws:lambda:us-east-1:SUA_CONTA:function:alexa-youtube-music" } } },
+    "manifestVersion": "1.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "minha música do youtube",
+      "intents": [
+        { "name": "TocarMusicaIntent",
+          "slots": [{ "name": "busca", "type": "AMAZON.SearchQuery" }],
+          "samples": ["tocar {busca}", "toca {busca}", "procura {busca}", "buscar {busca}"] },
+        { "name": "AMAZON.HelpIntent", "samples": [] },
+        { "name": "AMAZON.StopIntent", "samples": [] },
+        { "name": "AMAZON.CancelIntent", "samples": [] },
+        { "name": "AMAZON.FallbackIntent", "samples": [] }
+      ]
+    }
+  }
+}
