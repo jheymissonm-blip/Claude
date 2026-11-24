@@ -1,0 +1,1437 @@
+{
+  "versao": 1,
+  "descricao": "Treinos e exercícios de academia, organizados por grupo muscular e tipo de movimento. Use o tipo para encontrar substitutos.",
+  "treinos": [
+    {
+      "id": "d1",
+      "nome": "Peito + Tríceps",
+      "subtitulo": "Foco em peitoral · 20 séries · ~58 min · Máquinas e polia",
+      "exercicios": [
+        {
+          "exercicio_id": "peito-supino-reto-na-maquina",
+          "series": 4,
+          "reps": "8-10",
+          "descanso_s": 120
+        },
+        {
+          "exercicio_id": "peito-supino-inclinado-no-smith",
+          "series": 4,
+          "reps": "8-12",
+          "descanso_s": 120
+        },
+        {
+          "exercicio_id": "peito-peck-deck-voador",
+          "series": 3,
+          "reps": "12-15",
+          "descanso_s": 75
+        },
+        {
+          "exercicio_id": "peito-cross-over-polia-baixa-media",
+          "series": 3,
+          "reps": "12-15",
+          "descanso_s": 60
+        },
+        {
+          "exercicio_id": "triceps-triceps-frances-barra-bi-set",
+          "series": 6,
+          "reps": "10-12",
+          "descanso_s": 75
+        }
+      ]
+    },
+    {
+      "id": "d2",
+      "nome": "Pernas (Quadríceps)",
+      "subtitulo": "Coxas frontais e panturrilha · 21 séries · ~58 min",
+      "exercicios": [
+        {
+          "exercicio_id": "pernas-hack-squat-na-maquina",
+          "series": 4,
+          "reps": "8-10",
+          "descanso_s": 150
+        },
+        {
+          "exercicio_id": "pernas-leg-press-45-graus",
+          "series": 4,
+          "reps": "10-12",
+          "descanso_s": 120
+        },
+        {
+          "exercicio_id": "pernas-cadeira-extensora",
+          "series": 4,
+          "reps": "12-15",
+          "descanso_s": 75
+        },
+        {
+          "exercicio_id": "pernas-cadeira-adutora",
+          "series": 3,
+          "reps": "12-15",
+          "descanso_s": 60
+        },
+        {
+          "exercicio_id": "pernas-panturrilha-leg-abdomen-bi-set",
+          "series": 6,
+          "reps": "12-15",
+          "descanso_s": 60
+        }
+      ]
+    },
+    {
+      "id": "d3",
+      "nome": "Costas + Ombros",
+      "subtitulo": "Puxada e deltoides · 21 séries · ~58 min",
+      "exercicios": [
+        {
+          "exercicio_id": "costas-puxada-alta-aberta",
+          "series": 4,
+          "reps": "8-10",
+          "descanso_s": 90
+        },
+        {
+          "exercicio_id": "costas-remada-articulada-apoiada",
+          "series": 4,
+          "reps": "10-12",
+          "descanso_s": 90
+        },
+        {
+          "exercicio_id": "ombros-desenvolvimento-na-maquina",
+          "series": 3,
+          "reps": "8-10",
+          "descanso_s": 90
+        },
+        {
+          "exercicio_id": "ombros-elevacao-lateral-na-polia",
+          "series": 4,
+          "reps": "12-15",
+          "descanso_s": 60
+        },
+        {
+          "exercicio_id": "biceps-rosca-polia-rosca-corda-bi-set",
+          "series": 6,
+          "reps": "10-12",
+          "descanso_s": 75
+        }
+      ]
+    },
+    {
+      "id": "d4",
+      "nome": "Pernas (Posteriores)",
+      "subtitulo": "Posterior, glúteos e core · 21 séries · ~58 min",
+      "exercicios": [
+        {
+          "exercicio_id": "pernas-cadeira-flexora-prioridade",
+          "series": 4,
+          "reps": "10-12",
+          "descanso_s": 90
+        },
+        {
+          "exercicio_id": "pernas-mesa-flexora",
+          "series": 3,
+          "reps": "10-12",
+          "descanso_s": 90
+        },
+        {
+          "exercicio_id": "pernas-leg-press-45-pes-altos",
+          "series": 4,
+          "reps": "10-12",
+          "descanso_s": 120
+        },
+        {
+          "exercicio_id": "pernas-cadeira-abdutora",
+          "series": 3,
+          "reps": "12-15",
+          "descanso_s": 60
+        },
+        {
+          "exercicio_id": "pernas-panturrilha-abdominal-bi-set",
+          "series": 7,
+          "reps": "15",
+          "descanso_s": 60
+        }
+      ]
+    },
+    {
+      "id": "d5",
+      "nome": "Peito + Superiores",
+      "subtitulo": "2º estímulo de peitoral e acabamento · 21 séries · ~58 min",
+      "exercicios": [
+        {
+          "exercicio_id": "peito-supino-inclinado-na-maquina",
+          "series": 4,
+          "reps": "8-10",
+          "descanso_s": 120
+        },
+        {
+          "exercicio_id": "peito-cross-over-na-polia-alta",
+          "series": 3,
+          "reps": "12-15",
+          "descanso_s": 75
+        },
+        {
+          "exercicio_id": "costas-puxada-baixa-neutra-triangulo",
+          "series": 4,
+          "reps": "10-12",
+          "descanso_s": 90
+        },
+        {
+          "exercicio_id": "ombros-crucifixo-inverso-no-peck-deck",
+          "series": 4,
+          "reps": "12-15",
+          "descanso_s": 60
+        },
+        {
+          "exercicio_id": "ombros-elevacao-lateral-triceps-frances",
+          "series": 6,
+          "reps": "12",
+          "descanso_s": 75
+        }
+      ]
+    }
+  ],
+  "exercicios_por_grupo": {
+    "Peito": {
+      "Supino": [
+        "peito-supino-inclinado-com-halteres",
+        "peito-supino-inclinado-na-maquina",
+        "peito-supino-inclinado-no-smith",
+        "peito-supino-reto-com-barra",
+        "peito-supino-reto-com-halteres",
+        "peito-supino-reto-na-maquina"
+      ],
+      "Crucifixo / voador": [
+        "peito-crucifixo-com-halteres",
+        "peito-crucifixo-na-maquina-peck-deck",
+        "peito-peck-deck-voador"
+      ],
+      "Cross-over": [
+        "peito-cross-over-na-polia",
+        "peito-cross-over-na-polia-alta",
+        "peito-cross-over-polia-baixa-media"
+      ],
+      "Flexão de braço": [
+        "peito-flexao-com-maos-afastadas",
+        "peito-flexao-com-maos-em-apoio-elevado-inclinada",
+        "peito-flexao-com-pes-elevados-declinada",
+        "peito-flexao-de-braco"
+      ]
+    },
+    "Tríceps": {
+      "Bi-set (combinado)": [
+        "triceps-triceps-frances-barra-bi-set"
+      ],
+      "Tríceps na polia": [
+        "triceps-triceps-corda-na-polia"
+      ],
+      "Tríceps testa": [
+        "triceps-triceps-testa-com-barra"
+      ],
+      "Tríceps francês": [
+        "triceps-triceps-frances-com-halter"
+      ],
+      "Mergulho": [
+        "triceps-mergulho-em-cadeira-ou-banco",
+        "triceps-mergulho-no-banco"
+      ],
+      "Flexão diamante": [
+        "triceps-flexao-diamante-maos-juntas"
+      ],
+      "Tríceps acima da cabeça (sem equipamento)": [
+        "triceps-extensao-de-triceps-com-garrafa-acima-da-cabeca"
+      ]
+    },
+    "Pernas": {
+      "Agachamento": [
+        "pernas-agachamento-livre",
+        "pernas-agachamento-livre-com-barra",
+        "pernas-agachamento-no-smith",
+        "pernas-hack-squat-na-maquina"
+      ],
+      "Leg press": [
+        "pernas-leg-press-45-graus",
+        "pernas-leg-press-45-pes-altos",
+        "pernas-leg-press-horizontal"
+      ],
+      "Extensora": [
+        "pernas-cadeira-extensora"
+      ],
+      "Adutora / abdutora": [
+        "pernas-cadeira-abdutora",
+        "pernas-cadeira-adutora"
+      ],
+      "Bi-set (combinado)": [
+        "pernas-panturrilha-abdominal-bi-set",
+        "pernas-panturrilha-leg-abdomen-bi-set"
+      ],
+      "Flexora": [
+        "pernas-cadeira-flexora",
+        "pernas-cadeira-flexora-prioridade",
+        "pernas-mesa-flexora"
+      ],
+      "Stiff": [
+        "pernas-stiff-com-barra",
+        "pernas-stiff-com-halteres"
+      ],
+      "Panturrilha": [
+        "pernas-elevacao-de-panturrilha-no-degrau",
+        "pernas-panturrilha-em-pe-na-maquina",
+        "pernas-panturrilha-sentado"
+      ],
+      "Glúteos (sem equipamento)": [
+        "pernas-ponte-de-gluteos"
+      ]
+    },
+    "Costas": {
+      "Puxada vertical": [
+        "costas-pulldown-com-corda",
+        "costas-puxada-alta-aberta"
+      ],
+      "Remada": [
+        "costas-remada-articulada-apoiada",
+        "costas-remada-curvada-com-barra"
+      ],
+      "Puxada baixa (triângulo)": [
+        "costas-puxada-baixa-neutra-triangulo",
+        "costas-puxada-triangulo-polia-baixa"
+      ],
+      "Remada (sem equipamento)": [
+        "costas-puxada-de-toalha-remada-isometrica",
+        "costas-remada-com-toalha-presa-na-porta",
+        "costas-remada-invertida-embaixo-de-mesa-firme"
+      ],
+      "Lombar (sem equipamento)": [
+        "costas-superman-deitado-de-brucos"
+      ]
+    },
+    "Ombros": {
+      "Desenvolvimento": [
+        "ombros-desenvolvimento-com-halteres",
+        "ombros-desenvolvimento-na-maquina",
+        "ombros-flexao-pike-ombros"
+      ],
+      "Elevação lateral": [
+        "ombros-elevacao-lateral-com-garrafas-de-agua",
+        "ombros-elevacao-lateral-com-halteres",
+        "ombros-elevacao-lateral-na-polia"
+      ],
+      "Crucifixo inverso": [
+        "ombros-crucifixo-inverso-no-peck-deck"
+      ],
+      "Bi-set (combinado)": [
+        "ombros-elevacao-lateral-triceps-frances"
+      ],
+      "Elevação frontal": [
+        "ombros-elevacao-frontal-com-garrafa",
+        "ombros-elevacao-frontal-com-halteres"
+      ]
+    },
+    "Bíceps": {
+      "Bi-set (combinado)": [
+        "biceps-rosca-polia-rosca-corda-bi-set"
+      ],
+      "Rosca direta": [
+        "biceps-rosca-direta-com-barra"
+      ],
+      "Rosca alternada": [
+        "biceps-rosca-alternada-com-halteres"
+      ],
+      "Rosca Scott": [
+        "biceps-rosca-scott-na-maquina"
+      ],
+      "Rosca na polia": [
+        "biceps-rosca-na-polia"
+      ],
+      "Rosca (sem equipamento)": [
+        "biceps-rosca-com-garrafas-de-agua",
+        "biceps-rosca-com-mochila-cheia-de-livros"
+      ],
+      "Isometria": [
+        "biceps-isometria-com-toalha-sob-os-pes"
+      ]
+    },
+    "Abdômen": {
+      "Abdominal": [
+        "abdomen-abdominal-bicicleta",
+        "abdomen-abdominal-na-maquina",
+        "abdomen-abdominal-na-polia-corda",
+        "abdomen-abdominal-no-solo",
+        "abdomen-abdominal-supra",
+        "abdomen-dead-bug"
+      ],
+      "Prancha": [
+        "abdomen-prancha"
+      ],
+      "Elevação de pernas": [
+        "abdomen-elevacao-de-pernas",
+        "abdomen-elevacao-de-pernas-deitado"
+      ]
+    }
+  },
+  "exercicios": {
+    "peito-supino-reto-na-maquina": {
+      "id": "peito-supino-reto-na-maquina",
+      "nome": "Supino reto na máquina",
+      "grupo": "Peito",
+      "tipo": "Supino",
+      "equipamento": "Máquina Articulada",
+      "movimento": "push_horiz",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Regule o banco para que as manoplas fiquem alinhadas ao meio do peitoral.",
+      "execucao": "Escápulas apoiadas, empurre à frente sem travar cotovelos e segure 2s na volta.",
+      "video": "https://www.youtube.com/watch?v=bKSvckCwvh4"
+    },
+    "peito-supino-inclinado-no-smith": {
+      "id": "peito-supino-inclinado-no-smith",
+      "nome": "Supino inclinado no Smith",
+      "grupo": "Peito",
+      "tipo": "Supino",
+      "equipamento": "Barra Guiada (Smith)",
+      "movimento": "push_incline",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Banco a 30 graus centralizado para a barra descer na parte superior do peito.",
+      "execucao": "Desça controlado até perto do peitoral superior e suba em linha reta com firmeza.",
+      "video": "https://www.youtube.com/watch?v=WGdi4iTfza8"
+    },
+    "peito-peck-deck-voador": {
+      "id": "peito-peck-deck-voador",
+      "nome": "Peck Deck (Voador)",
+      "grupo": "Peito",
+      "tipo": "Crucifixo / voador",
+      "equipamento": "Máquina",
+      "movimento": "fly",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Manoplas na altura dos ombros; costas e cabeça totalmente encostadas.",
+      "execucao": "Feche os braços mantendo cotovelos levemente dobrados, sem projetar os ombros à frente.",
+      "video": "https://www.youtube.com/watch?v=FwtqdGlRgig"
+    },
+    "peito-cross-over-polia-baixa-media": {
+      "id": "peito-cross-over-polia-baixa-media",
+      "nome": "Cross-over polia baixa/média",
+      "grupo": "Peito",
+      "tipo": "Cross-over",
+      "equipamento": "Polia Dupla",
+      "movimento": "fly",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Polias na altura da cintura/quadril para tensão contínua em alongamento.",
+      "execucao": "Feche à frente do peito controlando a abertura na volta.",
+      "video": "https://www.youtube.com/watch?v=jqTlJt3JXzQ"
+    },
+    "triceps-triceps-frances-barra-bi-set": {
+      "id": "triceps-triceps-frances-barra-bi-set",
+      "nome": "Tríceps francês + Barra (Bi-set)",
+      "grupo": "Tríceps",
+      "tipo": "Bi-set (combinado)",
+      "equipamento": "Polia Alta",
+      "movimento": "push_down",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Faça 3 séries de francês acima da cabeça (Maeo 2023) seguidas de 3 séries na barra.",
+      "execucao": "Priorize o alongamento completo atrás da cabeça antes de ir para a barra reta.",
+      "video": "https://www.youtube.com/watch?v=O3rDfWaXhhs"
+    },
+    "pernas-hack-squat-na-maquina": {
+      "id": "pernas-hack-squat-na-maquina",
+      "nome": "Hack Squat na máquina",
+      "grupo": "Pernas",
+      "tipo": "Agachamento",
+      "equipamento": "Máquina Hack",
+      "movimento": "squat_down",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Ombros firmes sob as almofadas, lombar encostada e pés na largura dos ombros.",
+      "execucao": "Desça controlando até os joelhos passarem de 90 graus e empurre pelos calcanhares.",
+      "video": "https://www.youtube.com/watch?v=LeAgTrHfWuo"
+    },
+    "pernas-leg-press-45-graus": {
+      "id": "pernas-leg-press-45-graus",
+      "nome": "Leg Press 45 graus",
+      "grupo": "Pernas",
+      "tipo": "Leg press",
+      "equipamento": "Máquina Leg Press",
+      "movimento": "leg_press",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Pés na parte média/baixa da plataforma; quadril bem apoiado no assento.",
+      "execucao": "Desça até quase encostar os joelhos no peito sem tirar o quadril do banco.",
+      "video": "https://www.youtube.com/watch?v=bfHuhQPa4lc"
+    },
+    "pernas-cadeira-extensora": {
+      "id": "pernas-cadeira-extensora",
+      "nome": "Cadeira extensora",
+      "grupo": "Pernas",
+      "tipo": "Extensora",
+      "equipamento": "Máquina",
+      "movimento": "leg_ext",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Alinhe o eixo da máquina ao joelho; encosto levemente reclinado alonga o reto femoral.",
+      "execucao": "Suba estendendo totalmente o joelho, segure 1s no topo e desça devagar.",
+      "video": "https://www.youtube.com/watch?v=el3oHblB5DM"
+    },
+    "pernas-cadeira-adutora": {
+      "id": "pernas-cadeira-adutora",
+      "nome": "Cadeira adutora",
+      "grupo": "Pernas",
+      "tipo": "Adutora / abdutora",
+      "equipamento": "Máquina",
+      "movimento": "adduct",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Costas apoiadas, ajuste a abertura inicial sem causar desconforto na virilha.",
+      "execucao": "Feche as pernas com força controlada e segure a volta sem bater as placas.",
+      "video": "https://www.youtube.com/watch?v=Wf602gn_9zU"
+    },
+    "pernas-panturrilha-leg-abdomen-bi-set": {
+      "id": "pernas-panturrilha-leg-abdomen-bi-set",
+      "nome": "Panturrilha Leg + Abdômen (Bi-set)",
+      "grupo": "Pernas",
+      "tipo": "Bi-set (combinado)",
+      "equipamento": "Máquinas",
+      "movimento": "calf",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "4 séries de panturrilha com joelho estendido (Kinoshita 2023) + 2 séries de abdômen.",
+      "execucao": "Pausa de 1s no alongamento máximo do tornozelo.",
+      "video": "https://www.youtube.com/watch?v=bfHuhQPa4lc"
+    },
+    "costas-puxada-alta-aberta": {
+      "id": "costas-puxada-alta-aberta",
+      "nome": "Puxada alta aberta",
+      "grupo": "Costas",
+      "tipo": "Puxada vertical",
+      "equipamento": "Polia Alta",
+      "movimento": "pull_down",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Trave bem as coxas no apoio; pegada pouco mais aberta que os ombros.",
+      "execucao": "Puxe a barra em direção ao peitoral superior levando os cotovelos para baixo e para trás.",
+      "video": "https://www.youtube.com/watch?v=SapM-j_3M20"
+    },
+    "costas-remada-articulada-apoiada": {
+      "id": "costas-remada-articulada-apoiada",
+      "nome": "Remada articulada apoiada",
+      "grupo": "Costas",
+      "tipo": "Remada",
+      "equipamento": "Máquina",
+      "movimento": "pull_row",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Regule o banco para o peito ficar firme no apoio sem comprimir a respiração.",
+      "execucao": "Puxe as manoplas trazendo as escápulas para trás; evite girar o tronco.",
+      "video": "https://www.youtube.com/watch?v=Sq7rWvJtzDY"
+    },
+    "ombros-desenvolvimento-na-maquina": {
+      "id": "ombros-desenvolvimento-na-maquina",
+      "nome": "Desenvolvimento na máquina",
+      "grupo": "Ombros",
+      "tipo": "Desenvolvimento",
+      "equipamento": "Máquina",
+      "movimento": "push_up",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Ajuste o assento para as manoplas iniciarem na altura das orelhas/ombros.",
+      "execucao": "Empurre para cima mantendo a lombar neutra encostada no banco.",
+      "video": "https://www.youtube.com/watch?v=Xd5bgkvYdfk"
+    },
+    "ombros-elevacao-lateral-na-polia": {
+      "id": "ombros-elevacao-lateral-na-polia",
+      "nome": "Elevação lateral na polia",
+      "grupo": "Ombros",
+      "tipo": "Elevação lateral",
+      "equipamento": "Polia Baixa",
+      "movimento": "lat_raise",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Fique de lado para a polia baixa com o cabo passando por trás do corpo.",
+      "execucao": "Eleve o braço lateralmente até a altura do ombro sem encolher o trapézio.",
+      "video": "https://www.youtube.com/watch?v=3vbYw9xklBc"
+    },
+    "biceps-rosca-polia-rosca-corda-bi-set": {
+      "id": "biceps-rosca-polia-rosca-corda-bi-set",
+      "nome": "Rosca polia + Rosca corda (Bi-set)",
+      "grupo": "Bíceps",
+      "tipo": "Bi-set (combinado)",
+      "equipamento": "Polia Baixa",
+      "movimento": "curl_up",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "3 séries na barra reta/W seguidas de 3 séries na corda (martelo).",
+      "execucao": "Cotovelos colados ao tronco, subida controlada.",
+      "video": "https://www.youtube.com/watch?v=zqklqTcOsbo"
+    },
+    "pernas-cadeira-flexora-prioridade": {
+      "id": "pernas-cadeira-flexora-prioridade",
+      "nome": "Cadeira flexora (Prioridade)",
+      "grupo": "Pernas",
+      "tipo": "Flexora",
+      "equipamento": "Máquina",
+      "movimento": "leg_curl",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Prenda firme o apoio sobre as coxas (Maeo 2021: maior hipertrofia sob alongamento).",
+      "execucao": "Empurre os calcanhares para baixo e para trás com amplitude máxima.",
+      "video": "https://www.youtube.com/watch?v=Zss6E3VU6X0"
+    },
+    "pernas-mesa-flexora": {
+      "id": "pernas-mesa-flexora",
+      "nome": "Mesa flexora",
+      "grupo": "Pernas",
+      "tipo": "Flexora",
+      "equipamento": "Máquina",
+      "movimento": "leg_curl",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Alinhe os joelhos com o eixo da máquina e apoie o rolo acima dos calcanhares.",
+      "execucao": "Puxe o rolo em direção aos glúteos mantendo o quadril pressionado contra o banco.",
+      "video": "https://www.youtube.com/watch?v=2-ULaRrQa7c"
+    },
+    "pernas-leg-press-45-pes-altos": {
+      "id": "pernas-leg-press-45-pes-altos",
+      "nome": "Leg Press 45° (pés altos)",
+      "grupo": "Pernas",
+      "tipo": "Leg press",
+      "equipamento": "Máquina Leg Press",
+      "movimento": "leg_press",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Posicione os pés mais altos na plataforma para enfatizar glúteos e posteriores.",
+      "execucao": "Desça controlando o peso e empurre pelos calcanhares sem levantar o quadril.",
+      "video": "https://www.youtube.com/watch?v=bfHuhQPa4lc"
+    },
+    "pernas-cadeira-abdutora": {
+      "id": "pernas-cadeira-abdutora",
+      "nome": "Cadeira abdutora",
+      "grupo": "Pernas",
+      "tipo": "Adutora / abdutora",
+      "equipamento": "Máquina",
+      "movimento": "abduct",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Costas apoiadas ou tronco levemente inclinado à frente para maior ativação glútea.",
+      "execucao": "Empurre os apoios para fora abrindo os joelhos e retorne devagar.",
+      "video": "https://www.youtube.com/watch?v=e2gmqTG1OgQ"
+    },
+    "pernas-panturrilha-abdominal-bi-set": {
+      "id": "pernas-panturrilha-abdominal-bi-set",
+      "nome": "Panturrilha + Abdominal (Bi-set)",
+      "grupo": "Pernas",
+      "tipo": "Bi-set (combinado)",
+      "equipamento": "Máquinas",
+      "movimento": "calf",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "4 séries de panturrilha com joelho estendido + 3 séries de abdominal na polia/máquina.",
+      "execucao": "Amplitude máxima no tornozelo e flexão real da coluna no abdominal.",
+      "video": "https://www.youtube.com/watch?v=e2gmqTG1OgQ"
+    },
+    "peito-supino-inclinado-na-maquina": {
+      "id": "peito-supino-inclinado-na-maquina",
+      "nome": "Supino inclinado na máquina",
+      "grupo": "Peito",
+      "tipo": "Supino",
+      "equipamento": "Máquina Articulada",
+      "movimento": "push_incline",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Banco ajustado para empurrar em ângulo diagonal ascendente.",
+      "execucao": "Mantenha ombros baixos e escápulas firmes no encosto durante toda a série.",
+      "video": "https://www.youtube.com/watch?v=WGdi4iTfza8"
+    },
+    "peito-cross-over-na-polia-alta": {
+      "id": "peito-cross-over-na-polia-alta",
+      "nome": "Cross-over na polia alta",
+      "grupo": "Peito",
+      "tipo": "Cross-over",
+      "equipamento": "Polia Dupla",
+      "movimento": "fly",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Polias acima da cabeça, dê um passo à frente para estabilizar a base.",
+      "execucao": "Feche os braços em arco à frente do umbigo mantendo cotovelos semiflexionados.",
+      "video": "https://www.youtube.com/watch?v=jqTlJt3JXzQ"
+    },
+    "costas-puxada-baixa-neutra-triangulo": {
+      "id": "costas-puxada-baixa-neutra-triangulo",
+      "nome": "Puxada baixa neutra (triângulo)",
+      "grupo": "Costas",
+      "tipo": "Puxada baixa (triângulo)",
+      "equipamento": "Polia Baixa",
+      "movimento": "pull_row",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Pés firmes no apoio, joelhos semiflexionados e coluna reta.",
+      "execucao": "Alongue bem os dorsais à frente e puxe o triângulo em direção ao umbigo.",
+      "video": "https://www.youtube.com/watch?v=_K0I9tOnOdk"
+    },
+    "ombros-crucifixo-inverso-no-peck-deck": {
+      "id": "ombros-crucifixo-inverso-no-peck-deck",
+      "nome": "Crucifixo inverso no Peck Deck",
+      "grupo": "Ombros",
+      "tipo": "Crucifixo inverso",
+      "equipamento": "Máquina",
+      "movimento": "abduct",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "Sente de frente para o encosto com as manoplas na altura dos ombros.",
+      "execucao": "Abra os braços para trás focando na parte posterior dos ombros.",
+      "video": "https://www.youtube.com/watch?v=FwtqdGlRgig"
+    },
+    "ombros-elevacao-lateral-triceps-frances": {
+      "id": "ombros-elevacao-lateral-triceps-frances",
+      "nome": "Elevação lateral + Tríceps francês",
+      "grupo": "Ombros",
+      "tipo": "Bi-set (combinado)",
+      "equipamento": "Polia (Bi-set)",
+      "movimento": "push_up",
+      "no_plano": true,
+      "sem_equipamento": false,
+      "ajuste": "3 séries de elevação lateral na polia + 3 séries de tríceps francês na corda.",
+      "execucao": "Execute os dois movimentos com controle excêntrico sem roubar com o tronco.",
+      "video": "https://www.youtube.com/watch?v=O3rDfWaXhhs"
+    },
+    "peito-supino-reto-com-barra": {
+      "id": "peito-supino-reto-com-barra",
+      "nome": "Supino reto com barra",
+      "grupo": "Peito",
+      "tipo": "Supino",
+      "equipamento": "Barra",
+      "movimento": "push_horiz",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Supino+reto+com+barra+execução+academia"
+    },
+    "peito-supino-reto-com-halteres": {
+      "id": "peito-supino-reto-com-halteres",
+      "nome": "Supino reto com halteres",
+      "grupo": "Peito",
+      "tipo": "Supino",
+      "equipamento": "Halteres",
+      "movimento": "push_horiz",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Supino+reto+com+halteres+execução+academia"
+    },
+    "peito-supino-inclinado-com-halteres": {
+      "id": "peito-supino-inclinado-com-halteres",
+      "nome": "Supino inclinado com halteres",
+      "grupo": "Peito",
+      "tipo": "Supino",
+      "equipamento": "Halteres",
+      "movimento": "push_incline",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Supino+inclinado+com+halteres+execução+academia"
+    },
+    "peito-crucifixo-na-maquina-peck-deck": {
+      "id": "peito-crucifixo-na-maquina-peck-deck",
+      "nome": "Crucifixo na máquina (Peck Deck)",
+      "grupo": "Peito",
+      "tipo": "Crucifixo / voador",
+      "equipamento": "Máquina",
+      "movimento": "fly",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Crucifixo+na+máquina+(Peck+Deck)+execução+academia"
+    },
+    "peito-crucifixo-com-halteres": {
+      "id": "peito-crucifixo-com-halteres",
+      "nome": "Crucifixo com halteres",
+      "grupo": "Peito",
+      "tipo": "Crucifixo / voador",
+      "equipamento": "Halteres",
+      "movimento": "fly",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Crucifixo+com+halteres+execução+academia"
+    },
+    "peito-cross-over-na-polia": {
+      "id": "peito-cross-over-na-polia",
+      "nome": "Cross-over na polia",
+      "grupo": "Peito",
+      "tipo": "Cross-over",
+      "equipamento": "Polia Dupla",
+      "movimento": "fly",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Cross-over+na+polia+execução+academia"
+    },
+    "pernas-agachamento-no-smith": {
+      "id": "pernas-agachamento-no-smith",
+      "nome": "Agachamento no Smith",
+      "grupo": "Pernas",
+      "tipo": "Agachamento",
+      "equipamento": "Barra Guiada (Smith)",
+      "movimento": "squat_down",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Agachamento+no+Smith+execução+academia"
+    },
+    "pernas-agachamento-livre-com-barra": {
+      "id": "pernas-agachamento-livre-com-barra",
+      "nome": "Agachamento livre com barra",
+      "grupo": "Pernas",
+      "tipo": "Agachamento",
+      "equipamento": "Barra",
+      "movimento": "squat_down",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Agachamento+livre+com+barra+execução+academia"
+    },
+    "pernas-leg-press-horizontal": {
+      "id": "pernas-leg-press-horizontal",
+      "nome": "Leg Press horizontal",
+      "grupo": "Pernas",
+      "tipo": "Leg press",
+      "equipamento": "Máquina Leg Press",
+      "movimento": "leg_press",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Leg+Press+horizontal+execução+academia"
+    },
+    "pernas-cadeira-flexora": {
+      "id": "pernas-cadeira-flexora",
+      "nome": "Cadeira flexora",
+      "grupo": "Pernas",
+      "tipo": "Flexora",
+      "equipamento": "Máquina",
+      "movimento": "leg_curl",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Cadeira+flexora+execução+academia"
+    },
+    "pernas-stiff-com-barra": {
+      "id": "pernas-stiff-com-barra",
+      "nome": "Stiff com barra",
+      "grupo": "Pernas",
+      "tipo": "Stiff",
+      "equipamento": "Barra",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Stiff+com+barra+execução+academia"
+    },
+    "pernas-stiff-com-halteres": {
+      "id": "pernas-stiff-com-halteres",
+      "nome": "Stiff com halteres",
+      "grupo": "Pernas",
+      "tipo": "Stiff",
+      "equipamento": "Halteres",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Stiff+com+halteres+execução+academia"
+    },
+    "pernas-panturrilha-sentado": {
+      "id": "pernas-panturrilha-sentado",
+      "nome": "Panturrilha sentado",
+      "grupo": "Pernas",
+      "tipo": "Panturrilha",
+      "equipamento": "Máquina",
+      "movimento": "calf",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Panturrilha+sentado+execução+academia"
+    },
+    "pernas-panturrilha-em-pe-na-maquina": {
+      "id": "pernas-panturrilha-em-pe-na-maquina",
+      "nome": "Panturrilha em pé na máquina",
+      "grupo": "Pernas",
+      "tipo": "Panturrilha",
+      "equipamento": "Máquina",
+      "movimento": "calf",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Panturrilha+em+pé+na+máquina+execução+academia"
+    },
+    "costas-pulldown-com-corda": {
+      "id": "costas-pulldown-com-corda",
+      "nome": "Pulldown com corda",
+      "grupo": "Costas",
+      "tipo": "Puxada vertical",
+      "equipamento": "Polia Alta",
+      "movimento": "pull_down",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Pulldown+com+corda+execução+academia"
+    },
+    "costas-puxada-triangulo-polia-baixa": {
+      "id": "costas-puxada-triangulo-polia-baixa",
+      "nome": "Puxada triângulo (polia baixa)",
+      "grupo": "Costas",
+      "tipo": "Puxada baixa (triângulo)",
+      "equipamento": "Polia Baixa",
+      "movimento": "pull_row",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Puxada+triângulo+(polia+baixa)+execução+academia"
+    },
+    "costas-remada-curvada-com-barra": {
+      "id": "costas-remada-curvada-com-barra",
+      "nome": "Remada curvada com barra",
+      "grupo": "Costas",
+      "tipo": "Remada",
+      "equipamento": "Barra",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Remada+curvada+com+barra+execução+academia"
+    },
+    "ombros-desenvolvimento-com-halteres": {
+      "id": "ombros-desenvolvimento-com-halteres",
+      "nome": "Desenvolvimento com halteres",
+      "grupo": "Ombros",
+      "tipo": "Desenvolvimento",
+      "equipamento": "Halteres",
+      "movimento": "push_up",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Desenvolvimento+com+halteres+execução+academia"
+    },
+    "ombros-elevacao-lateral-com-halteres": {
+      "id": "ombros-elevacao-lateral-com-halteres",
+      "nome": "Elevação lateral com halteres",
+      "grupo": "Ombros",
+      "tipo": "Elevação lateral",
+      "equipamento": "Halteres",
+      "movimento": "lat_raise",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Elevação+lateral+com+halteres+execução+academia"
+    },
+    "ombros-elevacao-frontal-com-halteres": {
+      "id": "ombros-elevacao-frontal-com-halteres",
+      "nome": "Elevação frontal com halteres",
+      "grupo": "Ombros",
+      "tipo": "Elevação frontal",
+      "equipamento": "Halteres",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Elevação+frontal+com+halteres+execução+academia"
+    },
+    "biceps-rosca-direta-com-barra": {
+      "id": "biceps-rosca-direta-com-barra",
+      "nome": "Rosca direta com barra",
+      "grupo": "Bíceps",
+      "tipo": "Rosca direta",
+      "equipamento": "Barra",
+      "movimento": "curl_up",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Rosca+direta+com+barra+execução+academia"
+    },
+    "biceps-rosca-alternada-com-halteres": {
+      "id": "biceps-rosca-alternada-com-halteres",
+      "nome": "Rosca alternada com halteres",
+      "grupo": "Bíceps",
+      "tipo": "Rosca alternada",
+      "equipamento": "Halteres",
+      "movimento": "curl_up",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Rosca+alternada+com+halteres+execução+academia"
+    },
+    "biceps-rosca-scott-na-maquina": {
+      "id": "biceps-rosca-scott-na-maquina",
+      "nome": "Rosca Scott na máquina",
+      "grupo": "Bíceps",
+      "tipo": "Rosca Scott",
+      "equipamento": "Máquina",
+      "movimento": "curl_up",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Rosca+Scott+na+máquina+execução+academia"
+    },
+    "biceps-rosca-na-polia": {
+      "id": "biceps-rosca-na-polia",
+      "nome": "Rosca na polia",
+      "grupo": "Bíceps",
+      "tipo": "Rosca na polia",
+      "equipamento": "Polia Baixa",
+      "movimento": "curl_up",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Rosca+na+polia+execução+academia"
+    },
+    "triceps-triceps-corda-na-polia": {
+      "id": "triceps-triceps-corda-na-polia",
+      "nome": "Tríceps corda na polia",
+      "grupo": "Tríceps",
+      "tipo": "Tríceps na polia",
+      "equipamento": "Polia Alta",
+      "movimento": "push_down",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Tríceps+corda+na+polia+execução+academia"
+    },
+    "triceps-triceps-testa-com-barra": {
+      "id": "triceps-triceps-testa-com-barra",
+      "nome": "Tríceps testa com barra",
+      "grupo": "Tríceps",
+      "tipo": "Tríceps testa",
+      "equipamento": "Barra",
+      "movimento": "push_down",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Tríceps+testa+com+barra+execução+academia"
+    },
+    "triceps-triceps-frances-com-halter": {
+      "id": "triceps-triceps-frances-com-halter",
+      "nome": "Tríceps francês com halter",
+      "grupo": "Tríceps",
+      "tipo": "Tríceps francês",
+      "equipamento": "Halteres",
+      "movimento": "push_down",
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Tríceps+francês+com+halter+execução+academia"
+    },
+    "triceps-mergulho-no-banco": {
+      "id": "triceps-mergulho-no-banco",
+      "nome": "Mergulho no banco",
+      "grupo": "Tríceps",
+      "tipo": "Mergulho",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Mergulho+no+banco+execução+academia"
+    },
+    "abdomen-abdominal-na-maquina": {
+      "id": "abdomen-abdominal-na-maquina",
+      "nome": "Abdominal na máquina",
+      "grupo": "Abdômen",
+      "tipo": "Abdominal",
+      "equipamento": "Máquina",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Abdominal+na+máquina+execução+academia"
+    },
+    "abdomen-abdominal-no-solo": {
+      "id": "abdomen-abdominal-no-solo",
+      "nome": "Abdominal no solo",
+      "grupo": "Abdômen",
+      "tipo": "Abdominal",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Abdominal+no+solo+execução+academia"
+    },
+    "abdomen-abdominal-na-polia-corda": {
+      "id": "abdomen-abdominal-na-polia-corda",
+      "nome": "Abdominal na polia (corda)",
+      "grupo": "Abdômen",
+      "tipo": "Abdominal",
+      "equipamento": "Polia Alta",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Abdominal+na+polia+(corda)+execução+academia"
+    },
+    "abdomen-prancha": {
+      "id": "abdomen-prancha",
+      "nome": "Prancha",
+      "grupo": "Abdômen",
+      "tipo": "Prancha",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 20–40 s",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Prancha+execução+academia"
+    },
+    "abdomen-elevacao-de-pernas": {
+      "id": "abdomen-elevacao-de-pernas",
+      "nome": "Elevação de pernas",
+      "grupo": "Abdômen",
+      "tipo": "Elevação de pernas",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": false,
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Elevação+de+pernas+execução+academia"
+    },
+    "peito-flexao-de-braco": {
+      "id": "peito-flexao-de-braco",
+      "nome": "Flexão de braço",
+      "grupo": "Peito",
+      "tipo": "Flexão de braço",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 8–15",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Flexão+de+braço+execução+academia"
+    },
+    "peito-flexao-com-pes-elevados-declinada": {
+      "id": "peito-flexao-com-pes-elevados-declinada",
+      "nome": "Flexão com pés elevados (declinada)",
+      "grupo": "Peito",
+      "tipo": "Flexão de braço",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 8–12",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Flexão+com+pés+elevados+(declinada)+execução+academia"
+    },
+    "peito-flexao-com-maos-em-apoio-elevado-inclinada": {
+      "id": "peito-flexao-com-maos-em-apoio-elevado-inclinada",
+      "nome": "Flexão com mãos em apoio elevado (inclinada)",
+      "grupo": "Peito",
+      "tipo": "Flexão de braço",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 10–15",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Flexão+com+mãos+em+apoio+elevado+(inclinada)+execução+academia"
+    },
+    "peito-flexao-com-maos-afastadas": {
+      "id": "peito-flexao-com-maos-afastadas",
+      "nome": "Flexão com mãos afastadas",
+      "grupo": "Peito",
+      "tipo": "Flexão de braço",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 6–10",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Flexão+com+mãos+afastadas+execução+academia"
+    },
+    "costas-remada-com-toalha-presa-na-porta": {
+      "id": "costas-remada-com-toalha-presa-na-porta",
+      "nome": "Remada com toalha presa na porta",
+      "grupo": "Costas",
+      "tipo": "Remada (sem equipamento)",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 10–12",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Remada+com+toalha+presa+na+porta+execução+academia"
+    },
+    "costas-remada-invertida-embaixo-de-mesa-firme": {
+      "id": "costas-remada-invertida-embaixo-de-mesa-firme",
+      "nome": "Remada invertida embaixo de mesa firme",
+      "grupo": "Costas",
+      "tipo": "Remada (sem equipamento)",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 6–10",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Remada+invertida+embaixo+de+mesa+firme+execução+academia"
+    },
+    "costas-puxada-de-toalha-remada-isometrica": {
+      "id": "costas-puxada-de-toalha-remada-isometrica",
+      "nome": "Puxada de toalha (remada isométrica)",
+      "grupo": "Costas",
+      "tipo": "Remada (sem equipamento)",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 20–30 s",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Puxada+de+toalha+(remada+isométrica)+execução+academia"
+    },
+    "costas-superman-deitado-de-brucos": {
+      "id": "costas-superman-deitado-de-brucos",
+      "nome": "Superman (deitado de bruços)",
+      "grupo": "Costas",
+      "tipo": "Lombar (sem equipamento)",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 12–15",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Superman+(deitado+de+bruços)+execução+academia"
+    },
+    "pernas-agachamento-livre": {
+      "id": "pernas-agachamento-livre",
+      "nome": "Agachamento livre",
+      "grupo": "Pernas",
+      "tipo": "Agachamento",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 15–20",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Agachamento+livre+execução+academia"
+    },
+    "pernas-ponte-de-gluteos": {
+      "id": "pernas-ponte-de-gluteos",
+      "nome": "Ponte de glúteos",
+      "grupo": "Pernas",
+      "tipo": "Glúteos (sem equipamento)",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 15–20",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Ponte+de+glúteos+execução+academia"
+    },
+    "pernas-elevacao-de-panturrilha-no-degrau": {
+      "id": "pernas-elevacao-de-panturrilha-no-degrau",
+      "nome": "Elevação de panturrilha no degrau",
+      "grupo": "Pernas",
+      "tipo": "Panturrilha",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 15–25",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Elevação+de+panturrilha+no+degrau+execução+academia"
+    },
+    "ombros-flexao-pike-ombros": {
+      "id": "ombros-flexao-pike-ombros",
+      "nome": "Flexão pike (ombros)",
+      "grupo": "Ombros",
+      "tipo": "Desenvolvimento",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 6–10",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Flexão+pike+(ombros)+execução+academia"
+    },
+    "ombros-elevacao-lateral-com-garrafas-de-agua": {
+      "id": "ombros-elevacao-lateral-com-garrafas-de-agua",
+      "nome": "Elevação lateral com garrafas de água",
+      "grupo": "Ombros",
+      "tipo": "Elevação lateral",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 12–15",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Elevação+lateral+com+garrafas+de+água+execução+academia"
+    },
+    "ombros-elevacao-frontal-com-garrafa": {
+      "id": "ombros-elevacao-frontal-com-garrafa",
+      "nome": "Elevação frontal com garrafa",
+      "grupo": "Ombros",
+      "tipo": "Elevação frontal",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 10–12",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Elevação+frontal+com+garrafa+execução+academia"
+    },
+    "biceps-rosca-com-mochila-cheia-de-livros": {
+      "id": "biceps-rosca-com-mochila-cheia-de-livros",
+      "nome": "Rosca com mochila cheia de livros",
+      "grupo": "Bíceps",
+      "tipo": "Rosca (sem equipamento)",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 10–12",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Rosca+com+mochila+cheia+de+livros+execução+academia"
+    },
+    "biceps-rosca-com-garrafas-de-agua": {
+      "id": "biceps-rosca-com-garrafas-de-agua",
+      "nome": "Rosca com garrafas de água",
+      "grupo": "Bíceps",
+      "tipo": "Rosca (sem equipamento)",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 12–15",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Rosca+com+garrafas+de+água+execução+academia"
+    },
+    "biceps-isometria-com-toalha-sob-os-pes": {
+      "id": "biceps-isometria-com-toalha-sob-os-pes",
+      "nome": "Isometria com toalha sob os pés",
+      "grupo": "Bíceps",
+      "tipo": "Isometria",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 20–30 s",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Isometria+com+toalha+sob+os+pés+execução+academia"
+    },
+    "triceps-mergulho-em-cadeira-ou-banco": {
+      "id": "triceps-mergulho-em-cadeira-ou-banco",
+      "nome": "Mergulho em cadeira ou banco",
+      "grupo": "Tríceps",
+      "tipo": "Mergulho",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 8–15",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Mergulho+em+cadeira+ou+banco+execução+academia"
+    },
+    "triceps-flexao-diamante-maos-juntas": {
+      "id": "triceps-flexao-diamante-maos-juntas",
+      "nome": "Flexão diamante (mãos juntas)",
+      "grupo": "Tríceps",
+      "tipo": "Flexão diamante",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 6–10",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Flexão+diamante+(mãos+juntas)+execução+academia"
+    },
+    "triceps-extensao-de-triceps-com-garrafa-acima-da-cabeca": {
+      "id": "triceps-extensao-de-triceps-com-garrafa-acima-da-cabeca",
+      "nome": "Extensão de tríceps com garrafa acima da cabeça",
+      "grupo": "Tríceps",
+      "tipo": "Tríceps acima da cabeça (sem equipamento)",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 10–12",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Extensão+de+tríceps+com+garrafa+acima+da+cabeça+execução+academia"
+    },
+    "abdomen-abdominal-supra": {
+      "id": "abdomen-abdominal-supra",
+      "nome": "Abdominal supra",
+      "grupo": "Abdômen",
+      "tipo": "Abdominal",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 15–20",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Abdominal+supra+execução+academia"
+    },
+    "abdomen-abdominal-bicicleta": {
+      "id": "abdomen-abdominal-bicicleta",
+      "nome": "Abdominal bicicleta",
+      "grupo": "Abdômen",
+      "tipo": "Abdominal",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 20 (total)",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Abdominal+bicicleta+execução+academia"
+    },
+    "abdomen-elevacao-de-pernas-deitado": {
+      "id": "abdomen-elevacao-de-pernas-deitado",
+      "nome": "Elevação de pernas deitado",
+      "grupo": "Abdômen",
+      "tipo": "Elevação de pernas",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 10–15",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Elevação+de+pernas+deitado+execução+academia"
+    },
+    "abdomen-dead-bug": {
+      "id": "abdomen-dead-bug",
+      "nome": "Dead bug",
+      "grupo": "Abdômen",
+      "tipo": "Abdominal",
+      "equipamento": "Peso corporal",
+      "movimento": null,
+      "no_plano": false,
+      "sem_equipamento": "3 × 8–10 por lado",
+      "ajuste": null,
+      "execucao": null,
+      "video": "https://www.youtube.com/results?search_query=Dead+bug+execução+academia"
+    }
+  }
+}
