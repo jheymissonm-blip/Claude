@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monitor de Peso</title>
+  <style>
+    :root {
+      --bg: #f5f6f8; --card: #fff; --text: #1d1f24; --muted: #6b7280;
+      --accent: #2563eb; --down: #059669; --up: #dc2626; --border: #e2e5ea;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #111318; --card: #1b1e25; --text: #eceef2; --muted: #9aa3b2;
+        --accent: #60a5fa; --down: #34d399; --up: #f87171; --border: #2c313b;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 16px; max-width: 760px; margin-inline: auto;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg); color: var(--text);
+    }
+    h1 { font-size: 1.5rem; margin: 8px 0 16px; }
+    h2 { font-size: 1rem; margin: 0 0 10px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 12px; }
+    .stat .label { color: var(--muted); font-size: 0.85rem; }
+    .stat .valor { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .down { color: var(--down); }
+    .up { color: var(--up); }
+    .muted { color: var(--muted); font-size: 0.9rem; }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    input, select {
+      font: inherit; color: var(--text); background: var(--bg);
+      border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; min-width: 0;
+    }
+    input[type="number"] { width: 110px; }
+    input[type="date"] { width: 150px; }
+    button {
+      font: inherit; border: 0; border-radius: 8px; padding: 8px 12px; cursor: pointer;
+      background: var(--accent); color: #fff;
+    }
+    button.ghost { background: transparent; color: var(--accent); border: 1px solid var(--border); }
+    button.danger { background: transparent; color: var(--up); border: 1px solid var(--border); }
+    button.small { padding: 4px 8px; font-size: 0.85rem; }
+    svg { width: 100%; height: auto; display: block; }
+    svg text { fill: var(--muted); font-size: 11px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    th, td { text-align: left; padding: 8px 6px; border-top: 1px solid var(--border); }
+    td.num { font-variant-numeric: tabular-nums; }
+    .tabela-wrap { max-height: 320px; overflow: auto; }
+    .vazio { text-align: center; color: var(--muted); padding: 24px 0; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Monitor de Peso</h1>
+
+  <div class="grid">
+    <div class="card stat"><div class="label">Último registro</div><div class="valor" id="s-ultimo">–</div><div class="muted" id="s-ultimo-data"></div></div>
+    <div class="card stat"><div class="label">Variação total</div><div class="valor" id="s-variacao">–</div><div class="muted" id="s-periodo"></div></div>
+    <div class="card stat"><div class="label">Média (últimos 7)</div><div class="valor" id="s-media">–</div><div class="muted" id="s-media-var"></div></div>
+    <div class="card stat"><div class="label">IMC</div><div class="valor" id="s-imc">–</div><div class="muted" id="s-imc-txt"></div></div>
+  </div>
+
+  <div class="card">
+    <h2>Evolução</h2>
+    <div id="grafico"></div>
+  </div>
+
+  <div class="card">
+    <h2>Novo registro</h2>
+    <form id="form-peso" class="row">
+      <input type="date" id="f-data" required>
+      <input type="number" id="f-kg" step="0.1" min="20" max="400" placeholder="kg" required>
+      <button type="submit">Salvar</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Altura (para o IMC)</h2>
+    <form id="form-altura" class="row">
+      <input type="number" id="f-altura" min="100" max="250" placeholder="cm" step="1">
+      <button type="submit" class="ghost">Salvar altura</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Importar CSV</h2>
+    <p class="muted">Arquivo com uma linha por medição, com data (AAAA-MM-DD ou DD/MM/AAAA) e peso em kg. Separador de colunas: vírgula ou ponto e vírgula. Use ponto como separador decimal (ex.: 78.5).</p>
+    <div class="row">
+      <input type="file" id="f-csv" accept=".csv,text/csv,text/plain">
+      <span id="import-msg" class="muted"></span>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="ghost small" id="btn-exportar">Exportar CSV</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Registros</h2>
+    <div class="tabela-wrap" id="tabela"></div>
+  </div>
+
+<script>
+  const CHAVE = 'monitor-peso-v1';
+  const CHAVE_ALTURA = 'monitor-peso-altura-v1';
+
+  function carregar() {
+    try { return JSON.parse(localStorage.getItem(CHAVE)) || []; } catch (e) { return []; }
+  }
+  function salvar(lista) {
+    try { localStorage.setItem(CHAVE, JSON.stringify(lista)); }
+    catch (e) { alert('Não foi possível salvar neste navegador.'); }
+  }
+  function carregarAltura() {
+    try { return Number(localStorage.getItem(CHAVE_ALTURA)) || null; } catch (e) { return null; }
+  }
+  function salvarAltura(cm) {
+    try { localStorage.setItem(CHAVE_ALTURA, String(cm)); } catch (e) {}
+  }
+
+  let registros = carregar(); // [{data:'AAAA-MM-DD', kg:Number}] ordenados por data
+  let altura = carregarAltura();
+
+  function ordenar() { registros.sort((a, b) => a.data.localeCompare(b.data)); }
+
+  function inserir(data, kg) {
+    const existente = registros.find(r => r.data === data);
+    if (existente) existente.kg = kg;
+    else registros.push({ data, kg });
+    ordenar();
+    salvar(registros);
+  }
+
+  function formatarData(iso) {
+    const [a, m, d] = iso.split('-');
+    return `${d}/${m}/${a}`;
+  }
+  function fmtKg(v) { return v == null ? '–' : v.toFixed(1).replace('.', ',') + ' kg'; }
+  function fmtDelta(v) {
+    if (v == null) return '–';
+    const sinal = v > 0 ? '+' : '';
+    return sinal + v.toFixed(1).replace('.', ',') + ' kg';
+  }
+  function classeDelta(v) { return v == null || v === 0 ? '' : v < 0 ? 'down' : 'up'; }
+  function escapar(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+
+  // ---------- Estatísticas ----------
+  function renderEstatisticas() {
+    const ult = registros[registros.length - 1];
+    const primeiro = registros[0];
+
+    document.getElementById('s-ultimo').textContent = ult ? fmtKg(ult.kg) : '–';
+    document.getElementById('s-ultimo-data').textContent = ult ? formatarData(ult.data) : '';
+
+    const variacao = ult && primeiro && registros.length > 1 ? ult.kg - primeiro.kg : null;
+    const elVar = document.getElementById('s-variacao');
+    elVar.textContent = fmtDelta(variacao);
+    elVar.className = 'valor ' + classeDelta(variacao);
+    document.getElementById('s-periodo').textContent = registros.length > 1
+      ? `desde ${formatarData(primeiro.data)}` : '';
+
+    const ultimos7 = registros.slice(-7);
+    const media = ultimos7.length ? ultimos7.reduce((s, r) => s + r.kg, 0) / ultimos7.length : null;
+    document.getElementById('s-media').textContent = media == null ? '–' : fmtKg(media);
+    const antes = registros.slice(-14, -7);
+    const mediaAntes = antes.length ? antes.reduce((s, r) => s + r.kg, 0) / antes.length : null;
+    const difMedia = media != null && mediaAntes != null ? media - mediaAntes : null;
+    const elMedia = document.getElementById('s-media-var');
+    elMedia.textContent = difMedia == null ? '' : `${fmtDelta(difMedia)} vs. 7 anteriores`;
+    elMedia.className = 'muted ' + classeDelta(difMedia);
+
+    const elImc = document.getElementById('s-imc');
+    const elImcTxt = document.getElementById('s-imc-txt');
+    if (ult && altura) {
+      const imc = ult.kg / Math.pow(altura / 100, 2);
+      elImc.textContent = imc.toFixed(1).replace('.', ',');
+      elImcTxt.textContent = classificarImc(imc);
+    } else {
+      elImc.textContent = '–';
+      elImcTxt.textContent = altura ? '' : 'Informe a altura abaixo';
+    }
+  }
+
+  function classificarImc(imc) {
+    if (imc < 18.5) return 'Abaixo do peso';
+    if (imc < 25) return 'Peso normal';
+    if (imc < 30) return 'Sobrepeso';
+    return 'Obesidade';
+  }
+
+  // ---------- Gráfico (SVG simples) ----------
+  function renderGrafico() {
+    const alvo = document.getElementById('grafico');
+    if (registros.length < 2) {
+      alvo.innerHTML = '<div class="vazio">Registre pelo menos 2 pesagens para ver o gráfico.</div>';
+      return;
+    }
+    const W = 640, H = 240, pad = { l: 44, r: 16, t: 16, b: 28 };
+    const kgs = registros.map(r => r.kg);
+    let min = Math.min(...kgs), max = Math.max(...kgs);
+    if (min === max) { min -= 1; max += 1; }
+    const folga = (max - min) * 0.1;
+    min -= folga; max += folga;
+
+    const x = i => pad.l + (i / (registros.length - 1)) * (W - pad.l - pad.r);
+    const y = v => pad.t + (1 - (v - min) / (max - min)) * (H - pad.t - pad.b);
+
+    const pontos = registros.map((r, i) => `${x(i).toFixed(1)},${y(r.kg).toFixed(1)}`);
+    const linhas = [min, (min + max) / 2, max].map(v => `
+      <line x1="${pad.l}" x2="${W - pad.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--border)" />
+      <text x="${pad.l - 6}" y="${y(v) + 4}" text-anchor="end">${v.toFixed(1).replace('.', ',')}</text>`).join('');
+
+    const bolinhas = registros.map((r, i) => `<circle cx="${x(i)}" cy="${y(r.kg)}" r="3.5" fill="var(--accent)"><title>${formatarData(r.data)}: ${fmtKg(r.kg)}</title></circle>`).join('');
+
+    alvo.innerHTML = `
+      <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfico de evolução do peso">
+        ${linhas}
+        <polyline points="${pontos.join(' ')}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" />
+        ${bolinhas}
+        <text x="${pad.l}" y="${H - 6}">${formatarData(registros[0].data)}</text>
+        <text x="${W - pad.r}" y="${H - 6}" text-anchor="end">${formatarData(registros[registros.length - 1].data)}</text>
+      </svg>`;
+  }
+
+  // ---------- Tabela ----------
+  function renderTabela() {
+    const alvo = document.getElementById('tabela');
+    if (!registros.length) {
+      alvo.innerHTML = '<div class="vazio">Nenhum registro ainda.</div>';
+      return;
+    }
+    const linhas = [...registros].reverse().map((r, idx, arr) => {
+      const i = registros.indexOf(r);
+      const anterior = registros[i - 1];
+      const delta = anterior ? r.kg - anterior.kg : null;
+      return `<tr>
+        <td>${formatarData(r.data)}</td>
+        <td class="num">${fmtKg(r.kg)}</td>
+        <td class="num ${classeDelta(delta)}">${delta == null ? '' : fmtDelta(delta)}</td>
+        <td><button class="danger small" onclick="excluir('${r.data}')">Excluir</button></td>
+      </tr>`;
+    }).join('');
+    alvo.innerHTML = `<table><thead><tr><th>Data</th><th>Peso</th><th>Variação</th><th></th></tr></thead><tbody>${linhas}</tbody></table>`;
+  }
+
+  function renderTudo() {
+    renderEstatisticas();
+    renderGrafico();
+    renderTabela();
+  }
+
+  function excluir(data) {
+    if (!confirm(`Excluir o registro de ${formatarData(data)}?`)) return;
+    registros = registros.filter(r => r.data !== data);
+    salvar(registros);
+    renderTudo();
+  }
+  window.excluir = excluir;
+
+  // ---------- Formulários ----------
+  document.getElementById('f-data').value = new Date().toISOString().slice(0, 10);
+
+  document.getElementById('form-peso').addEventListener('submit', e => {
+    e.preventDefault();
+    const data = document.getElementById('f-data').value;
+    const kg = Number(document.getElementById('f-kg').value.replace(',', '.'));
+    if (!data || !(kg >= 20 && kg <= 400)) return;
+    inserir(data, Math.round(kg * 10) / 10);
+    document.getElementById('f-kg').value = '';
+    renderTudo();
+  });
+
+  document.getElementById('form-altura').addEventListener('submit', e => {
+    e.preventDefault();
+    const cm = Number(document.getElementById('f-altura').value);
+    if (!(cm >= 100 && cm <= 250)) return;
+    altura = cm;
+    salvarAltura(cm);
+    renderTudo();
+  });
+  if (altura) document.getElementById('f-altura').value = altura;
+
+  // ---------- Importar / exportar CSV ----------
+  // Aceita qualquer CSV com uma data e um peso por linha (ex.: exportações do Zepp ou da Apple Saúde convertidas).
+  function lerCsv(texto) {
+    const resultado = [];
+    texto.split(/\r?\n/).forEach(linha => {
+      const partes = linha.split(/[,;\t]/).map(p => p.trim().replace(/^"|"$/g, ''));
+      let data = null, kg = null;
+      for (const p of partes) {
+        if (!data) {
+          let m = p.match(/^(\d{4})-(\d{2})-(\d{2})/);
+          if (m) data = `${m[1]}-${m[2]}-${m[3]}`;
+          m = p.match(/^(\d{2})\/(\d{2})\/(\d{4})/);
+          if (m) data = `${m[3]}-${m[2]}-${m[1]}`;
+        }
+        if (kg == null && /^\d{2,3}(\.\d+)?$/.test(p)) {
+          const v = Number(p);
+          if (v >= 20 && v <= 400) kg = v;
+        }
+      }
+      if (data && kg != null) resultado.push({ data, kg: Math.round(kg * 10) / 10 });
+    });
+    return resultado;
+  }
+
+  document.getElementById('f-csv').addEventListener('change', e => {
+    const arquivo = e.target.files[0];
+    if (!arquivo) return;
+    const leitor = new FileReader();
+    leitor.onload = () => {
+      const lidos = lerCsv(String(leitor.result));
+      lidos.forEach(r => {
+        const existente = registros.find(x => x.data === r.data);
+        if (existente) existente.kg = r.kg; else registros.push(r);
+      });
+      ordenar();
+      salvar(registros);
+      document.getElementById('import-msg').textContent = `${lidos.length} registro(s) importado(s).`;
+      e.target.value = '';
+      renderTudo();
+    };
+    leitor.readAsText(arquivo);
+  });
+
+  document.getElementById('btn-exportar').addEventListener('click', () => {
+    const csv = 'data,kg\n' + registros.map(r => `${r.data},${r.kg}`).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'peso.csv';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+
+  renderTudo();
+</script>
+</body>
+</html>
