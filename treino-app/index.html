@@ -8,7 +8,8 @@
     :root {
       --bg: #f3f5f4; --card: #ffffff; --text: #14191f; --muted: #66707d;
       --accent: #0f9f8f; --accent-ink: #ffffff; --accent-soft: #dff5f1;
-      --danger: #dc2626; --border: #e3e8e6; --shadow: 0 1px 2px rgba(16,24,40,.05), 0 4px 14px rgba(16,24,40,.06);
+      --danger: #dc2626; --border: #e3e8e6;
+      --shadow: 0 1px 2px rgba(16,24,40,.05), 0 4px 14px rgba(16,24,40,.06);
       --radius: 16px;
     }
     @media (prefers-color-scheme: dark) {
@@ -23,6 +24,7 @@
       --accent: #2dd4bf; --accent-ink: #052e2a; --accent-soft: #123a36;
       --danger: #f87171; --border: #26302f; --shadow: 0 1px 2px rgba(0,0,0,.4);
     }
+    [hidden] { display: none !important; }
     * { box-sizing: border-box; }
     body {
       margin: 0 auto;
@@ -33,129 +35,304 @@
       background: var(--bg); color: var(--text);
       -webkit-font-smoothing: antialiased;
     }
+    h1 { font-size: 1.5rem; margin: 0; letter-spacing: -0.02em; }
+    h2 { font-size: 1.15rem; margin: 0; letter-spacing: -0.01em; }
+    h3 { font-size: 1rem; margin: 0 0 8px; }
+    button, input, select { font: inherit; }
+    input, select {
+      color: var(--text); background: var(--bg);
+      border: 1px solid var(--border); border-radius: 12px; padding: 11px 12px; min-width: 0;
+    }
+    input:focus, select:focus, button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    input[type="number"] { width: 84px; }
+
     header.topo { display: flex; align-items: center; gap: 12px; margin: 8px 0 18px; }
     .logo {
       width: 44px; height: 44px; border-radius: 14px; background: var(--accent); color: var(--accent-ink);
       display: grid; place-items: center; font-weight: 800; font-size: 1.1rem; flex: 0 0 auto;
     }
-    .topo h1 { font-size: 1.5rem; margin: 0; letter-spacing: -0.02em; }
-    .topo .sub { color: var(--muted); font-size: .88rem; margin-top: 2px; }
-    h2 { font-size: 1.05rem; margin: 0; letter-spacing: -0.01em; }
-    h3 { font-size: .95rem; margin: 0 0 8px; }
+    .topo .titulo { flex: 1; min-width: 0; }
+    .sub { color: var(--muted); font-size: .88rem; margin-top: 2px; }
+    .link-planilha {
+      color: var(--accent); font-weight: 600; font-size: .85rem; text-decoration: none;
+      border: 1px solid var(--border); padding: 8px 12px; border-radius: 12px; white-space: nowrap;
+    }
+    .muted { color: var(--muted); font-size: .88rem; }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .between { justify-content: space-between; }
+    .small-gap { gap: 8px; }
+
     .card {
       background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
       padding: 16px; margin-bottom: 14px; box-shadow: var(--shadow);
     }
-    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    .between { justify-content: space-between; }
-    .muted { color: var(--muted); font-size: .88rem; }
-    input, select {
-      font: inherit; color: var(--text); background: var(--bg);
-      border: 1px solid var(--border); border-radius: 12px; padding: 11px 12px; min-width: 0;
+    .vazio { text-align: center; color: var(--muted); padding: 24px 12px; }
+    .badge {
+      display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+      background: var(--accent-soft); color: var(--accent); padding: 3px 8px; border-radius: 999px;
     }
-    input:focus, select:focus, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    input[type="text"] { flex: 1 1 160px; }
-    input[type="number"] { width: 84px; }
+
     button {
-      font: inherit; font-weight: 600; border: 0; border-radius: 12px; padding: 11px 16px;
-      cursor: pointer; background: var(--accent); color: var(--accent-ink); transition: transform .08s, opacity .15s;
+      border: 0; border-radius: 12px; padding: 11px 16px; cursor: pointer; font-weight: 600;
+      background: var(--accent); color: var(--accent-ink); transition: transform .08s, opacity .15s;
     }
     button:active { transform: scale(.97); }
     button.ghost { background: var(--accent-soft); color: var(--accent); }
     button.danger { background: transparent; color: var(--danger); border: 1px solid var(--border); }
     button.small { padding: 7px 11px; font-size: .84rem; border-radius: 10px; }
     .chips { display: flex; gap: 6px; flex-wrap: wrap; }
-    .chips button { background: var(--bg); color: var(--text); border: 1px solid var(--border); padding: 7px 12px; border-radius: 999px; font-weight: 600; font-size: .85rem; }
-
-    .lista-treinos { display: grid; gap: 10px; }
-    .treino-card { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-    .treino-card .info { min-width: 0; }
-    .treino-card .info h2 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .badge {
-      display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
-      background: var(--accent-soft); color: var(--accent); padding: 3px 8px; border-radius: 999px; margin-top: 6px;
+    .chips button {
+      background: var(--bg); color: var(--text); border: 1px solid var(--border);
+      padding: 7px 12px; border-radius: 999px; font-weight: 600; font-size: .85rem;
     }
-
-    ul { list-style: none; padding: 0; margin: 10px 0 0; }
-    li {
-      display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 0; border-top: 1px solid var(--border);
-    }
-    li strong { font-weight: 600; }
-    .empty { text-align: center; color: var(--muted); padding: 32px 12px; }
-    .hidden { display: none; }
-    .add-form { margin-top: 14px; }
+    .chips button.on { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
 
     /* Cronômetro */
     #timer {
       position: sticky; top: max(8px, env(safe-area-inset-top, 0px)); z-index: 5;
-      background: var(--card); box-shadow: 0 8px 24px rgba(0,0,0,.12);
+      box-shadow: 0 8px 24px rgba(0,0,0,.12);
     }
-    #timer-display { font-size: 2.6rem; font-variant-numeric: tabular-nums; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+    .label { color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; font-weight: 600; }
+    #timer-display { font-size: 2.6rem; font-variant-numeric: tabular-nums; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
     #timer.alerta #timer-display { color: var(--danger); animation: pisca 1s steps(2) infinite; }
     @keyframes pisca { 50% { opacity: .35; } }
-    #timer-toggle { min-width: 110px; }
+    .barra { height: 6px; background: var(--bg); border-radius: 99px; overflow: hidden; margin-top: 12px; }
+    #timer-barra { height: 100%; background: var(--accent); transition: width .25s linear; }
+    #timer-presets { margin-top: 12px; }
+
+    /* Abas de treino */
+    .abas { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 12px; scrollbar-width: none; }
+    .abas::-webkit-scrollbar { display: none; }
+    .aba {
+      flex: 0 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+      background: var(--card); color: var(--text); border: 1px solid var(--border);
+      padding: 10px 14px; border-radius: 14px; min-width: 130px; text-align: left;
+    }
+    .aba.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+    .aba-dia { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; opacity: .8; }
+    .aba-nome { font-weight: 600; font-size: .9rem; white-space: nowrap; }
+
+    .cabeca .progresso { text-align: right; }
+    .progresso b { font-variant-numeric: tabular-nums; }
+
+    /* Exercícios */
+    .ex h3 { margin: 8px 0 10px; font-size: 1.02rem; }
+    .ex.concluido { border-color: var(--accent); }
+    .acoes { gap: 6px; margin-bottom: 12px; }
+    .sets-row { border-top: 1px solid var(--border); padding-top: 12px; gap: 10px; }
+    .sets { display: flex; gap: 6px; flex-wrap: wrap; }
+    .set {
+      min-width: 44px; height: 40px; padding: 0 10px; border-radius: 10px;
+      background: var(--bg); color: var(--text); border: 1px solid var(--border); font-weight: 700; font-size: .85rem;
+    }
+    .set.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+    .carga { display: flex; align-items: center; gap: 8px; font-size: .85rem; color: var(--muted); }
+    .carga input { width: 84px; }
+
+    .grid-form { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .grid-form input[name="nome"] { grid-column: 1 / -1; }
+    .form-ex button { margin-top: 10px; }
+
     .sugestao { padding: 12px 0; border-top: 1px solid var(--border); }
     .sugestao:first-of-type { border-top: 0; }
     .sugestao .alvo { font-weight: 600; }
     .sugestao .sug { display: inline-block; margin-top: 4px; font-size: .84rem; color: var(--accent); font-weight: 600; }
-    @media (prefers-reduced-motion: reduce) { #timer.alerta #timer-display { animation: none; } }
+
+    /* Modal de movimento */
+    .modal {
+      position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 20;
+      display: flex; align-items: center; justify-content: center; padding: 16px;
+    }
+    .modal-box {
+      background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+      padding: 18px; max-width: 480px; width: 100%; max-height: 90vh; overflow: auto;
+    }
+    .svgbox { background: var(--bg); border-radius: 14px; padding: 12px; margin: 12px 0; text-align: center; }
+    .svgbox svg { width: 100%; max-width: 260px; height: auto; display: block; margin: 0 auto; }
+    .anim-arrow { animation: pulseArrow 1.5s ease-in-out infinite; }
+    @keyframes pulseArrow {
+      0%, 100% { transform: translate(0, 0); opacity: .9; }
+      50% { transform: translate(var(--dx, 0px), var(--dy, -8px)); opacity: 1; }
+    }
+    .modal p { margin: 8px 0; font-size: .95rem; }
+    .btn-video {
+      background: #dc2626; color: #fff; text-decoration: none; padding: 11px 16px; border-radius: 12px; font-weight: 600;
+    }
+    @media (prefers-reduced-motion: reduce) { .anim-arrow, #timer.alerta #timer-display { animation: none; } }
   </style>
 </head>
 <body>
   <header class="topo">
     <div class="logo">MT</div>
-    <div>
+    <div class="titulo">
       <h1>Meus Treinos</h1>
-      <div class="sub">Peito e pernas · 5 dias por semana</div>
+      <div class="sub">Peito, pernas e o restante · máquinas e polias</div>
     </div>
+    <a class="link-planilha" href="https://docs.google.com/spreadsheets/d/1Wc6pv3R_wqTu-gtCEkiAfxPCWa9GTBe-Sr5mHP959KA/edit" target="_blank" rel="noopener noreferrer">Planilha</a>
   </header>
 
   <!-- Cronômetro de descanso -->
-  <div id="timer" class="card">
+  <section id="timer" class="card">
     <div class="row between">
       <div>
-        <div class="muted">Descanso</div>
-        <div id="timer-display">00:00</div>
+        <div class="label">Descanso</div>
+        <div id="timer-display">01:30</div>
       </div>
-      <div class="chips">
-        <button data-seg="30">30s</button>
-        <button data-seg="60">60s</button>
-        <button data-seg="90">90s</button>
-        <button data-seg="120">2min</button>
-        <button data-seg="180">3min</button>
+      <div class="row">
+        <button id="timer-toggle" type="button">Iniciar</button>
+        <button id="timer-mais" type="button" class="ghost">+15s</button>
+        <button id="timer-zerar" type="button" class="danger">Zerar</button>
       </div>
     </div>
-    <div class="row" style="margin-top:8px">
-      <button id="timer-toggle">Iniciar</button>
-      <button class="ghost" id="timer-mais">+15s</button>
-      <button class="danger" id="timer-zerar">Zerar</button>
+    <div class="chips" id="timer-presets"></div>
+    <div class="barra"><div id="timer-barra" style="width:100%"></div></div>
+  </section>
+
+  <!-- Abas dos treinos -->
+  <nav id="abas" class="abas" aria-label="Treinos"></nav>
+
+  <!-- Treino ativo -->
+  <section id="treino"></section>
+
+  <!-- Criar treino e restaurar plano -->
+  <section id="geral"></section>
+
+  <!-- Modal de movimento -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" hidden>
+    <div class="modal-box">
+      <div class="row between" style="align-items:flex-start">
+        <div>
+          <span id="modal-equip" class="badge"></span>
+          <h3 id="modal-titulo" style="margin-top:8px;font-size:1.2rem"></h3>
+        </div>
+        <button id="modal-fechar" type="button" class="ghost small" aria-label="Fechar">✕</button>
+      </div>
+      <div id="modal-svg" class="svgbox"></div>
+      <p><strong>Ajuste e postura:</strong> <span id="modal-setup"></span></p>
+      <p><strong>Execução:</strong> <span id="modal-cue"></span></p>
+      <div class="row between" style="margin-top:16px">
+        <a id="modal-video" class="btn-video" target="_blank" rel="noopener noreferrer">Assistir vídeo</a>
+        <button id="modal-ok" type="button" class="ghost">Fechar</button>
+      </div>
     </div>
   </div>
-
-  <!-- Criar treino -->
-  <div class="card">
-    <form id="form-treino" class="row">
-      <input type="text" id="novo-treino" placeholder="Nome do treino (ex: Treino A)" required>
-      <button type="submit">Criar treino</button>
-    </form>
-    <div class="row between" style="margin-top:12px">
-      <span class="muted">Sem ideia de por onde começar?</span>
-      <button class="ghost small" id="btn-plano">Adicionar plano de 5 dias</button>
-    </div>
-  </div>
-
-  <!-- Lista de treinos -->
-  <div id="lista-treinos"></div>
-
-  <!-- Detalhe do treino -->
-  <div id="detalhe" class="hidden"></div>
 
 <script>
   // ---------- Constantes ----------
-  const CHAVE = 'meus-treinos-v1';
-  const GRUPOS = ['Peito', 'Costas', 'Pernas', 'Ombros', 'Bíceps', 'Tríceps', 'Abdômen'];
+  const CHAVE = 'treinos-app-v3';
+  const GRUPOS = ['Peito', 'Pernas', 'Costas', 'Ombros', 'Bíceps', 'Tríceps', 'Abdômen'];
+  const TEMPOS = [30, 60, 75, 90, 120, 150, 180];
 
-  // Exercícios sem equipamento, por grupo muscular
+  // Exercício: id, nome, grupo, equipamento, séries, reps, descanso (s), movimento, ajuste, execução, vídeo
+  function ex(id, nome, grupo, equip, series, reps, descanso, motion, setup, cue, video) {
+    return { id, nome, grupo, equip, series, reps, descanso, motion, setup, cue, video };
+  }
+
+  // Plano padrão: 5 dias de peito e pernas em máquinas
+  const PLANO_PADRAO = [
+    { id: 'd1', nome: 'Peito + Tríceps', subtitulo: 'Foco em peitoral · 20 séries · ~58 min · Máquinas e polia', exercicios: [
+      ex('d1_1', 'Supino reto na máquina', 'Peito', 'Máquina Articulada', 4, '8-10', 120, 'push_horiz', 'Regule o banco para que as manoplas fiquem alinhadas ao meio do peitoral.', 'Escápulas apoiadas, empurre à frente sem travar cotovelos e segure 2s na volta.', 'https://www.youtube.com/watch?v=bKSvckCwvh4'),
+      ex('d1_2', 'Supino inclinado no Smith', 'Peito', 'Barra Guiada (Smith)', 4, '8-12', 120, 'push_incline', 'Banco a 30 graus centralizado para a barra descer na parte superior do peito.', 'Desça controlado até perto do peitoral superior e suba em linha reta com firmeza.', 'https://www.youtube.com/watch?v=WGdi4iTfza8'),
+      ex('d1_3', 'Peck Deck (Voador)', 'Peito', 'Máquina', 3, '12-15', 75, 'fly', 'Manoplas na altura dos ombros; costas e cabeça totalmente encostadas.', 'Feche os braços mantendo cotovelos levemente dobrados, sem projetar os ombros à frente.', 'https://www.youtube.com/watch?v=FwtqdGlRgig'),
+      ex('d1_4', 'Cross-over polia baixa/média', 'Peito', 'Polia Dupla', 3, '12-15', 60, 'fly', 'Polias na altura da cintura/quadril para tensão contínua em alongamento.', 'Feche à frente do peito controlando a abertura na volta.', 'https://www.youtube.com/watch?v=jqTlJt3JXzQ'),
+      ex('d1_5', 'Tríceps francês + Barra (Bi-set)', 'Tríceps', 'Polia Alta', 6, '10-12', 75, 'push_down', 'Faça 3 séries de francês acima da cabeça (Maeo 2023) seguidas de 3 séries na barra.', 'Priorize o alongamento completo atrás da cabeça antes de ir para a barra reta.', 'https://www.youtube.com/watch?v=O3rDfWaXhhs')
+    ]},
+    { id: 'd2', nome: 'Pernas (Quadríceps)', subtitulo: 'Coxas frontais e panturrilha · 21 séries · ~58 min', exercicios: [
+      ex('d2_1', 'Hack Squat na máquina', 'Pernas', 'Máquina Hack', 4, '8-10', 150, 'squat_down', 'Ombros firmes sob as almofadas, lombar encostada e pés na largura dos ombros.', 'Desça controlando até os joelhos passarem de 90 graus e empurre pelos calcanhares.', 'https://www.youtube.com/watch?v=LeAgTrHfWuo'),
+      ex('d2_2', 'Leg Press 45 graus', 'Pernas', 'Máquina Leg Press', 4, '10-12', 120, 'leg_press', 'Pés na parte média/baixa da plataforma; quadril bem apoiado no assento.', 'Desça até quase encostar os joelhos no peito sem tirar o quadril do banco.', 'https://www.youtube.com/watch?v=bfHuhQPa4lc'),
+      ex('d2_3', 'Cadeira extensora', 'Pernas', 'Máquina', 4, '12-15', 75, 'leg_ext', 'Alinhe o eixo da máquina ao joelho; encosto levemente reclinado alonga o reto femoral.', 'Suba estendendo totalmente o joelho, segure 1s no topo e desça devagar.', 'https://www.youtube.com/watch?v=el3oHblB5DM'),
+      ex('d2_4', 'Cadeira adutora', 'Pernas', 'Máquina', 3, '12-15', 60, 'adduct', 'Costas apoiadas, ajuste a abertura inicial sem causar desconforto na virilha.', 'Feche as pernas com força controlada e segure a volta sem bater as placas.', 'https://www.youtube.com/watch?v=Wf602gn_9zU'),
+      ex('d2_5', 'Panturrilha Leg + Abdômen (Bi-set)', 'Pernas', 'Máquinas', 6, '12-15', 60, 'calf', '4 séries de panturrilha com joelho estendido (Kinoshita 2023) + 2 séries de abdômen.', 'Pausa de 1s no alongamento máximo do tornozelo.', 'https://www.youtube.com/watch?v=bfHuhQPa4lc')
+    ]},
+    { id: 'd3', nome: 'Costas + Ombros', subtitulo: 'Puxada e deltoides · 21 séries · ~58 min', exercicios: [
+      ex('d3_1', 'Puxada alta aberta', 'Costas', 'Polia Alta', 4, '8-10', 90, 'pull_down', 'Trave bem as coxas no apoio; pegada pouco mais aberta que os ombros.', 'Puxe a barra em direção ao peitoral superior levando os cotovelos para baixo e para trás.', 'https://www.youtube.com/watch?v=SapM-j_3M20'),
+      ex('d3_2', 'Remada articulada apoiada', 'Costas', 'Máquina', 4, '10-12', 90, 'pull_row', 'Regule o banco para o peito ficar firme no apoio sem comprimir a respiração.', 'Puxe as manoplas trazendo as escápulas para trás; evite girar o tronco.', 'https://www.youtube.com/watch?v=Sq7rWvJtzDY'),
+      ex('d3_3', 'Desenvolvimento na máquina', 'Ombros', 'Máquina', 3, '8-10', 90, 'push_up', 'Ajuste o assento para as manoplas iniciarem na altura das orelhas/ombros.', 'Empurre para cima mantendo a lombar neutra encostada no banco.', 'https://www.youtube.com/watch?v=Xd5bgkvYdfk'),
+      ex('d3_4', 'Elevação lateral na polia', 'Ombros', 'Polia Baixa', 4, '12-15', 60, 'lat_raise', 'Fique de lado para a polia baixa com o cabo passando por trás do corpo.', 'Eleve o braço lateralmente até a altura do ombro sem encolher o trapézio.', 'https://www.youtube.com/watch?v=3vbYw9xklBc'),
+      ex('d3_5', 'Rosca polia + Rosca corda (Bi-set)', 'Bíceps', 'Polia Baixa', 6, '10-12', 75, 'curl_up', '3 séries na barra reta/W seguidas de 3 séries na corda (martelo).', 'Cotovelos colados ao tronco, subida controlada.', 'https://www.youtube.com/watch?v=zqklqTcOsbo')
+    ]},
+    { id: 'd4', nome: 'Pernas (Posteriores)', subtitulo: 'Posterior, glúteos e core · 21 séries · ~58 min', exercicios: [
+      ex('d4_1', 'Cadeira flexora (Prioridade)', 'Pernas', 'Máquina', 4, '10-12', 90, 'leg_curl', 'Prenda firme o apoio sobre as coxas (Maeo 2021: maior hipertrofia sob alongamento).', 'Empurre os calcanhares para baixo e para trás com amplitude máxima.', 'https://www.youtube.com/watch?v=Zss6E3VU6X0'),
+      ex('d4_2', 'Mesa flexora', 'Pernas', 'Máquina', 3, '10-12', 90, 'leg_curl', 'Alinhe os joelhos com o eixo da máquina e apoie o rolo acima dos calcanhares.', 'Puxe o rolo em direção aos glúteos mantendo o quadril pressionado contra o banco.', 'https://www.youtube.com/watch?v=2-ULaRrQa7c'),
+      ex('d4_3', 'Leg Press 45° (pés altos)', 'Pernas', 'Máquina Leg Press', 4, '10-12', 120, 'leg_press', 'Posicione os pés mais altos na plataforma para enfatizar glúteos e posteriores.', 'Desça controlando o peso e empurre pelos calcanhares sem levantar o quadril.', 'https://www.youtube.com/watch?v=bfHuhQPa4lc'),
+      ex('d4_4', 'Cadeira abdutora', 'Pernas', 'Máquina', 3, '12-15', 60, 'abduct', 'Costas apoiadas ou tronco levemente inclinado à frente para maior ativação glútea.', 'Empurre os apoios para fora abrindo os joelhos e retorne devagar.', 'https://www.youtube.com/watch?v=e2gmqTG1OgQ'),
+      ex('d4_5', 'Panturrilha + Abdominal (Bi-set)', 'Pernas', 'Máquinas', 7, '15', 60, 'calf', '4 séries de panturrilha com joelho estendido + 3 séries de abdominal na polia/máquina.', 'Amplitude máxima no tornozelo e flexão real da coluna no abdominal.', 'https://www.youtube.com/watch?v=e2gmqTG1OgQ')
+    ]},
+    { id: 'd5', nome: 'Peito + Superiores', subtitulo: '2º estímulo de peitoral e acabamento · 21 séries · ~58 min', exercicios: [
+      ex('d5_1', 'Supino inclinado na máquina', 'Peito', 'Máquina Articulada', 4, '8-10', 120, 'push_incline', 'Banco ajustado para empurrar em ângulo diagonal ascendente.', 'Mantenha ombros baixos e escápulas firmes no encosto durante toda a série.', 'https://www.youtube.com/watch?v=WGdi4iTfza8'),
+      ex('d5_2', 'Cross-over na polia alta', 'Peito', 'Polia Dupla', 3, '12-15', 75, 'fly', 'Polias acima da cabeça, dê um passo à frente para estabilizar a base.', 'Feche os braços em arco à frente do umbigo mantendo cotovelos semiflexionados.', 'https://www.youtube.com/watch?v=jqTlJt3JXzQ'),
+      ex('d5_3', 'Puxada baixa neutra (triângulo)', 'Costas', 'Polia Baixa', 4, '10-12', 90, 'pull_row', 'Pés firmes no apoio, joelhos semiflexionados e coluna reta.', 'Alongue bem os dorsais à frente e puxe o triângulo em direção ao umbigo.', 'https://www.youtube.com/watch?v=_K0I9tOnOdk'),
+      ex('d5_4', 'Crucifixo inverso no Peck Deck', 'Ombros', 'Máquina', 4, '12-15', 60, 'abduct', 'Sente de frente para o encosto com as manoplas na altura dos ombros.', 'Abra os braços para trás focando na parte posterior dos ombros.', 'https://www.youtube.com/watch?v=FwtqdGlRgig'),
+      ex('d5_5', 'Elevação lateral + Tríceps francês', 'Ombros', 'Polia (Bi-set)', 6, '12', 75, 'push_up', '3 séries de elevação lateral na polia + 3 séries de tríceps francês na corda.', 'Execute os dois movimentos com controle excêntrico sem roubar com o tronco.', 'https://www.youtube.com/watch?v=O3rDfWaXhhs')
+    ]}
+  ];
+
+  // Exercícios de academia por grupo, para troca: [nome, equipamento, movimento]
+  const CATALOGO = {
+    'Peito': [
+      ['Supino reto na máquina', 'Máquina Articulada', 'push_horiz'],
+      ['Supino reto com barra', 'Barra', 'push_horiz'],
+      ['Supino reto com halteres', 'Halteres', 'push_horiz'],
+      ['Supino inclinado no Smith', 'Barra Guiada (Smith)', 'push_incline'],
+      ['Supino inclinado com halteres', 'Halteres', 'push_incline'],
+      ['Supino inclinado na máquina', 'Máquina Articulada', 'push_incline'],
+      ['Crucifixo na máquina (Peck Deck)', 'Máquina', 'fly'],
+      ['Crucifixo com halteres', 'Halteres', 'fly'],
+      ['Cross-over na polia', 'Polia Dupla', 'fly']
+    ],
+    'Pernas': [
+      ['Hack Squat na máquina', 'Máquina Hack', 'squat_down'],
+      ['Agachamento no Smith', 'Barra Guiada (Smith)', 'squat_down'],
+      ['Agachamento livre com barra', 'Barra', 'squat_down'],
+      ['Leg Press 45 graus', 'Máquina Leg Press', 'leg_press'],
+      ['Leg Press horizontal', 'Máquina Leg Press', 'leg_press'],
+      ['Cadeira extensora', 'Máquina', 'leg_ext'],
+      ['Cadeira flexora', 'Máquina', 'leg_curl'],
+      ['Mesa flexora', 'Máquina', 'leg_curl'],
+      ['Stiff com barra', 'Barra', null],
+      ['Stiff com halteres', 'Halteres', null],
+      ['Cadeira abdutora', 'Máquina', 'abduct'],
+      ['Cadeira adutora', 'Máquina', 'adduct'],
+      ['Panturrilha sentado', 'Máquina', 'calf'],
+      ['Panturrilha em pé na máquina', 'Máquina', 'calf']
+    ],
+    'Costas': [
+      ['Puxada alta aberta', 'Polia Alta', 'pull_down'],
+      ['Puxada triângulo (polia baixa)', 'Polia Baixa', 'pull_row'],
+      ['Remada articulada apoiada', 'Máquina', 'pull_row'],
+      ['Remada curvada com barra', 'Barra', null],
+      ['Pulldown com corda', 'Polia Alta', 'pull_down']
+    ],
+    'Ombros': [
+      ['Desenvolvimento na máquina', 'Máquina', 'push_up'],
+      ['Desenvolvimento com halteres', 'Halteres', 'push_up'],
+      ['Elevação lateral na polia', 'Polia Baixa', 'lat_raise'],
+      ['Elevação lateral com halteres', 'Halteres', 'lat_raise'],
+      ['Elevação frontal com halteres', 'Halteres', null],
+      ['Crucifixo inverso no Peck Deck', 'Máquina', 'abduct']
+    ],
+    'Bíceps': [
+      ['Rosca direta com barra', 'Barra', 'curl_up'],
+      ['Rosca alternada com halteres', 'Halteres', 'curl_up'],
+      ['Rosca Scott na máquina', 'Máquina', 'curl_up'],
+      ['Rosca na polia', 'Polia Baixa', 'curl_up']
+    ],
+    'Tríceps': [
+      ['Tríceps corda na polia', 'Polia Alta', 'push_down'],
+      ['Tríceps testa com barra', 'Barra', 'push_down'],
+      ['Tríceps francês com halter', 'Halteres', 'push_down'],
+      ['Mergulho no banco', 'Peso corporal', null]
+    ],
+    'Abdômen': [
+      ['Abdominal na máquina', 'Máquina', null],
+      ['Abdominal no solo', 'Peso corporal', null],
+      ['Prancha', 'Peso corporal', null],
+      ['Elevação de pernas', 'Peso corporal', null],
+      ['Abdominal na polia (corda)', 'Polia Alta', null]
+    ]
+  };
+
+  // Alternativas sem equipamento, por grupo: [nome, sugestão de séries e repetições]
   const SEM_EQUIPAMENTO = {
     'Peito': [
       ['Flexão de braço', '3 × 8–15'],
@@ -171,8 +348,6 @@
     ],
     'Pernas': [
       ['Agachamento livre', '3 × 15–20'],
-      ['Agachamento búlgaro (pé de trás apoiado)', '3 × 8–12 por perna'],
-      ['Avanço (passada)', '3 × 10–12 por perna'],
       ['Ponte de glúteos', '3 × 15–20'],
       ['Elevação de panturrilha no degrau', '3 × 15–25']
     ],
@@ -200,422 +375,486 @@
     ]
   };
 
-
-  // Exercícios de academia, por grupo: usados para trocar um exercício por outro disponível na sua academia
-  const CATALOGO = {
-    'Peito': ['Supino reto com barra', 'Supino reto com halteres', 'Supino reto na máquina',
-              'Supino inclinado com barra', 'Supino inclinado com halteres', 'Supino inclinado na máquina',
-              'Crucifixo com halteres', 'Crucifixo inclinado com halteres', 'Crucifixo na máquina (peck deck)',
-              'Crossover na polia', 'Flexão de braço'],
-    'Pernas': ['Leg press 45°', 'Leg press horizontal', 'Leg press com pés altos', 'Hack machine',
-               'Agachamento no Smith', 'Agachamento livre com barra', 'Cadeira extensora',
-               'Cadeira flexora', 'Mesa flexora', 'Stiff com barra', 'Stiff com halteres',
-               'Cadeira abdutora', 'Cadeira adutora', 'Panturrilha sentado', 'Panturrilha em pé na máquina'],
-    'Costas': ['Puxada frontal', 'Puxada triângulo', 'Remada baixa na polia', 'Remada curvada com barra',
-               'Remada na máquina', 'Pulldown com corda'],
-    'Ombros': ['Desenvolvimento com halteres', 'Desenvolvimento na máquina', 'Elevação lateral com halteres',
-               'Elevação lateral no cabo', 'Elevação frontal com halteres', 'Crucifixo inverso na máquina'],
-    'Bíceps': ['Rosca direta com barra', 'Rosca alternada com halteres', 'Rosca Scott na máquina',
-               'Rosca na polia', 'Rosca martelo'],
-    'Tríceps': ['Tríceps corda na polia', 'Tríceps testa com barra', 'Tríceps francês com halter',
-                'Mergulho no banco', 'Tríceps coice'],
-    'Abdômen': ['Abdominal na máquina', 'Abdominal no solo', 'Prancha', 'Elevação de pernas',
-                'Abdominal na polia (corda)']
+  // Desenhos dos movimentos (SVG) usados no modal
+  const MOVIMENTOS = {
+    push_horiz: { label: 'Empurre horizontal', path: '<rect x="30" y="30" width="22" height="60" rx="6" fill="#334155"/><circle cx="52" cy="44" r="10" fill="#94a3b8"/><line x1="56" y1="60" x2="115" y2="60" stroke="#14b8a6" stroke-width="6" stroke-linecap="round"/><g class="anim-arrow" style="--dx:16px;--dy:0px"><path d="M125 60 L155 60 M147 52 L157 60 L147 68" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>' },
+    push_incline: { label: 'Empurre inclinado (30°)', path: '<line x1="35" y1="90" x2="80" y2="45" stroke="#334155" stroke-width="12" stroke-linecap="round"/><line x1="72" y1="68" x2="115" y2="38" stroke="#14b8a6" stroke-width="6" stroke-linecap="round"/><g class="anim-arrow" style="--dx:12px;--dy:-12px"><path d="M122 34 L148 16 M137 15 L150 15 L146 27" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>' },
+    fly: { label: 'Adução de ombros (fechamento)', path: '<circle cx="100" cy="60" r="14" fill="#334155"/><path d="M40 60 Q70 25 96 42" stroke="#14b8a6" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M160 60 Q130 25 104 42" stroke="#14b8a6" stroke-width="5" fill="none" stroke-linecap="round"/><g class="anim-arrow" style="--dx:8px;--dy:0px"><path d="M55 75 L82 75 M75 69 L84 75 L75 81" stroke="#f59e0b" stroke-width="3.5" fill="none" stroke-linecap="round"/></g><g class="anim-arrow" style="--dx:-8px;--dy:0px"><path d="M145 75 L118 75 M125 69 L116 75 L125 81" stroke="#f59e0b" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>' },
+    push_down: { label: 'Extensão de cotovelo para baixo', path: '<line x1="100" y1="15" x2="100" y2="48" stroke="#64748b" stroke-width="3" stroke-dasharray="4 3"/><path d="M75 48 L100 62 L125 48" stroke="#14b8a6" stroke-width="6" fill="none" stroke-linecap="round"/><g class="anim-arrow" style="--dx:0px;--dy:14px"><path d="M100 72 L100 102 M92 94 L100 104 L108 94" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>' },
+    squat_down: { label: 'Agachamento guiado', path: '<line x1="55" y1="20" x2="55" y2="100" stroke="#334155" stroke-width="6"/><rect x="65" y="42" width="46" height="12" rx="4" fill="#64748b"/><path d="M88 54 L118 74 L95 100" stroke="#14b8a6" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><g class="anim-arrow" style="--dx:0px;--dy:-12px"><path d="M142 85 L142 40 M134 48 L142 38 L150 48" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>' },
+    leg_press: { label: 'Empurre diagonal 45 graus', path: '<line x1="40" y1="95" x2="80" y2="95" stroke="#334155" stroke-width="10" stroke-linecap="round"/><path d="M68 90 L98 62 L135 45" stroke="#14b8a6" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="130" y1="28" x2="152" y2="58" stroke="#64748b" stroke-width="8" stroke-linecap="round"/><g class="anim-arrow" style="--dx:12px;--dy:-8px"><path d="M146 38 L172 22 M162 20 L174 21 L169 32" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>' },
+    leg_ext: { label: 'Extensão de joelho', path: '<rect x="55" y="55" width="35" height="14" rx="4" fill="#334155"/><path d="M88 62 L132 45" stroke="#14b8a6" stroke-width="7" fill="none" stroke-linecap="round"/><g class="anim-arrow" style="--dx:10px;--dy:-10px"><path d="M138 78 Q155 60 142 35 M136 43 L142 33 L151 40" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>' },
+    leg_curl: { label: 'Flexão de joelho', path: '<rect x="45" y="55" width="60" height="12" rx="4" fill="#334155"/><path d="M105 61 L138 92" stroke="#14b8a6" stroke-width="7" fill="none" stroke-linecap="round"/><g class="anim-arrow" style="--dx:-8px;--dy:10px"><path d="M148 75 Q148 98 118 98 M125 92 L116 98 L125 104" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>' },
+    adduct: { label: 'Fechamento (adução)', path: '<line x1="55" y1="35" x2="80" y2="95" stroke="#14b8a6" stroke-width="7" stroke-linecap="round"/><line x1="145" y1="35" x2="120" y2="95" stroke="#14b8a6" stroke-width="7" stroke-linecap="round"/><g class="anim-arrow" style="--dx:8px;--dy:0px"><path d="M52 65 L78 65 M71 59 L80 65 L71 71" stroke="#f59e0b" stroke-width="3.5" fill="none" stroke-linecap="round"/></g><g class="anim-arrow" style="--dx:-8px;--dy:0px"><path d="M148 65 L122 65 M129 59 L120 65 L129 71" stroke="#f59e0b" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>' },
+    abduct: { label: 'Abertura (abdução)', path: '<line x1="85" y1="35" x2="65" y2="95" stroke="#14b8a6" stroke-width="7" stroke-linecap="round"/><line x1="115" y1="35" x2="135" y2="95" stroke="#14b8a6" stroke-width="7" stroke-linecap="round"/><g class="anim-arrow" style="--dx:-8px;--dy:0px"><path d="M72 65 L45 65 M52 59 L43 65 L52 71" stroke="#f59e0b" stroke-width="3.5" fill="none" stroke-linecap="round"/></g><g class="anim-arrow" style="--dx:8px;--dy:0px"><path d="M128 65 L155 65 M148 59 L157 65 L148 71" stroke="#f59e0b" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>' },
+    calf: { label: 'Flexão plantar', path: '<line x1="90" y1="25" x2="90" y2="75" stroke="#14b8a6" stroke-width="8" stroke-linecap="round"/><line x1="90" y1="75" x2="130" y2="85" stroke="#14b8a6" stroke-width="7" stroke-linecap="round"/><g class="anim-arrow" style="--dx:0px;--dy:-10px"><path d="M145 75 L145 45 M138 52 L145 43 L152 52" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>' },
+    pull_down: { label: 'Puxada vertical', path: '<line x1="60" y1="24" x2="140" y2="24" stroke="#64748b" stroke-width="6" stroke-linecap="round"/><line x1="100" y1="10" x2="100" y2="24" stroke="#94a3b8" stroke-width="3"/><g class="anim-arrow" style="--dx:0px;--dy:14px"><path d="M100 42 L100 84 M90 74 L100 86 L110 74" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>' },
+    pull_row: { label: 'Remada horizontal', path: '<rect x="132" y="30" width="20" height="60" rx="6" fill="#334155"/><line x1="65" y1="60" x2="128" y2="60" stroke="#14b8a6" stroke-width="6" stroke-linecap="round"/><g class="anim-arrow" style="--dx:-14px;--dy:0px"><path d="M95 40 L55 40 M63 32 L53 40 L63 48" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>' },
+    push_up: { label: 'Empurre vertical', path: '<line x1="70" y1="84" x2="130" y2="84" stroke="#14b8a6" stroke-width="6" stroke-linecap="round"/><g class="anim-arrow" style="--dx:0px;--dy:-14px"><path d="M100 70 L100 26 M90 36 L100 24 L110 36" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>' },
+    lat_raise: { label: 'Abdução de ombro', path: '<line x1="80" y1="30" x2="80" y2="95" stroke="#334155" stroke-width="10" stroke-linecap="round"/><line x1="84" y1="45" x2="138" y2="45" stroke="#14b8a6" stroke-width="6" stroke-linecap="round"/><g class="anim-arrow" style="--dx:10px;--dy:-10px"><path d="M118 82 Q145 75 148 52 M141 59 L148 50 L154 60" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>' },
+    curl_up: { label: 'Flexão de cotovelo', path: '<line x1="78" y1="28" x2="78" y2="68" stroke="#334155" stroke-width="8" stroke-linecap="round"/><line x1="78" y1="68" x2="122" y2="44" stroke="#14b8a6" stroke-width="6" stroke-linecap="round"/><g class="anim-arrow" style="--dx:-8px;--dy:-10px"><path d="M134 78 Q138 52 115 35 M116 44 L113 33 L124 35" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>' }
   };
 
-  // ---------- Armazenamento ----------
-  function carregar() {
-    try {
-      return JSON.parse(localStorage.getItem(CHAVE)) || [];
-    } catch (e) {
-      return [];
-    }
+  // ---------- Utilidades ----------
+  function esc(t) {
+    const d = document.createElement('div');
+    d.textContent = t == null ? '' : String(t);
+    return d.innerHTML;
+  }
+  function novoId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function linkBusca(nome) {
+    return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(nome + ' execução academia');
   }
 
-  function salvar(treinos) {
-    try {
-      localStorage.setItem(CHAVE, JSON.stringify(treinos));
-    } catch (e) {
-      alert('Não foi possível salvar neste navegador.');
-    }
-  }
-
-  let treinos = carregar();
-  let treinoAberto = null;   // id do treino em detalhe
+  // ---------- Estado e armazenamento ----------
+  let estado = { treinos: [], ativo: 'd1', marcadas: {}, cargas: {} };
+  let trocando = null;            // {treinoId, exId} enquanto escolhe a troca
   let grupoSugestao = 'Peito';
-  let trocando = null; // {treinoId, exId} do exercício que está sendo trocado
+  let pendente = null, tPendente = null;
 
-  function novoId() {
-    return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  function carregarEstado() {
+    try {
+      const s = JSON.parse(localStorage.getItem(CHAVE));
+      if (s && Array.isArray(s.treinos)) {
+        return { treinos: s.treinos, ativo: s.ativo, marcadas: s.marcadas || {}, cargas: s.cargas || {} };
+      }
+    } catch (e) {}
+    return { treinos: JSON.parse(JSON.stringify(PLANO_PADRAO)), ativo: 'd1', marcadas: {}, cargas: {} };
   }
-
-  function escapar(texto) {
-    const div = document.createElement('div');
-    div.textContent = texto == null ? '' : String(texto);
-    return div.innerHTML;
+  function salvarEstado() {
+    try { localStorage.setItem(CHAVE, JSON.stringify(estado)); } catch (e) {}
+  }
+  function treinoAtivo() { return estado.treinos.find(t => t.id === estado.ativo) || null; }
+  function feitasDoExercicio(exercicio) {
+    return (estado.marcadas[exercicio.id] || []).slice(0, exercicio.series).filter(Boolean).length;
+  }
+  function alternativasDe(exercicio) {
+    return (CATALOGO[exercicio.grupo] || []).filter(c => c[0] !== exercicio.nome);
+  }
+  // Confirmação sem caixa de diálogo: o primeiro toque pede o segundo
+  function rotulo(chave, normal) { return pendente === chave ? 'Toque de novo para confirmar' : normal; }
+  function confirmar(chave, acao) {
+    if (pendente === chave) { pendente = null; clearTimeout(tPendente); acao(); return; }
+    pendente = chave;
+    clearTimeout(tPendente);
+    tPendente = setTimeout(() => { pendente = null; render(); }, 3000);
+    render();
   }
 
   // ---------- Cronômetro de descanso ----------
-  // Usa horário de término (Date.now), então continua certo mesmo com a aba em segundo plano.
-  const timerEl = document.getElementById('timer');
-  const timerDisplay = document.getElementById('timer-display');
-  const timerToggle = document.getElementById('timer-toggle');
-  let restanteMs = 0;     // tempo restante quando pausado
-  let fimMs = null;       // horário de término quando rodando
+  // Usa horário de término, então continua certo com a aba em segundo plano.
+  let timerSeg = 90;
+  let restanteMs = 90000;
+  let fimMs = null;
+  let pausado = false;
   let intervalo = null;
   let audioCtx = null;
 
-  function formatar(ms) {
-    const total = Math.ceil(ms / 1000);
-    const m = String(Math.floor(total / 60)).padStart(2, '0');
-    const s = String(total % 60).padStart(2, '0');
-    return `${m}:${s}`;
+  function fmt(ms) {
+    const t = Math.ceil(ms / 1000);
+    return String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0');
   }
-
-  function atualizarTimer() {
-    const ms = fimMs !== null ? Math.max(0, fimMs - Date.now()) : restanteMs;
-    timerDisplay.textContent = formatar(ms);
-    if (fimMs !== null && ms <= 0) terminou();
-  }
-
-  function tocarAlerta() {
+  function desbloquearAudio() {
     try {
       audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.resume) audioCtx.resume();
+    } catch (e) {}
+  }
+  function pararTick() { clearInterval(intervalo); intervalo = null; }
+  function desenharTimer() {
+    const ms = fimMs !== null ? Math.max(0, fimMs - Date.now()) : restanteMs;
+    document.getElementById('timer-display').textContent = fmt(ms);
+    const pct = timerSeg > 0 ? Math.max(0, Math.min(100, (ms / (timerSeg * 1000)) * 100)) : 0;
+    document.getElementById('timer-barra').style.width = pct + '%';
+    let txt = 'Iniciar';
+    if (fimMs !== null) txt = 'Pausar';
+    else if (pausado) txt = 'Continuar';
+    document.getElementById('timer-toggle').textContent = txt;
+  }
+  function marcarPresets() {
+    document.getElementById('timer-presets').innerHTML = TEMPOS.map(s => {
+      const label = s >= 120 && s % 60 === 0 ? (s / 60) + 'min' : s + 's';
+      return `<button type="button" data-seg="${s}" class="${s === timerSeg ? 'on' : ''}">${label}</button>`;
+    }).join('');
+  }
+  function alertar() {
+    try {
+      desbloquearAudio();
+      const ctx = audioCtx;
       [0, 0.4, 0.8].forEach(t => {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
         osc.frequency.value = 880;
         gain.gain.value = 0.3;
-        osc.connect(gain).connect(audioCtx.destination);
-        osc.start(audioCtx.currentTime + t);
-        osc.stop(audioCtx.currentTime + t + 0.2);
+        osc.connect(gain).connect(ctx.destination);
+        osc.start(ctx.currentTime + t);
+        osc.stop(ctx.currentTime + t + 0.2);
       });
-    } catch (e) { /* sem áudio: segue só com vibração */ }
+    } catch (e) {}
     if (navigator.vibrate) navigator.vibrate([300, 150, 300, 150, 300]);
+    document.getElementById('timer').classList.add('alerta');
   }
-
-  function terminou() {
-    pararIntervalo();
-    fimMs = null;
-    restanteMs = 0;
-    timerEl.classList.add('alerta');
-    timerToggle.textContent = 'Iniciar';
-    timerDisplay.textContent = '00:00';
-    tocarAlerta();
-  }
-
-  function pararIntervalo() {
-    clearInterval(intervalo);
-    intervalo = null;
-  }
-
-  function iniciarOuPausar() {
-    timerEl.classList.remove('alerta');
-    if (fimMs !== null) {
-      // pausar
-      restanteMs = Math.max(0, fimMs - Date.now());
-      fimMs = null;
-      pararIntervalo();
-      timerToggle.textContent = 'Continuar';
-    } else {
-      if (restanteMs <= 0) return;
-      // ao iniciar com um toque, o navegador libera o áudio
-      try {
-        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-        audioCtx.resume();
-      } catch (e) {}
-      fimMs = Date.now() + restanteMs;
-      intervalo = setInterval(atualizarTimer, 250);
-      timerToggle.textContent = 'Pausar';
+  function tick() {
+    if (fimMs === null) return;
+    if (Date.now() >= fimMs) {
+      fimMs = null; restanteMs = 0; pausado = false;
+      pararTick();
+      alertar();
     }
-    atualizarTimer();
+    desenharTimer();
   }
-
-  function definirTempo(seg) {
-    pararIntervalo();
-    fimMs = null;
+  function iniciar() {
+    desbloquearAudio();
+    if (restanteMs <= 0) restanteMs = timerSeg * 1000;
+    fimMs = Date.now() + restanteMs;
+    pausado = false;
+    document.getElementById('timer').classList.remove('alerta');
+    pararTick();
+    intervalo = setInterval(tick, 250);
+    desenharTimer();
+  }
+  function iniciarTimer(seg) {
+    timerSeg = seg;
     restanteMs = seg * 1000;
-    timerEl.classList.remove('alerta');
-    timerToggle.textContent = 'Iniciar';
-    atualizarTimer();
+    marcarPresets();
+    iniciar();
   }
-
-  function somarTempo(seg) {
-    if (fimMs !== null) fimMs += seg * 1000;
-    else restanteMs += seg * 1000;
-    timerEl.classList.remove('alerta');
-    atualizarTimer();
+  function alternarTimer() {
+    if (fimMs !== null) {
+      restanteMs = Math.max(0, fimMs - Date.now());
+      fimMs = null; pausado = true;
+      pararTick();
+      desenharTimer();
+    } else {
+      iniciar();
+    }
   }
-
   function zerarTimer() {
-    pararIntervalo();
-    fimMs = null;
-    restanteMs = 0;
-    timerEl.classList.remove('alerta');
-    timerToggle.textContent = 'Iniciar';
-    atualizarTimer();
+    fimMs = null; pausado = false;
+    pararTick();
+    restanteMs = timerSeg * 1000;
+    document.getElementById('timer').classList.remove('alerta');
+    desenharTimer();
   }
 
-  timerToggle.addEventListener('click', iniciarOuPausar);
-  document.getElementById('timer-mais').addEventListener('click', () => somarTempo(15));
+  document.getElementById('timer-toggle').addEventListener('click', alternarTimer);
   document.getElementById('timer-zerar').addEventListener('click', zerarTimer);
-  document.querySelectorAll('[data-seg]').forEach(b =>
-    b.addEventListener('click', () => definirTempo(Number(b.dataset.seg)))
-  );
+  document.getElementById('timer-mais').addEventListener('click', () => {
+    if (fimMs !== null) fimMs += 15000; else restanteMs += 15000;
+    desenharTimer();
+  });
+  document.getElementById('timer-presets').addEventListener('click', e => {
+    const b = e.target.closest('button[data-seg]');
+    if (!b) return;
+    timerSeg = Number(b.dataset.seg);
+    restanteMs = timerSeg * 1000;
+    fimMs = null; pausado = false;
+    pararTick();
+    document.getElementById('timer').classList.remove('alerta');
+    marcarPresets();
+    desenharTimer();
+  });
 
   // ---------- Renderização ----------
-  function render() {
-    const lista = document.getElementById('lista-treinos');
-    const detalhe = document.getElementById('detalhe');
+  function render() { renderAbas(); renderTreino(); renderGeral(); }
 
-    if (treinoAberto) {
-      lista.classList.add('hidden');
-      detalhe.classList.remove('hidden');
-      renderDetalhe();
-      return;
-    }
-
-    detalhe.classList.add('hidden');
-    lista.classList.remove('hidden');
-
-    if (treinos.length === 0) {
-      lista.innerHTML = '<div class="empty">Nenhum treino ainda. Crie o primeiro acima.</div>';
-      return;
-    }
-
-    lista.innerHTML = '<div class="lista-treinos">' + treinos.map(t => `
-      <div class="card treino-card">
-        <div class="info">
-          <h2>${escapar(t.nome)}</h2>
-          <span class="badge">${t.exercicios.length} exercício(s)</span>
-        </div>
-        <div class="row">
-          <button class="ghost small" onclick="abrir('${t.id}')">Abrir</button>
-          <button class="danger small" onclick="excluirTreino('${t.id}')">Excluir</button>
-        </div>
-      </div>
-    `).join('') + '</div>';
-  }
-
-  function renderDetalhe() {
-    const t = treinos.find(x => x.id === treinoAberto);
-    const detalhe = document.getElementById('detalhe');
-    if (!t) { treinoAberto = null; render(); return; }
-
-    const exercicios = t.exercicios.length
-      ? `<ul>${t.exercicios.map(e => `
-          <li>
-            <div>
-              <strong>${escapar(e.nome)}</strong>
-              <div class="muted">${escapar(e.grupo || 'Sem grupo')} · ${e.series} série(s) × ${e.repeticoes} rep${e.carga ? ' · ' + escapar(e.carga) : ''}</div>
-            </div>
-            <div class="row">
-              <button class="ghost small" onclick="iniciarTroca('${t.id}','${e.id}')">Trocar</button>
-              <button class="ghost small" onclick="verSugestoes('${e.grupo || ''}')">Sem equipamento?</button>
-              <button class="danger small" onclick="excluirExercicio('${t.id}','${e.id}')">Remover</button>
-            </div>
-          </li>`).join('')}</ul>`
-      : '<div class="empty">Nenhum exercício ainda.</div>';
-
-    const opcoesGrupo = GRUPOS.map(g => `<option>${g}</option>`).join('');
-
-    detalhe.innerHTML = `
-      <div class="row between">
-        <h1>${escapar(t.nome)}</h1>
-        <button class="ghost" onclick="fechar()">← Voltar</button>
-      </div>
-
-      ${painelTroca(t)}
-      <div class="card">
-        ${exercicios}
-        <form id="form-exercicio" class="add-form row">
-          <input type="text" id="ex-nome" placeholder="Exercício (ex: Supino)" required>
-          <select id="ex-grupo">${opcoesGrupo}</select>
-          <input type="number" id="ex-series" placeholder="Séries" min="1" value="3" required>
-          <input type="number" id="ex-reps" placeholder="Reps" min="1" value="10" required>
-          <input type="text" id="ex-carga" placeholder="Carga (opcional, ex: 20kg)">
-          <button type="submit">Adicionar</button>
-        </form>
-      </div>
-
-      <div class="card">
-        <h3>Sugestões sem equipamento</h3>
-        <div class="row">
-          <select id="sel-grupo">${opcoesGrupo}</select>
-        </div>
-        <div id="sugestoes"></div>
-      </div>
-    `;
-
-    document.getElementById('sel-grupo').value = grupoSugestao;
-    document.getElementById('sel-grupo').addEventListener('change', e => {
-      grupoSugestao = e.target.value;
-      renderSugestoes();
-    });
-    renderSugestoes();
-
-    document.getElementById('form-exercicio').addEventListener('submit', e => {
-      e.preventDefault();
-      const nome = document.getElementById('ex-nome').value.trim();
-      if (!nome) return;
-      t.exercicios.push({
-        id: novoId(),
-        nome,
-        grupo: document.getElementById('ex-grupo').value,
-        series: Number(document.getElementById('ex-series').value) || 1,
-        repeticoes: Number(document.getElementById('ex-reps').value) || 1,
-        carga: document.getElementById('ex-carga').value.trim()
-      });
-      salvar(treinos);
-      render();
-    });
-  }
-
-  function renderSugestoes() {
-    const alvo = document.getElementById('sugestoes');
-    if (!alvo) return;
-    const lista = SEM_EQUIPAMENTO[grupoSugestao] || [];
-    alvo.innerHTML = lista.map(([nome, sugestao]) => `
-      <div class="sugestao">
-        <div class="alvo">${escapar(nome)}</div>
-        <span class="sug">${escapar(sugestao)}</span>
-      </div>
-    `).join('');
-  }
-
-
-  // ---------- Trocar exercício por outro da academia ----------
-  function alternativasDe(ex) {
-    return (CATALOGO[ex.grupo] || []).filter(n => n !== ex.nome);
+  function renderAbas() {
+    const ativo = treinoAtivo();
+    document.getElementById('abas').innerHTML = estado.treinos.map((t, i) => `
+      <button type="button" class="aba ${ativo && t.id === ativo.id ? 'on' : ''}" data-aba="${esc(t.id)}">
+        <span class="aba-dia">Dia ${i + 1}</span>
+        <span class="aba-nome">${esc(t.nome)}</span>
+      </button>`).join('') || '<span class="muted">Nenhum treino. Crie um abaixo.</span>';
   }
 
   function painelTroca(t) {
     if (!trocando || trocando.treinoId !== t.id) return '';
-    const ex = t.exercicios.find(x => x.id === trocando.exId);
-    if (!ex) { trocando = null; return ''; }
-    const alternativas = alternativasDe(ex);
-    const botoes = alternativas.length
-      ? `<div class="chips" style="margin-top:12px">${alternativas.map((n, i) =>
-          `<button onclick="aplicarTroca(${i})">${escapar(n)}</button>`).join('')}</div>`
+    const exercicio = t.exercicios.find(x => x.id === trocando.exId);
+    if (!exercicio) { trocando = null; return ''; }
+    const alts = alternativasDe(exercicio);
+    const botoes = alts.length
+      ? `<div class="chips" style="margin-top:12px">${alts.map((c, i) =>
+          `<button type="button" data-trocar-para="${i}">${esc(c[0])}</button>`).join('')}</div>`
       : '<div class="muted" style="margin-top:12px">Não há alternativas cadastradas para este grupo.</div>';
     return `
       <div class="card" id="painel-troca">
-        <h3>Trocar "${escapar(ex.nome)}" por:</h3>
-        <div class="muted">Exercícios do grupo ${escapar(ex.grupo || 'sem grupo')}. Escolha o que tem na sua academia; séries e repetições são mantidas.</div>
+        <h3>Trocar "${esc(exercicio.nome)}" por:</h3>
+        <div class="muted">Exercícios do grupo ${esc(exercicio.grupo || 'sem grupo')}. Escolha o que tem na sua academia; séries, repetições e descanso são mantidos.</div>
         ${botoes}
-        <div class="row" style="margin-top:14px"><button class="ghost small" onclick="cancelarTroca()">Cancelar</button></div>
+        <div class="row" style="margin-top:14px"><button type="button" class="ghost small" data-acao="cancelar-troca">Cancelar</button></div>
       </div>`;
   }
 
-  function iniciarTroca(treinoId, exId) {
-    trocando = { treinoId, exId };
-    renderDetalhe();
-    document.getElementById('painel-troca')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  function cardExercicio(exercicio) {
+    const marc = estado.marcadas[exercicio.id] || [];
+    const feitas = feitasDoExercicio(exercicio);
+    const sets = Array.from({ length: exercicio.series }, (_, i) =>
+      `<button type="button" class="set ${marc[i] ? 'on' : ''}" data-set="${esc(exercicio.id)}" data-idx="${i}" data-descanso="${exercicio.descanso}" aria-pressed="${marc[i] ? 'true' : 'false'}">S${i + 1}</button>`
+    ).join('');
+    const desc = exercicio.descanso === 0 ? 'Bi-set (0s)' : `${exercicio.descanso}s`;
+    const carga = estado.cargas[exercicio.id] == null ? '' : estado.cargas[exercicio.id];
+    return `
+      <article class="card ex ${feitas >= exercicio.series ? 'concluido' : ''}">
+        <div class="row small-gap">
+          <span class="badge">${esc(exercicio.equip)}</span>
+          <span class="muted">${exercicio.series} séries · ${esc(exercicio.reps)} reps · Descanso: ${desc}</span>
+        </div>
+        <h3>${esc(exercicio.nome)}</h3>
+        <div class="row acoes">
+          <button type="button" class="ghost small" data-acao="movimento" data-ex="${esc(exercicio.id)}">▶ Ver movimento</button>
+          <button type="button" class="ghost small" data-acao="trocar" data-ex="${esc(exercicio.id)}">Trocar</button>
+          <button type="button" class="ghost small" data-acao="sem-equip" data-grupo="${esc(exercicio.grupo)}">Sem equipamento?</button>
+          <button type="button" class="danger small" data-acao="remover-ex" data-ex="${esc(exercicio.id)}">${rotulo('remover-ex:' + exercicio.id, 'Remover')}</button>
+        </div>
+        <div class="row between sets-row">
+          <div class="sets">${sets}</div>
+          <label class="carga"><span>Carga (kg)</span>
+            <input type="number" min="0" step="0.5" inputmode="decimal" placeholder="0" data-carga="${esc(exercicio.id)}" value="${esc(carga)}">
+          </label>
+        </div>
+      </article>`;
   }
 
-  function cancelarTroca() {
-    trocando = null;
-    renderDetalhe();
+  function cardSemEquipamento() {
+    const lista = (SEM_EQUIPAMENTO[grupoSugestao] || []).map(([nome, sug]) =>
+      `<div class="sugestao"><div class="alvo">${esc(nome)}</div><span class="sug">${esc(sug)}</span></div>`).join('');
+    return `
+      <div class="card" id="sem-equip">
+        <h3>Sugestões sem equipamento</h3>
+        <select data-sel="grupo" aria-label="Grupo muscular">
+          ${GRUPOS.map(g => `<option ${g === grupoSugestao ? 'selected' : ''}>${g}</option>`).join('')}
+        </select>
+        <div style="margin-top:6px">${lista}</div>
+      </div>`;
   }
 
-  function aplicarTroca(i) {
-    if (!trocando) return;
-    const t = treinos.find(x => x.id === trocando.treinoId);
-    const ex = t && t.exercicios.find(x => x.id === trocando.exId);
-    if (!ex) { trocando = null; renderDetalhe(); return; }
-    const alternativas = alternativasDe(ex);
-    if (alternativas[i] == null) return;
-    ex.nome = alternativas[i];
-    trocando = null;
-    salvar(treinos);
-    renderDetalhe();
+  function renderTreino() {
+    const alvo = document.getElementById('treino');
+    const t = treinoAtivo();
+    if (!t) {
+      alvo.innerHTML = '<div class="card vazio">Nenhum treino. Crie um abaixo ou restaure o plano padrão.</div>';
+      return;
+    }
+    let total = 0, feitas = 0;
+    t.exercicios.forEach(exercicio => { total += exercicio.series; feitas += feitasDoExercicio(exercicio); });
+
+    alvo.innerHTML = `
+      <div class="card cabeca">
+        <div class="row between">
+          <div><h2>${esc(t.nome)}</h2>${t.subtitulo ? `<div class="muted">${esc(t.subtitulo)}</div>` : ''}</div>
+          <div class="progresso"><span class="muted">Progresso</span><div><b>${feitas} / ${total} séries</b></div></div>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <button type="button" class="ghost small" data-acao="limpar">Limpar dia</button>
+          <button type="button" class="danger small" data-acao="excluir-treino">${rotulo('excluir-treino', 'Excluir treino')}</button>
+        </div>
+      </div>
+      ${painelTroca(t)}
+      ${t.exercicios.length ? t.exercicios.map(cardExercicio).join('') : '<div class="card vazio">Nenhum exercício ainda. Adicione abaixo.</div>'}
+      <form id="form-ex" class="card form-ex">
+        <h3>Adicionar exercício</h3>
+        <div class="grid-form">
+          <input type="text" name="nome" placeholder="Nome (ex: Supino)" required aria-label="Nome do exercício">
+          <select name="grupo" aria-label="Grupo muscular">${GRUPOS.map(g => `<option>${g}</option>`).join('')}</select>
+          <input type="text" name="equip" placeholder="Equipamento" value="Máquina" aria-label="Equipamento">
+          <input type="number" name="series" min="1" value="3" aria-label="Séries">
+          <input type="text" name="reps" value="10-12" aria-label="Repetições">
+          <input type="number" name="descanso" min="0" value="90" aria-label="Descanso em segundos">
+        </div>
+        <button type="submit">Adicionar exercício</button>
+      </form>
+      ${cardSemEquipamento()}`;
+  }
+
+  function renderGeral() {
+    document.getElementById('geral').innerHTML = `
+      <div class="card">
+        <h3>Novo treino</h3>
+        <form id="form-treino" class="row">
+          <input type="text" id="novo-treino" placeholder="Nome (ex: Treino extra)" required aria-label="Nome do novo treino">
+          <button type="submit">Criar</button>
+        </form>
+        <div class="row between" style="margin-top:14px">
+          <span class="muted">Voltar ao plano de 5 dias original</span>
+          <button type="button" class="danger small" data-acao="restaurar-plano">${rotulo('restaurar-plano', 'Restaurar plano')}</button>
+        </div>
+      </div>`;
   }
 
   // ---------- Ações ----------
-  function abrir(id) { treinoAberto = id; render(); window.scrollTo(0, 0); }
-  function fechar() { treinoAberto = null; trocando = null; render(); }
-
-  // Botão "Sem equipamento?" de um exercício: mostra as alternativas do grupo dele
-  function verSugestoes(grupo) {
-    if (GRUPOS.includes(grupo)) grupoSugestao = grupo;
-    renderDetalhe();
-    document.getElementById('sugestoes')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  function marcarSerie(exId, idx, descanso) {
+    const arr = (estado.marcadas[exId] || []).slice();
+    arr[idx] = !arr[idx];
+    estado.marcadas[exId] = arr;
+    salvarEstado();
+    renderTreino();
+    if (arr[idx] && descanso > 0) iniciarTimer(descanso);
   }
 
-  function excluirTreino(id) {
-    const t = treinos.find(x => x.id === id);
-    if (!t || !confirm(`Excluir o treino "${t.nome}"?`)) return;
-    treinos = treinos.filter(x => x.id !== id);
-    salvar(treinos);
+  function abrirMovimento(exercicio) {
+    const spec = exercicio.motion && MOVIMENTOS[exercicio.motion];
+    document.getElementById('modal-equip').textContent = exercicio.equip;
+    document.getElementById('modal-titulo').textContent = exercicio.nome;
+    document.getElementById('modal-setup').textContent = exercicio.setup || 'Sem orientação cadastrada para este exercício.';
+    document.getElementById('modal-cue').textContent = exercicio.cue || 'Use a amplitude completa, sem roubar com o tronco.';
+    document.getElementById('modal-video').href = exercicio.video || linkBusca(exercicio.nome);
+    document.getElementById('modal-svg').innerHTML = spec
+      ? `<svg viewBox="0 0 200 120" role="img" aria-label="${esc(spec.label)}">${spec.path}</svg><p class="muted">${esc(spec.label)}</p>`
+      : '<p class="muted">Sem animação para este exercício. Use o vídeo.</p>';
+    document.getElementById('modal').hidden = false;
+  }
+  function fecharMovimento() { document.getElementById('modal').hidden = true; }
+
+  function aplicarTroca(i) {
+    if (!trocando) return;
+    const t = estado.treinos.find(x => x.id === trocando.treinoId);
+    const exercicio = t && t.exercicios.find(x => x.id === trocando.exId);
+    if (!exercicio) { trocando = null; render(); return; }
+    const c = alternativasDe(exercicio)[i];
+    if (!c) return;
+    exercicio.nome = c[0];
+    exercicio.equip = c[1];
+    exercicio.motion = c[2];
+    exercicio.setup = '';
+    exercicio.cue = '';
+    exercicio.video = linkBusca(c[0]);
+    trocando = null;
+    salvarEstado();
     render();
   }
 
-  function excluirExercicio(treinoId, exId) {
-    const t = treinos.find(x => x.id === treinoId);
+  // Cliques nos treinos (séries, ações dos exercícios, troca, etc.)
+  document.getElementById('treino').addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    if (b.dataset.set) { marcarSerie(b.dataset.set, Number(b.dataset.idx), Number(b.dataset.descanso)); return; }
+    if (b.dataset.trocarPara != null) { aplicarTroca(Number(b.dataset.trocarPara)); return; }
+
+    const t = treinoAtivo();
     if (!t) return;
-    t.exercicios = t.exercicios.filter(e => e.id !== exId);
-    salvar(treinos);
-    render();
-  }
+    const exercicio = t.exercicios.find(x => x.id === b.dataset.ex);
 
-  document.getElementById('form-treino').addEventListener('submit', e => {
+    switch (b.dataset.acao) {
+      case 'limpar':
+        t.exercicios.forEach(x => { delete estado.marcadas[x.id]; });
+        salvarEstado(); render();
+        break;
+      case 'excluir-treino':
+        confirmar('excluir-treino', () => {
+          estado.treinos = estado.treinos.filter(x => x.id !== t.id);
+          estado.ativo = estado.treinos[0] ? estado.treinos[0].id : null;
+          trocando = null;
+          salvarEstado(); render();
+        });
+        break;
+      case 'movimento':
+        if (exercicio) abrirMovimento(exercicio);
+        break;
+      case 'trocar':
+        if (exercicio) {
+          trocando = { treinoId: t.id, exId: exercicio.id };
+          renderTreino();
+          document.getElementById('painel-troca')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        break;
+      case 'cancelar-troca':
+        trocando = null; renderTreino();
+        break;
+      case 'sem-equip':
+        if (GRUPOS.includes(b.dataset.grupo)) grupoSugestao = b.dataset.grupo;
+        renderTreino();
+        document.getElementById('sem-equip')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        break;
+      case 'remover-ex':
+        if (exercicio) {
+          confirmar('remover-ex:' + exercicio.id, () => {
+            t.exercicios = t.exercicios.filter(x => x.id !== exercicio.id);
+            delete estado.marcadas[exercicio.id];
+            delete estado.cargas[exercicio.id];
+            salvarEstado(); render();
+          });
+        }
+        break;
+    }
+  });
+
+  document.getElementById('treino').addEventListener('input', e => {
+    const campo = e.target.closest('[data-carga]');
+    if (!campo) return;
+    estado.cargas[campo.dataset.carga] = campo.value;
+    salvarEstado();
+  });
+
+  document.getElementById('treino').addEventListener('change', e => {
+    const sel = e.target.closest('[data-sel="grupo"]');
+    if (!sel) return;
+    grupoSugestao = sel.value;
+    document.getElementById('sem-equip').outerHTML = cardSemEquipamento();
+  });
+
+  document.getElementById('treino').addEventListener('submit', e => {
+    if (e.target.id !== 'form-ex') return;
     e.preventDefault();
-    const input = document.getElementById('novo-treino');
-    const nome = input.value.trim();
+    const t = treinoAtivo();
+    if (!t) return;
+    const f = e.target;
+    const nome = f.nome.value.trim();
     if (!nome) return;
-    treinos.push({ id: novoId(), nome, exercicios: [] });
-    salvar(treinos);
-    input.value = '';
-    render();
+    t.exercicios.push({
+      id: novoId(), nome, grupo: f.grupo.value,
+      equip: f.equip.value.trim() || 'Máquina',
+      series: Math.max(1, Number(f.series.value) || 1),
+      reps: f.reps.value.trim() || '10-12',
+      descanso: Math.max(0, Number(f.descanso.value) || 0),
+      motion: null, setup: '', cue: '', video: linkBusca(nome)
+    });
+    salvarEstado(); render();
   });
 
-
-  // ---------- Plano de 5 dias: peito e pernas (máquinas e exercícios apoiados) ----------
-  // Cada exercício: [nome, grupo, séries, repetições]
-  const PLANO = [
-    { nome: 'Segunda · Peito', exercicios: [
-      ['Supino reto na máquina ou com barra', 'Peito', 4, '8–10'],
-      ['Supino inclinado com halteres', 'Peito', 3, '10–12'],
-      ['Crucifixo na máquina (peck deck)', 'Peito', 3, '12–15']
-    ]},
-    { nome: 'Terça · Pernas', exercicios: [
-      ['Leg press 45°', 'Pernas', 4, '10–12'],
-      ['Cadeira extensora', 'Pernas', 3, '12–15'],
-      ['Cadeira flexora', 'Pernas', 3, '10–12'],
-      ['Panturrilha sentado', 'Pernas', 3, '12–15']
-    ]},
-    { nome: 'Quarta · Peito', exercicios: [
-      ['Supino inclinado com barra', 'Peito', 4, '8–10'],
-      ['Supino reto com halteres', 'Peito', 3, '10–12'],
-      ['Crucifixo inclinado com halteres', 'Peito', 3, '12–15']
-    ]},
-    { nome: 'Quinta · Pernas', exercicios: [
-      ['Agachamento no Smith (apoiado)', 'Pernas', 4, '8–10'],
-      ['Stiff com halteres', 'Pernas', 3, '10–12'],
-      ['Cadeira flexora', 'Pernas', 3, '12–15'],
-      ['Cadeira abdutora', 'Pernas', 3, '15']
-    ]},
-    { nome: 'Sexta · Peito e pernas', exercicios: [
-      ['Supino na máquina', 'Peito', 3, '10–12'],
-      ['Crossover (polia)', 'Peito', 3, '12–15'],
-      ['Leg press com pés altos', 'Pernas', 3, '12–15'],
-      ['Cadeira extensora', 'Pernas', 2, '15–20']
-    ]}
-  ];
-
-  document.getElementById('btn-plano').addEventListener('click', () => {
-    if (!confirm('Adicionar os 5 treinos do plano à sua lista?')) return;
-    PLANO.forEach(t => treinos.push({
-      id: novoId(),
-      nome: t.nome,
-      exercicios: t.exercicios.map(([nome, grupo, series, repeticoes]) => ({
-        id: novoId(), nome, grupo, series, repeticoes, carga: ''
-      }))
-    }));
-    salvar(treinos);
-    render();
+  document.getElementById('abas').addEventListener('click', e => {
+    const b = e.target.closest('[data-aba]');
+    if (!b) return;
+    estado.ativo = b.dataset.aba;
+    trocando = null;
+    salvarEstado(); render();
   });
 
+  document.getElementById('geral').addEventListener('submit', e => {
+    if (e.target.id !== 'form-treino') return;
+    e.preventDefault();
+    const campo = document.getElementById('novo-treino');
+    const nome = campo.value.trim();
+    if (!nome) return;
+    const novo = { id: novoId(), nome, subtitulo: 'Treino personalizado', exercicios: [] };
+    estado.treinos.push(novo);
+    estado.ativo = novo.id;
+    salvarEstado(); render();
+  });
+
+  document.getElementById('geral').addEventListener('click', e => {
+    const b = e.target.closest('button[data-acao="restaurar-plano"]');
+    if (!b) return;
+    confirmar('restaurar-plano', () => {
+      const personalizados = estado.treinos.filter(t => !PLANO_PADRAO.some(p => p.id === t.id));
+      estado.treinos = JSON.parse(JSON.stringify(PLANO_PADRAO)).concat(personalizados);
+      estado.ativo = 'd1';
+      trocando = null;
+      salvarEstado(); render();
+    });
+  });
+
+  // Modal de movimento
+  document.getElementById('modal-fechar').addEventListener('click', fecharMovimento);
+  document.getElementById('modal-ok').addEventListener('click', fecharMovimento);
+  document.getElementById('modal').addEventListener('click', e => {
+    if (e.target.id === 'modal') fecharMovimento();
+  });
+
+  // ---------- Início ----------
+  estado = carregarEstado();
+  if (!treinoAtivo()) estado.ativo = estado.treinos[0] ? estado.treinos[0].id : null;
+  marcarPresets();
+  desenharTimer();
   render();
 </script>
 </body>
