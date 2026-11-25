@@ -1,8 +1,8 @@
 // Detecta caminhos do tipo "EMPRESA - 147/ARQUIVO DIGITAL/..." e adiciona botão para abrir no Explorer.
 const MARCADOR = /ARQUIVO DIGITAL/i;
-let base = "\\SERVIDOR\Monetize\CLIENTES";
+let base = "//SERVIDOR/Monetize/CLIENTES";
 
-chrome.storage.sync.get({ base: "\\SERVIDOR\Monetize\CLIENTES" }, (c) => { base = c.base; varrer(document.body); });
+chrome.storage.sync.get({ base: "//SERVIDOR/Monetize/CLIENTES" }, (c) => { base = c.base; varrer(document.body); });
 chrome.storage.onChanged.addListener((ch) => { if (ch.base) base = ch.base.newValue || ""; });
 
 function limparCaminho(txt) {
@@ -15,7 +15,7 @@ function limparCaminho(txt) {
 
 function montarUrl(caminho) {
   let p = caminho.replace(/\\/g, "/");
-  if (base) p = base.replace(/[\\\/]+$/, "") + "/" + p;
+  if (base) p = base.replace(/[\\\/]+$/, "").replace(/\\/g, "/") + "/" + p;
   return "pamfolder://open?p=" + encodeURIComponent(p);
 }
 
