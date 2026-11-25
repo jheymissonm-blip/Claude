@@ -29,3 +29,22 @@ Antes do primeiro passo, leia a skill `anthropic-skills:chrome-browser` e carreg
 - Ritmo humano: sem laços rápidos de requisições. Em lotes, processe um item por vez e avise o total antes de começar.
 - Se o serviço bloquear a conta ou mostrar limite de tentativas, pare e informe.
 - Downloads: salve num diretório próprio e informe o caminho completo.
+
+## Serviços comuns e onde costuma travar
+
+Os endereços e telas mudam. Confira na página antes de agir e não assuma o que não viu.
+
+| Serviço | Tarefas típicas | Onde pode parar |
+|---|---|---|
+| Meu INSS | consultar benefício, extrato, agendamentos, baixar documentos | login gov.br, 2FA |
+| e-CAC / Receita Federal | situação fiscal, comprovantes, declarações, certidões | login com certificado ou gov.br nível prata/ouro, CAPTCHA |
+| Carteira de Trabalho Digital | consultar vínculos, baixar contratos | login, 2FA |
+| Emissão de certidões (federais) | gerar e baixar PDF | CAPTCHA |
+| Portais estaduais e municipais (SEFAZ, prefeitura, Detran) | consultas, guias, certidões | CAPTCHA, certificado digital |
+
+## Tipos de ação
+
+- **Consultar:** ler a página e devolver os dados em tabela curta. Não precisa de confirmação.
+- **Baixar:** clicar no download, salvar em diretório próprio e informar o caminho completo.
+- **Preencher e enviar:** preencher, mostrar o resumo do que será enviado e esperar o "pode enviar" do usuário antes do clique final.
+- **Em lote:** confirmar o total e a lista antes de começar. Um item por vez.
