@@ -39,7 +39,7 @@ function varrer(raiz) {
     if (!MARCADOR.test(n.nodeValue) || !n.nodeValue.includes("/")) continue;
     const pai = n.parentElement;
     if (!pai || pai.closest("script,style,textarea,input") || pai.dataset.pamExplorer) continue;
-    if (pai.parentElement && pai.parentElement.querySelector(":scope > [data-pam-explorer]")) continue;
+    if (pai.nextElementSibling && pai.nextElementSibling.dataset.pamExplorer) continue;
     achados.push(n);
   }
   achados.forEach((n) => {
