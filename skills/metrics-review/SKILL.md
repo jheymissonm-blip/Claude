@@ -4,385 +4,385 @@ description: "Revisa e analisa métricas de produto com análise de tendências 
 argument-hint: "<time period or metric focus>"
 ---
 
-# Metrics Review
+# Revisão de métricas
 
-> If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](../../CONNECTORS.md).
+> Se aparecerem placeholders desconhecidos ou você precisar conferir quais ferramentas estão conectadas, veja [CONNECTORS.md](../../CONNECTORS.md).
 
-Review and analyze product metrics, identify trends, and surface actionable insights.
+Revise e analise métricas de produto, identifique tendências e traga à tona insights acionáveis.
 
-## Usage
+## Uso
 
 ```
 /metrics-review $ARGUMENTS
 ```
 
-## Workflow
+## Fluxo de trabalho
 
-### 1. Gather Metrics Data
+### 1. Reúna os dados das métricas
 
-If **~~product analytics** is connected:
-- Pull key product metrics for the relevant time period
-- Get comparison data (previous period, same period last year, targets)
-- Pull segment breakdowns if available
+Se a **~~product analytics** estiver conectada:
+- Puxe as principais métricas de produto do período relevante
+- Obtenha dados de comparação (período anterior, mesmo período do ano passado, metas)
+- Puxe os detalhamentos por segmento, se disponíveis
 
-If no analytics tool is connected, ask the user to provide:
-- The metrics and their values (paste a table, screenshot, or describe)
-- Comparison data (previous period, targets)
-- Any context on recent changes (launches, incidents, seasonality)
+Se nenhuma ferramenta de analytics estiver conectada, peça ao usuário que forneça:
+- As métricas e seus valores (cole uma tabela, uma captura de tela ou descreva)
+- Dados de comparação (período anterior, metas)
+- Qualquer contexto sobre mudanças recentes (lançamentos, incidentes, sazonalidade)
 
-Ask the user:
-- What time period to review? (last week, last month, last quarter)
-- What metrics to focus on? Or should we review the full product metrics suite?
-- Are there specific targets or goals to compare against?
-- Any known events that might explain changes (launches, outages, marketing campaigns, seasonality)?
+Pergunte ao usuário:
+- Que período revisar? (última semana, último mês, último trimestre)
+- Em quais métricas focar? Ou devemos revisar o conjunto completo de métricas do produto?
+- Há metas ou objetivos específicos para comparar?
+- Algum evento conhecido que possa explicar as mudanças (lançamentos, quedas de serviço, campanhas de marketing, sazonalidade)?
 
-### 2. Organize the Metrics
+### 2. Organize as métricas
 
-Structure the review using a metrics hierarchy: North Star metric at the top, L1 health indicators (acquisition, activation, engagement, retention, revenue, satisfaction), and L2 diagnostic metrics for drill-down. See **Product Metrics Hierarchy** below for full definitions.
+Estruture a revisão usando uma hierarquia de métricas: a métrica North Star no topo, indicadores de saúde L1 (aquisição, ativação, engajamento, retenção, receita, satisfação) e métricas de diagnóstico L2 para detalhamento. Veja **Hierarquia de métricas de produto** abaixo para as definições completas.
 
-If the user has not defined their metrics hierarchy, help them identify their North Star and key L1 metrics before proceeding.
+Se o usuário não definiu sua hierarquia de métricas, ajude-o a identificar a North Star e as principais métricas L1 antes de prosseguir.
 
-### 3. Analyze Trends
+### 3. Analise as tendências
 
-For each key metric:
-- **Current value**: What is the metric today?
-- **Trend**: Up, down, or flat compared to previous period? Over what timeframe?
-- **vs Target**: How does it compare to the goal or target?
-- **Rate of change**: Is the trend accelerating or decelerating?
-- **Anomalies**: Any sudden changes, spikes, or drops?
+Para cada métrica-chave:
+- **Valor atual**: qual é a métrica hoje?
+- **Tendência**: para cima, para baixo ou estável em relação ao período anterior? Em que intervalo?
+- **vs meta**: como se compara ao objetivo ou à meta?
+- **Taxa de mudança**: a tendência está acelerando ou desacelerando?
+- **Anomalias**: alguma mudança súbita, pico ou queda?
 
-Identify correlations:
-- Do changes in one metric correlate with changes in another?
-- Are there leading indicators that predict lagging metric changes?
-- Do segment breakdowns reveal that an aggregate trend is driven by a specific cohort?
+Identifique correlações:
+- Mudanças em uma métrica se correlacionam com mudanças em outra?
+- Há indicadores antecedentes que preveem mudanças em métricas de resultado?
+- Os detalhamentos por segmento revelam que uma tendência agregada é puxada por uma coorte específica?
 
-### 4. Generate the Review
+### 4. Gere a revisão
 
-#### Summary
-2-3 sentences: overall product health, most notable changes, key callout.
+#### Resumo
+2-3 frases: saúde geral do produto, mudanças mais notáveis, destaque principal.
 
-#### Metric Scorecard
-Table format for quick scanning:
+#### Scorecard de métricas
+Formato de tabela para leitura rápida:
 
-| Metric | Current | Previous | Change | Target | Status |
-|--------|---------|----------|--------|--------|--------|
-| [Metric] | [Value] | [Value] | [+/- %] | [Target] | [On track / At risk / Miss] |
+| Métrica | Atual | Anterior | Variação | Meta | Status |
+|---------|-------|----------|----------|------|--------|
+| [Métrica] | [Valor] | [Valor] | [+/- %] | [Meta] | [No caminho / Em risco / Fora da meta] |
 
-#### Trend Analysis
-For each metric worth discussing:
-- What happened and how significant is the change
-- Why it likely happened (attribution based on known events, correlated metrics, segment analysis)
-- Whether this is a one-time event or a sustained trend
+#### Análise de tendências
+Para cada métrica que valha discutir:
+- O que aconteceu e quão significativa é a mudança
+- Por que provavelmente aconteceu (atribuição com base em eventos conhecidos, métricas correlacionadas, análise de segmentos)
+- Se é um evento pontual ou uma tendência sustentada
 
-#### Bright Spots
-What is going well:
-- Metrics beating targets
-- Positive trends to sustain
-- Segments or features showing strong performance
+#### Pontos positivos
+O que está indo bem:
+- Métricas superando as metas
+- Tendências positivas a sustentar
+- Segmentos ou funcionalidades com forte desempenho
 
-#### Areas of Concern
-What needs attention:
-- Metrics missing targets or trending negatively
-- Early warning signals before they become problems
-- Metrics where we lack visibility or understanding
+#### Áreas de preocupação
+O que precisa de atenção:
+- Métricas fora da meta ou com tendência negativa
+- Sinais de alerta precoce antes de virarem problemas
+- Métricas sobre as quais falta visibilidade ou entendimento
 
-#### Recommended Actions
-Specific next steps based on the analysis:
-- Investigations to run (dig deeper into a concerning trend)
-- Experiments to launch (test hypotheses about what could improve a metric)
-- Investments to make (double down on what is working)
-- Alerts to set (monitor a metric more closely)
+#### Ações recomendadas
+Próximos passos específicos com base na análise:
+- Investigações a conduzir (aprofundar uma tendência preocupante)
+- Experimentos a lançar (testar hipóteses sobre o que poderia melhorar uma métrica)
+- Investimentos a fazer (dobrar a aposta no que funciona)
+- Alertas a configurar (monitorar uma métrica mais de perto)
 
-#### Context and Caveats
-- Known data quality issues
-- Events that affect comparability (outages, holidays, launches)
-- Metrics we should be tracking but are not yet
+#### Contexto e ressalvas
+- Problemas conhecidos de qualidade de dados
+- Eventos que afetam a comparabilidade (quedas de serviço, feriados, lançamentos)
+- Métricas que deveríamos acompanhar mas ainda não acompanhamos
 
-### 5. Follow Up
+### 5. Acompanhamento
 
-After generating the review:
-- Ask if any metric needs deeper investigation
-- Offer to create a dashboard spec for ongoing monitoring
-- Offer to draft experiment proposals for areas of concern
-- Offer to set up a metrics review template for recurring use
+Depois de gerar a revisão:
+- Pergunte se alguma métrica precisa de investigação mais profunda
+- Ofereça criar uma especificação de painel para monitoramento contínuo
+- Ofereça redigir propostas de experimento para as áreas de preocupação
+- Ofereça montar um modelo de revisão de métricas para uso recorrente
 
-## Product Metrics Hierarchy
+## Hierarquia de métricas de produto
 
-### North Star Metric
-The single metric that best captures the core value your product delivers to users. It should be:
+### Métrica North Star
+A única métrica que melhor captura o valor central que o seu produto entrega aos usuários. Ela deve ser:
 
-- **Value-aligned**: Moves when users get more value from the product
-- **Leading**: Predicts long-term business success (revenue, retention)
-- **Actionable**: The product team can influence it through their work
-- **Understandable**: Everyone in the company can understand what it means and why it matters
+- **Alinhada ao valor**: se move quando os usuários obtêm mais valor do produto
+- **Antecedente**: prevê o sucesso de negócio a longo prazo (receita, retenção)
+- **Acionável**: o time de produto consegue influenciá-la com o seu trabalho
+- **Compreensível**: todos na empresa entendem o que significa e por que importa
 
-**Examples by product type**:
-- Collaboration tool: Weekly active teams with 3+ members contributing
-- Marketplace: Weekly transactions completed
-- SaaS platform: Weekly active users completing core workflow
-- Content platform: Weekly engaged reading/viewing time
-- Developer tool: Weekly deployments using the tool
+**Exemplos por tipo de produto**:
+- Ferramenta de colaboração: equipes ativas por semana com 3+ membros contribuindo
+- Marketplace: transações concluídas por semana
+- Plataforma SaaS: usuários ativos por semana que concluem o fluxo central
+- Plataforma de conteúdo: tempo semanal de leitura/visualização engajada
+- Ferramenta para desenvolvedores: deploys semanais usando a ferramenta
 
-### L1 Metrics (Health Indicators)
-The 5-7 metrics that together paint a complete picture of product health. These map to the key stages of the user lifecycle:
+### Métricas L1 (indicadores de saúde)
+As 5-7 métricas que juntas pintam um quadro completo da saúde do produto. Correspondem às etapas-chave do ciclo de vida do usuário:
 
-**Acquisition**: Are new users finding the product?
-- New signups or trial starts (volume and trend)
-- Signup conversion rate (visitors to signups)
-- Channel mix (where are new users coming from)
-- Cost per acquisition (for paid channels)
+**Aquisição**: novos usuários estão encontrando o produto?
+- Novos cadastros ou inícios de teste (volume e tendência)
+- Taxa de conversão de cadastro (visitantes para cadastros)
+- Mix de canais (de onde vêm os novos usuários)
+- Custo por aquisição (para canais pagos)
 
-**Activation**: Are new users reaching the value moment?
-- Activation rate: % of new users who complete the key action that predicts retention
-- Time to activate: how long from signup to activation
-- Setup completion rate: % who complete onboarding steps
-- First value moment: when users first experience the core product value
+**Ativação**: novos usuários estão chegando ao momento de valor?
+- Taxa de ativação: % dos novos usuários que completam a ação-chave que prevê a retenção
+- Tempo até a ativação: quanto tempo do cadastro à ativação
+- Taxa de conclusão da configuração: % que completam os passos de onboarding
+- Primeiro momento de valor: quando os usuários experimentam pela primeira vez o valor central do produto
 
-**Engagement**: Are active users getting value?
-- DAU / WAU / MAU: active users at different timeframes
-- DAU/MAU ratio (stickiness): what fraction of monthly users come back daily
-- Core action frequency: how often users do the thing that matters most
-- Session depth: how much users do per session
-- Feature adoption: % of users using key features
+**Engajamento**: usuários ativos estão obtendo valor?
+- DAU / WAU / MAU: usuários ativos em diferentes intervalos
+- Razão DAU/MAU (aderência): que fração dos usuários mensais volta diariamente
+- Frequência da ação central: com que frequência os usuários fazem o que mais importa
+- Profundidade da sessão: quanto os usuários fazem por sessão
+- Adoção de funcionalidades: % de usuários usando as funcionalidades-chave
 
-**Retention**: Are users coming back?
-- D1, D7, D30 retention: % of users who return after 1 day, 7 days, 30 days
-- Cohort retention curves: how retention evolves for each signup cohort
-- Churn rate: % of users or revenue lost per period
-- Resurrection rate: % of churned users who come back
+**Retenção**: os usuários estão voltando?
+- Retenção D1, D7, D30: % de usuários que voltam após 1 dia, 7 dias, 30 dias
+- Curvas de retenção por coorte: como a retenção evolui para cada coorte de cadastro
+- Taxa de churn: % de usuários ou receita perdidos por período
+- Taxa de ressurreição: % de usuários que cancelaram e voltam
 
-**Monetization**: Is value translating to revenue?
-- Conversion rate: free to paid (for freemium)
-- MRR / ARR: monthly or annual recurring revenue
-- ARPU / ARPA: average revenue per user or account
-- Expansion revenue: revenue growth from existing customers
-- Net revenue retention: revenue retention including expansion and contraction
+**Monetização**: o valor está se traduzindo em receita?
+- Taxa de conversão: gratuito para pago (em freemium)
+- MRR / ARR: receita recorrente mensal ou anual
+- ARPU / ARPA: receita média por usuário ou conta
+- Receita de expansão: crescimento de receita a partir de clientes existentes
+- Retenção líquida de receita: retenção de receita incluindo expansão e contração
 
-**Satisfaction**: How do users feel about the product?
+**Satisfação**: o que os usuários sentem pelo produto?
 - NPS: Net Promoter Score
 - CSAT: Customer Satisfaction Score
-- Support ticket volume and resolution time
-- App store ratings and review sentiment
+- Volume de chamados de suporte e tempo de resolução
+- Notas em lojas de apps e sentimento das avaliações
 
-### L2 Metrics (Diagnostic)
-Detailed metrics used to investigate changes in L1 metrics:
+### Métricas L2 (diagnóstico)
+Métricas detalhadas usadas para investigar mudanças nas métricas L1:
 
-- Funnel conversion at each step
-- Feature-level usage and adoption
-- Segment-specific breakdowns (by plan, company size, geography, user role)
-- Performance metrics (page load time, error rate, API latency)
-- Content-specific engagement (which features, pages, or content types drive engagement)
+- Conversão do funil em cada etapa
+- Uso e adoção por funcionalidade
+- Detalhamentos por segmento (por plano, porte da empresa, geografia, função do usuário)
+- Métricas de desempenho (tempo de carregamento de página, taxa de erro, latência de API)
+- Engajamento específico de conteúdo (quais funcionalidades, páginas ou tipos de conteúdo impulsionam o engajamento)
 
-## Common Product Metrics
+## Métricas de produto comuns
 
 ### DAU / WAU / MAU
-**What they measure**: Unique users who perform a qualifying action in a day, week, or month.
+**O que medem**: usuários únicos que realizam uma ação qualificadora em um dia, semana ou mês.
 
-**Key decisions**:
-- What counts as "active"? A login? A page view? A core action? Define this carefully — different definitions tell different stories.
-- Which timeframe matters most? DAU for daily-use products (messaging, email). WAU for weekly-use products (project management). MAU for less frequent products (tax software, travel booking).
+**Decisões-chave**:
+- O que conta como "ativo"? Um login? Uma visualização de página? Uma ação central? Defina com cuidado: definições diferentes contam histórias diferentes.
+- Qual intervalo importa mais? DAU para produtos de uso diário (mensagens, e-mail). WAU para produtos de uso semanal (gestão de projetos). MAU para produtos menos frequentes (software de imposto, reserva de viagens).
 
-**How to use them**:
-- DAU/MAU ratio (stickiness): values above 0.5 indicate a daily habit. Below 0.2 suggests infrequent usage.
-- Trend matters more than absolute number. Is active usage growing, flat, or declining?
-- Segment by user type. Power users and casual users behave very differently.
+**Como usá-las**:
+- Razão DAU/MAU (aderência): valores acima de 0,5 indicam um hábito diário. Abaixo de 0,2 sugere uso pouco frequente.
+- A tendência importa mais que o número absoluto. O uso ativo está crescendo, estável ou em queda?
+- Segmente por tipo de usuário. Usuários avançados e casuais se comportam de forma muito diferente.
 
-### Retention
-**What it measures**: Of users who started in period X, what % are still active in period Y?
+### Retenção
+**O que mede**: dos usuários que começaram no período X, que % ainda está ativo no período Y?
 
-**Common retention timeframes**:
-- D1 (next day): Was the first experience good enough to come back?
-- D7 (one week): Did the user establish a habit?
-- D30 (one month): Is the user retained long-term?
-- D90 (three months): Is this a durable user?
+**Intervalos comuns de retenção**:
+- D1 (dia seguinte): a primeira experiência foi boa o bastante para voltar?
+- D7 (uma semana): o usuário estabeleceu um hábito?
+- D30 (um mês): o usuário está retido a longo prazo?
+- D90 (três meses): este é um usuário duradouro?
 
-**How to use retention**:
-- Plot retention curves by cohort. Look for: initial drop-off (activation problem), steady decline (engagement problem), or flattening (good — you have a stable retained base).
-- Compare cohorts over time. Are newer cohorts retaining better than older ones? That means product improvements are working.
-- Segment retention by activation behavior. Users who completed onboarding vs those who did not. Users who used feature X vs those who did not.
+**Como usar a retenção**:
+- Trace curvas de retenção por coorte. Procure: queda inicial (problema de ativação), declínio constante (problema de engajamento) ou estabilização (bom: você tem uma base retida estável).
+- Compare coortes ao longo do tempo. As coortes mais novas estão retendo melhor que as antigas? Isso significa que as melhorias de produto estão funcionando.
+- Segmente a retenção pelo comportamento de ativação. Usuários que concluíram o onboarding versus os que não concluíram. Usuários que usaram a funcionalidade X versus os que não usaram.
 
-### Conversion
-**What it measures**: % of users who move from one stage to the next.
+### Conversão
+**O que mede**: % de usuários que passam de uma etapa para a seguinte.
 
-**Common conversion funnels**:
-- Visitor to signup
-- Signup to activation (key value moment)
-- Free to paid (trial conversion)
-- Trial to paid subscription
-- Monthly to annual plan
+**Funis de conversão comuns**:
+- Visitante para cadastro
+- Cadastro para ativação (momento-chave de valor)
+- Gratuito para pago (conversão de teste)
+- Teste para assinatura paga
+- Plano mensal para anual
 
-**How to use conversion**:
-- Map the full funnel and measure conversion at each step
-- Identify the biggest drop-off points — these are your highest-leverage improvement opportunities
-- Segment conversion by source, plan, user type. Different segments convert very differently.
-- Track conversion over time. Is it improving as you iterate on the experience?
+**Como usar a conversão**:
+- Mapeie o funil completo e meça a conversão em cada etapa
+- Identifique os maiores pontos de queda: são as suas oportunidades de melhoria de maior alavancagem
+- Segmente a conversão por origem, plano, tipo de usuário. Segmentos diferentes convertem de forma muito diferente.
+- Acompanhe a conversão ao longo do tempo. Está melhorando conforme você itera na experiência?
 
-### Activation
-**What it measures**: % of new users who reach the moment where they first experience the product's core value.
+### Ativação
+**O que mede**: % dos novos usuários que chegam ao momento em que experimentam pela primeira vez o valor central do produto.
 
-**Defining activation**:
-- Look at retained users vs churned users. What actions did retained users take that churned users did not?
-- The activation event should be strongly predictive of long-term retention
-- It should be achievable within the first session or first few days
-- Examples: created first project, invited a teammate, completed first workflow, connected an integration
+**Definindo a ativação**:
+- Compare usuários retidos com usuários que cancelaram. Que ações os retidos fizeram e os que cancelaram não?
+- O evento de ativação deve ser um forte preditor da retenção a longo prazo
+- Deve ser alcançável na primeira sessão ou nos primeiros dias
+- Exemplos: criou o primeiro projeto, convidou um colega, concluiu o primeiro fluxo, conectou uma integração
 
-**How to use activation**:
-- Track activation rate for every signup cohort
-- Measure time to activate — faster is almost always better
-- Build onboarding flows that guide users to the activation moment
-- A/B test activation flows and measure impact on retention, not just activation rate
+**Como usar a ativação**:
+- Acompanhe a taxa de ativação de toda coorte de cadastro
+- Meça o tempo até a ativação: mais rápido é quase sempre melhor
+- Construa fluxos de onboarding que guiem os usuários até o momento de ativação
+- Faça teste A/B dos fluxos de ativação e meça o impacto na retenção, não só na taxa de ativação
 
-## Goal Setting Frameworks
+## Frameworks de definição de metas
 
-### OKRs (Objectives and Key Results)
+### OKRs (Objetivos e Resultados-Chave)
 
-**Objectives**: Qualitative, aspirational goals that describe what you want to achieve.
-- Inspiring and memorable
-- Time-bound (quarterly or annually)
-- Directional, not metric-specific
+**Objetivos**: metas qualitativas e aspiracionais que descrevem o que você quer alcançar.
+- Inspiradores e memoráveis
+- Com prazo (trimestral ou anual)
+- Direcionais, não específicos de métrica
 
-**Key Results**: Quantitative measures that tell you if you achieved the objective.
-- Specific and measurable
-- Time-bound with a clear target
-- Outcome-based, not output-based
-- 2-4 Key Results per Objective
+**Resultados-Chave**: medidas quantitativas que dizem se você alcançou o objetivo.
+- Específicos e mensuráveis
+- Com prazo e meta clara
+- Baseados em resultado, não em entrega
+- 2-4 Resultados-Chave por Objetivo
 
-**Example**:
+**Exemplo**:
 ```
-Objective: Make our product indispensable for daily workflows
+Objetivo: Tornar nosso produto indispensável nos fluxos de trabalho diários
 
-Key Results:
-- Increase DAU/MAU ratio from 0.35 to 0.50
-- Increase D30 retention for new users from 40% to 55%
-- 3 core workflows with >80% task completion rate
+Resultados-Chave:
+- Aumentar a razão DAU/MAU de 0,35 para 0,50
+- Aumentar a retenção D30 de novos usuários de 40% para 55%
+- 3 fluxos centrais com taxa de conclusão de tarefa >80%
 ```
 
-### OKR Best Practices
-- Set OKRs that are ambitious but achievable. 70% completion is the target for stretch OKRs.
-- Key Results should measure outcomes (user behavior, business results), not outputs (features shipped, tasks completed).
-- Do not have too many OKRs. 2-3 objectives with 2-4 KRs each is plenty.
-- OKRs should be uncomfortable. If you are confident you will hit all of them, they are not ambitious enough.
-- Review OKRs at mid-period. Adjust effort allocation if some KRs are clearly off track.
-- Grade OKRs honestly at end of period. 0.0-0.3 = missed, 0.4-0.6 = progress, 0.7-1.0 = achieved.
+### Boas práticas de OKR
+- Defina OKRs ambiciosos, mas alcançáveis. 70% de conclusão é a meta para OKRs ambiciosos.
+- Os Resultados-Chave devem medir resultados (comportamento do usuário, resultados de negócio), não entregas (funcionalidades lançadas, tarefas concluídas).
+- Não tenha OKRs demais. 2-3 objetivos com 2-4 KRs cada já é bastante.
+- OKRs devem ser desconfortáveis. Se você tem certeza de que vai atingir todos, não são ambiciosos o bastante.
+- Revise os OKRs no meio do período. Ajuste a alocação de esforço se alguns KRs estiverem claramente fora do rumo.
+- Avalie os OKRs com honestidade no fim do período. 0,0-0,3 = não atingido, 0,4-0,6 = progresso, 0,7-1,0 = atingido.
 
-### Setting Metric Targets
-- **Baseline**: What is the current value? You need a reliable baseline before setting a target.
-- **Benchmark**: What do comparable products achieve? Industry benchmarks provide context.
-- **Trajectory**: What is the current trend? If the metric is already improving at 5% per month, a 6% target is not ambitious.
-- **Effort**: How much investment are you putting behind this? Bigger bets warrant more ambitious targets.
-- **Confidence**: How confident are you in hitting the target? Set a "commit" (high confidence) and a "stretch" (ambitious).
+### Definindo metas de métricas
+- **Linha de base**: qual é o valor atual? Você precisa de uma linha de base confiável antes de definir uma meta.
+- **Referência**: o que produtos comparáveis alcançam? As referências do setor dão contexto.
+- **Trajetória**: qual é a tendência atual? Se a métrica já melhora 5% ao mês, uma meta de 6% não é ambiciosa.
+- **Esforço**: quanto investimento você está colocando nisso? Apostas maiores justificam metas mais ambiciosas.
+- **Confiança**: quão confiante você está de atingir a meta? Defina um "compromisso" (alta confiança) e uma meta "ambiciosa".
 
-## Metric Review Cadences
+## Cadências de revisão de métricas
 
-### Weekly Metrics Check
-**Purpose**: Catch issues quickly, monitor experiments, stay in touch with product health.
-**Duration**: 15-30 minutes.
-**Attendees**: Product manager, maybe engineering lead.
+### Checagem semanal de métricas
+**Objetivo**: pegar problemas rápido, monitorar experimentos, manter contato com a saúde do produto.
+**Duração**: 15-30 minutos.
+**Participantes**: gerente de produto, talvez o líder de engenharia.
 
-**What to review**:
-- North Star metric: current value, week-over-week change
-- Key L1 metrics: any notable movements
-- Active experiments: results and statistical significance
-- Anomalies: any unexpected spikes or drops
-- Alerts: anything that triggered a monitoring alert
+**O que revisar**:
+- Métrica North Star: valor atual, variação semana a semana
+- Principais métricas L1: qualquer movimento notável
+- Experimentos ativos: resultados e significância estatística
+- Anomalias: qualquer pico ou queda inesperado
+- Alertas: qualquer coisa que tenha disparado um alerta de monitoramento
 
-**Action**: If something looks off, investigate. Otherwise, note it and move on.
+**Ação**: se algo parecer errado, investigue. Caso contrário, anote e siga em frente.
 
-### Monthly Metrics Review
-**Purpose**: Deeper analysis of trends, progress against goals, strategic implications.
-**Duration**: 30-60 minutes.
-**Attendees**: Product team, key stakeholders.
+### Revisão mensal de métricas
+**Objetivo**: análise mais profunda de tendências, progresso em relação às metas, implicações estratégicas.
+**Duração**: 30-60 minutos.
+**Participantes**: time de produto, stakeholders-chave.
 
-**What to review**:
-- Full L1 metric scorecard with month-over-month trends
-- Progress against quarterly OKR targets
-- Cohort analysis: are newer cohorts performing better?
-- Feature adoption: how are recent launches performing?
-- Segment analysis: any divergence between user segments?
+**O que revisar**:
+- Scorecard completo das métricas L1 com tendências mês a mês
+- Progresso em relação às metas dos OKRs trimestrais
+- Análise de coortes: as coortes mais novas estão se saindo melhor?
+- Adoção de funcionalidades: como estão os lançamentos recentes?
+- Análise de segmentos: alguma divergência entre segmentos de usuários?
 
-**Action**: Identify 1-3 areas to investigate or invest in. Update priorities if metrics reveal new information.
+**Ação**: identifique 1-3 áreas para investigar ou investir. Atualize as prioridades se as métricas revelarem informação nova.
 
-### Quarterly Business Review
-**Purpose**: Strategic assessment of product performance, goal-setting for next quarter.
-**Duration**: 60-90 minutes.
-**Attendees**: Product, engineering, design, leadership.
+### Revisão trimestral de negócios
+**Objetivo**: avaliação estratégica do desempenho do produto, definição de metas para o próximo trimestre.
+**Duração**: 60-90 minutos.
+**Participantes**: produto, engenharia, design, liderança.
 
-**What to review**:
-- OKR scoring for the quarter
-- Trend analysis for all L1 metrics over the quarter
-- Year-over-year comparisons
-- Competitive context: market changes and competitor movements
-- What worked and what did not
+**O que revisar**:
+- Pontuação dos OKRs do trimestre
+- Análise de tendências de todas as métricas L1 ao longo do trimestre
+- Comparações ano contra ano
+- Contexto competitivo: mudanças de mercado e movimentos de concorrentes
+- O que funcionou e o que não funcionou
 
-**Action**: Set OKRs for next quarter. Adjust product strategy based on what the data shows.
+**Ação**: defina os OKRs do próximo trimestre. Ajuste a estratégia de produto com base no que os dados mostram.
 
-## Dashboard Design Principles
+## Princípios de design de painéis
 
-### Effective Product Dashboards
-A good dashboard answers the question "How is the product doing?" at a glance.
+### Painéis de produto eficazes
+Um bom painel responde à pergunta "Como o produto está indo?" num relance.
 
-**Principles**:
+**Princípios**:
 
-1. **Start with the question, not the data**. What decisions does this dashboard support? Design backwards from the decision.
+1. **Comece pela pergunta, não pelos dados**. Que decisões este painel apoia? Projete de trás para frente, a partir da decisão.
 
-2. **Hierarchy of information**. The most important metric should be the most visually prominent. North Star at the top, L1 metrics next, L2 metrics available on drill-down.
+2. **Hierarquia de informação**. A métrica mais importante deve ser a mais visualmente proeminente. North Star no topo, métricas L1 em seguida, métricas L2 disponíveis no detalhamento.
 
-3. **Context over numbers**. A number without context is meaningless. Always show: current value, comparison (previous period, target, benchmark), trend direction.
+3. **Contexto acima de números**. Um número sem contexto não significa nada. Mostre sempre: valor atual, comparação (período anterior, meta, referência), direção da tendência.
 
-4. **Fewer metrics, more insight**. A dashboard with 50 metrics helps no one. Focus on 5-10 that matter. Put everything else in a detailed report.
+4. **Menos métricas, mais insight**. Um painel com 50 métricas não ajuda ninguém. Foque em 5-10 que importam. Coloque todo o resto em um relatório detalhado.
 
-5. **Consistent time periods**. Use the same time period for all metrics on a dashboard. Mixing daily and monthly metrics creates confusion.
+5. **Períodos de tempo consistentes**. Use o mesmo período para todas as métricas de um painel. Misturar métricas diárias e mensais causa confusão.
 
-6. **Visual status indicators**. Use color to indicate health at a glance:
-   - Green: on track or improving
-   - Yellow: needs attention or flat
-   - Red: off track or declining
+6. **Indicadores visuais de status**. Use cor para indicar a saúde num relance:
+   - Verde: no caminho ou melhorando
+   - Amarelo: precisa de atenção ou estável
+   - Vermelho: fora do caminho ou em queda
 
-7. **Actionability**. Every metric on the dashboard should be something the team can influence. If you cannot act on it, it does not belong on the product dashboard.
+7. **Acionabilidade**. Toda métrica do painel deve ser algo que o time consegue influenciar. Se você não pode agir sobre ela, ela não pertence ao painel de produto.
 
-### Dashboard Layout
+### Layout do painel
 
-**Top row**: North Star metric with trend line and target.
+**Linha superior**: métrica North Star com linha de tendência e meta.
 
-**Second row**: L1 metrics scorecard — current value, change, target, status for each key metric.
+**Segunda linha**: scorecard das métricas L1: valor atual, variação, meta e status de cada métrica-chave.
 
-**Third row**: Key funnels or conversion metrics — visual funnel showing drop-off at each stage.
+**Terceira linha**: funis ou métricas de conversão principais: funil visual mostrando a queda em cada etapa.
 
-**Fourth row**: Recent experiments and launches — active A/B tests, recent feature launches with early metrics.
+**Quarta linha**: experimentos e lançamentos recentes: testes A/B ativos, lançamentos recentes de funcionalidades com métricas iniciais.
 
-**Bottom / drill-down**: L2 metrics, segment breakdowns, and detailed time series for investigation.
+**Parte inferior / detalhamento**: métricas L2, detalhamentos por segmento e séries temporais detalhadas para investigação.
 
-### Dashboard Anti-Patterns
-- **Vanity metrics**: Metrics that always go up but do not indicate health (total signups ever, total page views)
-- **Too many metrics**: Dashboards that require scrolling to see. If it does not fit on one screen, cut metrics.
-- **No comparison**: Raw numbers without context (current value with no previous period or target)
-- **Stale dashboards**: Metrics that have not been updated or reviewed in months
-- **Output dashboards**: Measuring team activity (tickets closed, PRs merged) instead of user and business outcomes
-- **One dashboard for all audiences**: Executives, PMs, and engineers need different views. One size does not fit all.
+### Antipadrões de painéis
+- **Métricas de vaidade**: métricas que sempre sobem mas não indicam saúde (total de cadastros de todos os tempos, total de visualizações de página)
+- **Métricas demais**: painéis que exigem rolagem para ver. Se não cabe em uma tela, corte métricas.
+- **Sem comparação**: números brutos sem contexto (valor atual sem período anterior nem meta)
+- **Painéis obsoletos**: métricas que não são atualizadas nem revisadas há meses
+- **Painéis de produção**: medem a atividade do time (tickets fechados, PRs mesclados) em vez de resultados de usuário e de negócio
+- **Um painel para todos os públicos**: executivos, PMs e engenheiros precisam de visões diferentes. Um tamanho não serve para todos.
 
-### Alerting
-Set alerts for metrics that require immediate attention:
+### Alertas
+Configure alertas para métricas que exigem atenção imediata:
 
-- **Threshold alerts**: Metric drops below or rises above a critical threshold (error rate > 1%, conversion < 5%)
-- **Trend alerts**: Metric shows sustained decline over multiple days/weeks
-- **Anomaly alerts**: Metric deviates significantly from expected range
+- **Alertas de limiar**: a métrica cai abaixo de, ou sobe acima de, um limiar crítico (taxa de erro > 1%, conversão < 5%)
+- **Alertas de tendência**: a métrica mostra queda sustentada ao longo de vários dias/semanas
+- **Alertas de anomalia**: a métrica se desvia de forma significativa da faixa esperada
 
-**Alert hygiene**:
-- Every alert should be actionable. If you cannot do anything about it, do not alert on it.
-- Review and tune alerts regularly. Too many false positives and people ignore all alerts.
-- Define an owner for each alert. Who responds when it fires?
-- Set appropriate severity levels. Not everything is P0.
+**Higiene de alertas**:
+- Todo alerta deve ser acionável. Se você não pode fazer nada a respeito, não alerte sobre isso.
+- Revise e ajuste os alertas regularmente. Falsos positivos demais e as pessoas ignoram todos os alertas.
+- Defina um responsável para cada alerta. Quem responde quando ele dispara?
+- Defina níveis de severidade apropriados. Nem tudo é P0.
 
-## Output Format
+## Formato de saída
 
-Use tables for the scorecard. Use clear status indicators. Keep the summary tight — the reader should get the essential story in 30 seconds.
+Use tabelas para o scorecard. Use indicadores de status claros. Mantenha o resumo enxuto: o leitor deve captar a história essencial em 30 segundos.
 
-## Tips
+## Dicas
 
-- Start with the "so what" — what is the most important thing in this metrics review? Lead with that.
-- Absolute numbers without context are useless. Always show comparisons (vs previous period, vs target, vs benchmark).
-- Be careful about attribution. Correlation is not causation. If a metric moved, acknowledge uncertainty about why.
-- Segment analysis often reveals that an aggregate metric masks important differences. A flat overall number might hide one segment growing and another shrinking.
-- Not all metric movements matter. Small fluctuations are noise. Focus attention on meaningful changes.
-- If a metric is missing its target, do not just report the miss — recommend what to do about it.
-- Metrics reviews should drive decisions. If the review does not lead to at least one action, it was not useful.
+- Comece pelo "e daí?": qual é a coisa mais importante desta revisão de métricas? Abra com isso.
+- Números absolutos sem contexto são inúteis. Sempre mostre comparações (vs período anterior, vs meta, vs referência).
+- Cuidado com a atribuição. Correlação não é causalidade. Se uma métrica se moveu, reconheça a incerteza sobre o motivo.
+- A análise de segmentos muitas vezes revela que uma métrica agregada mascara diferenças importantes. Um número geral estável pode esconder um segmento crescendo e outro encolhendo.
+- Nem todo movimento de métrica importa. Pequenas flutuações são ruído. Concentre a atenção em mudanças significativas.
+- Se uma métrica está fora da meta, não relate apenas o desvio: recomende o que fazer a respeito.
+- As revisões de métricas devem gerar decisões. Se a revisão não levar a pelo menos uma ação, não foi útil.
