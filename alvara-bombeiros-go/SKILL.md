@@ -24,7 +24,7 @@ Roda **na máquina do usuário** (navegador com interface). Não roda no contain
 2. `export CERT_PFX_PATH=/caminho/certificado.pfx CERT_PFX_PASSPHRASE='...'`
 3. Copiar `config/clientes.exemplo.json` para `config/clientes.json` e preencher.
 4. Opcional: `node scripts/login.js` para testar o login. Nas rotinas, o login é pedido na própria execução.
-5. `node scripts/mapear.js <url>` salva HTML + screenshot das telas do SIAPI em `saida/mapa/` para preencher `config/seletores.json`. Isso precisa ser feito acompanhando o fluxo real uma vez; os seletores do exemplo são palpites.
+5. Mais simples: abra a tela no Chrome já logado, F12, Console, cole `scripts/mapear-console.js`. Ele só lê a página (nada é enviado ou clicado), copia o JSON e baixa `siapi_mapa_<data>.json`. Repetir em cada tela (andamentos, representado, novo processo) e entregar os JSONs ao Claude para preencher `seletores.json`. Alternativa: `node scripts/mapear.js <url>` salva HTML + screenshot das telas do SIAPI em `saida/mapa/` para preencher `config/seletores.json`. Isso precisa ser feito acompanhando o fluxo real uma vez; os seletores do exemplo são palpites.
 
 ## Acompanhar (rotina)
 1. `node scripts/acompanhar.js` percorre todos os protocolos de `clientes.json`, lê `listarAndamentosWeb.jsf`, compara com `estado/<protocolo>.json` e grava `saida/novidades.json`.
