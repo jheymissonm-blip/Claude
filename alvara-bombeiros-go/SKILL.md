@@ -13,6 +13,12 @@ Roda **na máquina do usuário** (navegador com interface). Não roda no contain
 - Sessão expirou ou apareceu captcha: parar e pedir ao usuário para resolver na janela aberta.
 - Aviso por e-mail vai para o endereço do próprio usuário (campo `aviso_email` em `config/clientes.json`). Mandar a cliente só se o usuário pedir.
 
+## Contexto de uso
+- Usuário é contador, ~100 clientes, um único certificado A1 do contador com procuração dos clientes.
+- Tipo de processo tratado: Certificação da Edificação.
+- Antes de protocolar, `protocolar.js` confere `procuracao_valida_ate` e recusa cliente com procuração vencida. O processo é aberto em nome do cliente (CNPJ) pela tela de representado, que precisa ser mapeada.
+- A lista de documentos exigidos da Certificação da Edificação não está preenchida: pedir ao usuário (ou ler a página de orientações do SIAPI) antes de montar a checklist. Não inventar.
+
 ## Preparo (uma vez)
 1. `cd alvara-bombeiros-go && npm i playwright` (o navegador do Playwright já deve estar instalado).
 2. `export CERT_PFX_PATH=/caminho/certificado.pfx CERT_PFX_PASSPHRASE='...'`

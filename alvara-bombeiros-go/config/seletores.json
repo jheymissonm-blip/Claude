@@ -10,7 +10,15 @@
     "url_novo": "COLOCAR_URL_DA_TELA_DE_NOVO_PROCESSO",
     "campos": {},
     "upload": "input[type='file']",
-    "botao_enviar": "COLOCAR_SELETOR_DO_BOTAO_FINAL"
+    "botao_enviar": "COLOCAR_SELETOR_DO_BOTAO_FINAL",
+    "tipo_processo": "Certificação da Edificação",
+    "selecionar_representado": {
+      "_aviso": "Login é do contador (um certificado só). Cada processo é aberto em nome do cliente via procuração; mapear esta tela.",
+      "campo_cnpj": "COLOCAR_SELETOR",
+      "botao_buscar": "COLOCAR_SELETOR"
+    }
   },
-  "checklist": ["Projeto/PSCIP", "ART/RRT", "Documento do imóvel", "Comprovante da taxa"]
+  "checklist": [
+    "CONFERIR_COM_USUARIO: lista oficial de documentos da Certificação da Edificação (não preenchida de propósito)"
+  ]
 }

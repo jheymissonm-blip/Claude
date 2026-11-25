@@ -10,6 +10,7 @@ const { abrir, garantirSessao, ler, raiz } = require('./comum');
   const p = sel.protocolar;
   if (/COLOCAR_/.test(JSON.stringify(p))) throw new Error('Preencha protocolar.* em seletores.json (use mapear.js).');
 
+  if (c.procuracao_valida_ate && new Date(c.procuracao_valida_ate) < new Date()) throw new Error('Procuração vencida para ' + c.nome);
   const docs = fs.existsSync(c.pasta_docs) ? fs.readdirSync(c.pasta_docs).filter(f => /\.pdf$/i.test(f)) : [];
   if (!docs.length) throw new Error('Nenhum PDF em ' + c.pasta_docs);
   console.log('Checklist (conferir manualmente):', sel.checklist.join('; '));
@@ -19,6 +20,8 @@ const { abrir, garantirSessao, ler, raiz } = require('./comum');
   const page = ctx.pages()[0] || await ctx.newPage();
   await page.goto(p.url_novo, { waitUntil: 'networkidle' });
   await garantirSessao(page);
+  const r = p.selecionar_representado;
+  if (r && r.campo_cnpj) { await page.fill(r.campo_cnpj, c.cnpj); await page.click(r.botao_buscar); await page.waitForLoadState('networkidle'); }
   for (const [seletor, chave] of Object.entries(p.campos)) await page.fill(seletor, String(c[chave] ?? ''));
   await page.setInputFiles(p.upload, docs.map(f => path.join(c.pasta_docs, f)));
   const out = path.join(raiz, 'saida', 'protocolos', id); fs.mkdirSync(out, { recursive: true });

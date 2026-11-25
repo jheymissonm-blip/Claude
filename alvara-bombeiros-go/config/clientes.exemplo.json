@@ -6,7 +6,12 @@
       "nome": "Empresa Exemplo LTDA",
       "cnpj": "00.000.000/0001-00",
       "pasta_docs": "/caminho/para/docs/cliente-001",
-      "protocolos": ["2026000000"]
+      "protocolos": [
+        "2026000000"
+      ],
+      "tipo_processo": "Certificação da Edificação",
+      "procuracao_valida_ate": "2027-12-31"
     }
-  ]
+  ],
+  "certificado": "único, do contador, com procuração dos clientes"
 }
