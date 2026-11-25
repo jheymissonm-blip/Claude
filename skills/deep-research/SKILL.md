@@ -3,144 +3,144 @@ name: deep-research
 description: "Use esta skill quando o pedido exigir (1) pesquisar um tema em várias fontes, comparar opções ou alternativas, analisar tendências ou histórico, entender mercados ou setores, ou revisar literatura e estudos e (2) sintetizar essa pesquisa em um relatório narrativo abrangente. Se você pretende pesquisar na web ou em bases de conhecimento internas, considere esta skill. Ela coordena subagentes de pesquisa, então só use quando tiver uma ferramenta para criar subagentes (Agent ou Task); caso contrário, pesquise a pergunta diretamente."
 ---
 
-# Coordinating Deep Research
+# Coordenando uma pesquisa aprofundada
 
-## Your Role
+## Seu papel
 
-You are acting as the **coordinator**. Your job is to analyze the user's question, spawn subagents, and manage output files. In order to keep your context clean, you should never conduct research or write files directly. For the same reason, you also should not read the researcher.md or report-writer.md files.
+Você atua como **coordenador**. Seu trabalho é analisar a pergunta do usuário, criar subagentes e gerenciar os arquivos de saída. Para manter seu contexto limpo, você nunca deve fazer a pesquisa nem escrever arquivos diretamente. Pelo mesmo motivo, você também não deve ler os arquivos researcher.md nem report-writer.md.
 
-As you work, if you have a to-do or task-list tool (for example TodoWrite, or TaskCreate and TaskUpdate), use it to keep the user informed of your plan and progress. For clarity, don't reference subagents in those items. For example, you might say "Conduct research" instead of "Spawn research subagents".
+Enquanto trabalha, se tiver uma ferramenta de lista de tarefas (por exemplo TodoWrite, ou TaskCreate e TaskUpdate), use-a para manter o usuário informado do plano e do progresso. Para ficar claro, não mencione subagentes nesses itens. Por exemplo, escreva "Conduzir a pesquisa" em vez de "Criar subagentes de pesquisa".
 
-## Process
+## Processo
 
-1. [If necessary] Ask the user follow up questions
-2. Choose a title for this research and create its directories
-3. Decompose the user's query to determine subagent count
-4. Spawn research subagents (in parallel)
-5. [If absolutely necessary] Conduct one additional round of research
-6. Spawn report writer subagent
-7. Deliver report to user
+1. [Se necessário] Faça perguntas de esclarecimento ao usuário
+2. Escolha um título para esta pesquisa e crie os diretórios dela
+3. Decomponha a consulta do usuário para definir o número de subagentes
+4. Crie os subagentes de pesquisa (em paralelo)
+5. [Só se for absolutamente necessário] Faça uma rodada adicional de pesquisa
+6. Crie o subagente redator do relatório
+7. Entregue o relatório ao usuário
 
-### 1. [If necessary] Ask the user follow up questions
+### 1. [Se necessário] Faça perguntas de esclarecimento ao usuário
 
-Read the user's question and consider if there are any missing or ambiguous details that need to be clarified. Some examples include:
-- Ambiguous terminology — Acronyms, jargon, or terms with multiple meanings across different fields
-- Implicit geographic or jurisdictional context — Questions where the answer varies significantly by region but no region is specified
-- Ambiguous entities — Company names, product names, or proper nouns that refer to multiple distinct entities
+Leia a pergunta do usuário e avalie se há detalhes ausentes ou ambíguos que precisem ser esclarecidos. Alguns exemplos:
+- Terminologia ambígua: siglas, jargões ou termos com vários significados em áreas diferentes
+- Contexto geográfico ou jurisdicional implícito: perguntas cuja resposta varia muito por região, sem região especificada
+- Entidades ambíguas: nomes de empresas, produtos ou nomes próprios que se referem a várias entidades distintas
 
-In order to avoid creating unnecessary friction with the user, follow ups should only be asked when they would meaningfully impact how research is conducted.
+Para não criar atrito desnecessário com o usuário, só faça perguntas de esclarecimento quando elas afetarem de forma significativa a condução da pesquisa.
 
-If you determine that you do need to ask follow up questions, do so with the AskUserQuestion tool.
+Se concluir que precisa fazer perguntas de esclarecimento, faça-as com a ferramenta AskUserQuestion.
 
-### 2. Choose a title for this research and create its directories
+### 2. Escolha um título para esta pesquisa e crie os diretórios dela
 
-First choose a title for this research. It names the folder that will hold this request's research notes and is also the filename of the report the user receives, where it is shown as the report's title, so make it a short, specific title for this research in the user's language and in sentence case: 3 to 6 words and under 50 characters (count them, and drop words rather than exceed either limit), using only letters, numbers and single spaces. Keep accented and non-Latin letters exactly as the user's language writes them (for example é, ñ, ü, 日本語) rather than converting them to plain ASCII, and use no hyphens, underscores, apostrophes or other punctuation. For example, a question about how the EU AI Act affects startups could use "EU AI Act startup obligations".
+Primeiro escolha um título para esta pesquisa. Ele dá nome à pasta que guardará as anotações de pesquisa deste pedido e também é o nome do arquivo do relatório que o usuário recebe, onde aparece como título do relatório; portanto faça um título curto e específico para esta pesquisa, no idioma do usuário e em caixa de frase: de 3 a 6 palavras e menos de 50 caracteres (conte, e corte palavras em vez de passar de qualquer um dos limites), usando só letras, números e espaços simples. Mantenha letras acentuadas e não latinas exatamente como o idioma do usuário as escreve (por exemplo é, ñ, ü, 日本語), em vez de convertê-las para ASCII simples, e não use hífens, sublinhados, apóstrofos nem outra pontuação. Por exemplo, uma pergunta sobre como a Lei de IA da UE afeta startups poderia usar "EU AI Act startup obligations".
 
-This research's folders go in the same directory you used for research earlier in this conversation, or, if this is the first research request here, in your current working directory (not /tmp or an uploads folder). Before settling on the title, recall the titles of any research reports you have already delivered earlier in this conversation, and, if a research_notes/ folder already exists in that directory, list it — each folder inside it holds the notes behind a report of the same name in reports/, possibly from an earlier conversation. Then pick the case that fits:
-- New topic: choose a fresh title.
-- Returning to, extending or updating an earlier topic: choose a title that still names the topic and says what this request adds or changes (for example "EU AI Act startup penalties", not just "Penalties"), or, if nothing distinguishes it from the earlier request, the earlier title with the next number added, dropping a word first if that would exceed the limits above (for example "EU AI Act startup obligations 2"). Note the path of the most recent earlier report on that topic and of its notes folder: you will pass them to the report writer in step 6 as background to build on. If that report or its notes folder is no longer on disk, pass on only what remains and research whatever is missing.
-- The user asks for earlier research to be redone independently: choose a title as in the previous case, but do not pass the earlier material on.
+As pastas desta pesquisa ficam no mesmo diretório que você usou para pesquisas anteriores nesta conversa ou, se este for o primeiro pedido de pesquisa aqui, no seu diretório de trabalho atual (não em /tmp nem em uma pasta de uploads). Antes de decidir o título, lembre os títulos de qualquer relatório de pesquisa que você já entregou antes nesta conversa e, se já existir uma pasta research_notes/ nesse diretório, liste-a: cada pasta dentro dela guarda as anotações por trás de um relatório de mesmo nome em reports/, possivelmente de uma conversa anterior. Depois escolha o caso que se aplica:
+- Tema novo: escolha um título novo.
+- Retomar, ampliar ou atualizar um tema anterior: escolha um título que ainda nomeie o tema e diga o que este pedido acrescenta ou muda (por exemplo "EU AI Act startup penalties", e não só "Penalties") ou, se nada distinguir este pedido do anterior, o título anterior com o número seguinte acrescentado, tirando antes uma palavra se isso passar dos limites acima (por exemplo "EU AI Act startup obligations 2"). Anote o caminho do relatório anterior mais recente sobre esse tema e o da pasta de anotações dele: você vai passá-los ao redator do relatório no passo 6 como base para construir. Se esse relatório ou a pasta de anotações não estiver mais no disco, passe só o que restar e pesquise o que faltar.
+- O usuário pede que a pesquisa anterior seja refeita de forma independente: escolha um título como no caso anterior, mas não repasse o material anterior.
 
-In every case the title must differ from every report delivered earlier in this conversation and from every folder you see, so that this request's notes and report never mix with or replace an earlier one's. Never rename, move or write into an earlier request's folder.
+Em todos os casos o título deve ser diferente de todo relatório entregue antes nesta conversa e de toda pasta que você vir, para que as anotações e o relatório deste pedido nunca se misturem com os de um anterior nem os substituam. Nunca renomeie, mova nem escreva na pasta de um pedido anterior.
 
-Then create the folders research_notes/{research title}/ and reports/ in that directory. Quote these paths in shell commands, since the title contains spaces, and note the directory's absolute path — you will give the subagents absolute paths into these folders, and they will store their files there.
+Depois crie as pastas research_notes/{título da pesquisa}/ e reports/ nesse diretório. Coloque esses caminhos entre aspas nos comandos de shell, pois o título tem espaços, e anote o caminho absoluto do diretório: você dará aos subagentes caminhos absolutos para essas pastas, e eles guardarão seus arquivos lá.
 
-### 3. Decompose the user's query to determine subagent count
+### 3. Decomponha a consulta do usuário para definir o número de subagentes
 
-In order to effectively spawn and task subagents, determine if and how the user's question can be decomposed into independent subtopics. These subtopics should be mutually exclusive and collectively exhaustive. For each subtopic, then consider if the research requires (or would benefit from) multiple independent points of view.
+Para criar e atribuir tarefas aos subagentes com eficácia, determine se e como a pergunta do usuário pode ser decomposta em subtemas independentes. Esses subtemas devem ser mutuamente exclusivos e coletivamente exaustivos. Para cada subtema, avalie então se a pesquisa exige (ou se beneficiaria de) vários pontos de vista independentes.
 
-| Researchers | Decomposition Strategy | Example |
-|-------------|------------------------|---------|
-| 1 | No meaningful decomposition — single factual question | "Who won the 2024 Super Bowl?" |
-| 3 | Few natural angles or perspectives on a focused topic | "Effects of temperature on salmon migration" → (1) biological mechanisms, (2) observed population data, (3) climate projections |
-| 4 | Distinct facets or evaluation criteria | "Compare CRM platforms for small businesses" → (1) pricing models, (2) feature comparison, (3) integrations ecosystem, (4) user reviews/sentiment |
-| 5 | Multiple independent entities, regions, or domains | "AI regulation landscape" → (1) US federal, (2) EU/GDPR-AI Act, (3) China, (4) UK, (5) industry self-regulation |
-| 6+ | Large enumerable set requiring systematic coverage | "Electric vehicle adoption rates by US state" → researchers assigned to regional clusters |
+| Pesquisadores | Estratégia de decomposição | Exemplo |
+|---------------|----------------------------|---------|
+| 1 | Sem decomposição significativa: pergunta factual única | "Quem ganhou o Super Bowl de 2024?" |
+| 3 | Poucos ângulos ou perspectivas naturais sobre um tema focado | "Efeitos da temperatura na migração do salmão" → (1) mecanismos biológicos, (2) dados observados das populações, (3) projeções climáticas |
+| 4 | Facetas ou critérios de avaliação distintos | "Comparar plataformas de CRM para pequenas empresas" → (1) modelos de preço, (2) comparação de funcionalidades, (3) ecossistema de integrações, (4) avaliações/sentimento dos usuários |
+| 5 | Várias entidades, regiões ou domínios independentes | "Panorama da regulação de IA" → (1) EUA federal, (2) UE/GDPR-AI Act, (3) China, (4) Reino Unido, (5) autorregulação do setor |
+| 6+ | Grande conjunto enumerável que exige cobertura sistemática | "Adoção de veículos elétricos por estado dos EUA" → pesquisadores atribuídos a grupos regionais |
 
-In the next step, you should spawn one subagent for each subtopic and independent point of view that you identified. When in doubt, 3 researchers is a reasonable default. If in step 2 you noted earlier research to build on, decompose only what this request adds or needs re-checked; the report writer will have the earlier material.
+No próximo passo, você deve criar um subagente para cada subtema e ponto de vista independente que identificou. Na dúvida, 3 pesquisadores é um padrão razoável. Se no passo 2 você anotou uma pesquisa anterior para usar como base, decomponha apenas o que este pedido acrescenta ou precisa reverificar; o redator do relatório terá o material anterior.
 
-### 4. Spawn foreground research subagents (in parallel)
+### 4. Crie subagentes de pesquisa em primeiro plano (em paralelo)
 
-For each subtopic and independent point of view determined above, spawn a foreground research subagent.
+Para cada subtema e ponto de vista independente determinado acima, crie um subagente de pesquisa em primeiro plano.
 
-To spawn research subagents, use the Agent tool (named Task in some versions) with subagent_type="general-purpose" and run_in_background=false. Ensure that you provide **extremely clear, specific** instructions to each research subagent. Be sure to propagate constraints of the original question to the research subagent (e.g., temporal, geographical). In the prompts below, replace {path_to_skill} with this skill's base directory (the directory this SKILL.md was loaded from), {absolute path of your working directory} with the path you noted in step 2, and {research title} with the title you chose in step 2. Follow the exact format provided below:
-
-```
-Agent(
-  run_in_background=false
-  subagent_type="general-purpose",
-  description="{3-5 words}",
-  prompt="Research {specific narrow topic}.
-
-Objective: {clear description of what's covered in the desired output}
-
-Key questions:
-- {Specific question 1}
-- {Specific question 2}
-
-Suggested sources:
-- {Types of source to prioritize}
-
-Constraints:
-- {Any bounds from the initial user query, including temporal or geographic}
-
-Save your output notes to {absolute path of your working directory}/research_notes/{research title}/{topic}.md
-
-**As a first step, you must read {path_to_skill}/references/researcher.md for instructions on how to conduct research.**"
-)
-```
-
-Example of a good, clear, detailed prompt for a research subagent:
-
-> Research the semiconductor supply chain crisis and its current status as of 2026.
->
-> Objective: Compile a dense report of the facts, covering the current situation, ongoing solutions, and future outlook, with specific timelines and quantitative data where available.
->
-> Key questions:
->  - What are current bottlenecks?
->  - What are the projected capacity increases from new fab construction?
->  - What are geopolitical factors affecting supply chains?
->  - When do experts predict supply will meet demand?
->
-> Suggested sources:
-> - Recent quarterly reports from major chip manufacturers like TSMC, Samsung, and Intel, found on investor relations pages or through the SEC EDGAR database
-> - Industry reports from SEMI, Gartner, and IDC that provide market analysis and forecasts
-> - Government responses, including US CHIPS Act implementation progress at commerce.gov, EU Chips Act at ec.europa.eu, and similar initiatives in Japan, South Korea, and Taiwan through their respective government portals
->
-> Constraints:
-> - Must reflect current state as of 2026 with prior issues clearly noted as such
->
-> Save your output notes to {absolute path of your working directory}/research_notes/Semiconductor supply chain outlook 2026/semiconductor_supply_chain.md
->
-> **As a first step, you must read {path_to_skill}/references/researcher.md for instructions on how to conduct research.**"
-
-In order to ensure research is conducted as quickly as possible, it's essential that all subagents are spawned in parallel, i.e., that you make all your calls to the Agent tool in a single turn.
-
-### 5. [If absolutely necessary] Conduct one additional round of research
-
-Based on the task summaries returned by the research subagents, determine if there are any critical gaps that would make the report incomplete. If deemed absolutely necessary, spawn researchers in parallel to close those gaps. Spawning additional researchers in this step delays delivery of the report to the user, leading to a much worse experience, so this must be used with extreme care.
-
-**This step can only be followed once** - after the researchers finish, move immediately to Step 6, regardless of what results you get back. If you kick off any more research, you will hit timeouts or rate limits, meaning the user will never get an answer to their query. **To help yourself remember this, you should always output "After these researchers finish, I will move directly to coordinating the report writer" when choosing to kick off additional research.**
-
-### 6. Spawn foreground report writer subagent
-
-After research is done, spawn a single report writer subagent. Use the Agent tool (named Task in some versions) with subagent_type="general-purpose" and run_in_background=false, and fill in the placeholders as in step 4. For {the user's original question}, state the question this report must answer in full — if this request returns to or extends earlier research, that is the earlier question as amended by this request (for example "How does the EU AI Act affect startups, including penalties?"), not just the follow-up message. On the line for earlier research, give the absolute paths of the earlier report and notes folder you noted in step 2, or write "none" if you noted nothing to build on or the user asked for an independent redo. Follow the exact format provided below:
+Para criar os subagentes de pesquisa, use a ferramenta Agent (chamada Task em algumas versões) com subagent_type="general-purpose" e run_in_background=false. Garanta que você dê instruções **extremamente claras e específicas** a cada subagente de pesquisa. Não deixe de propagar as restrições da pergunta original ao subagente (por exemplo, temporais, geográficas). Nos prompts abaixo, substitua {path_to_skill} pelo diretório base desta skill (o diretório de onde este SKILL.md foi carregado), {absolute path of your working directory} pelo caminho que você anotou no passo 2 e {research title} pelo título que escolheu no passo 2. Siga exatamente o formato abaixo:
 
 ```
 Agent(
   run_in_background=false
   subagent_type="general-purpose",
-  description="Write final report",
-  prompt="Read the notes in {absolute path of your working directory}/research_notes/{research title}/ and synthesize into a research report that answers: {the user's original question}.
+  description="{3-5 palavras}",
+  prompt="Pesquise {tema específico e restrito}.
 
-Earlier research in this conversation to build on: {absolute paths of the earlier report and notes folder from step 2, or "none"}
+Objetivo: {descrição clara do que deve ser coberto na saída desejada}
 
-Save your final report to this exact path: {absolute path of your working directory}/reports/{research title}.md
+Perguntas-chave:
+- {Pergunta específica 1}
+- {Pergunta específica 2}
 
-**As a first step, you must read {path_to_skill}/references/report-writer.md for instructions on how to write your research report.**"
+Fontes sugeridas:
+- {Tipos de fonte a priorizar}
+
+Restrições:
+- {Quaisquer limites da consulta inicial do usuário, inclusive temporais ou geográficos}
+
+Salve suas anotações de saída em {absolute path of your working directory}/research_notes/{research title}/{topic}.md
+
+**Como primeiro passo, você deve ler {path_to_skill}/references/researcher.md para obter as instruções de como conduzir a pesquisa.**"
 )
 ```
 
-### 7. Deliver report to user
+Exemplo de um prompt bom, claro e detalhado para um subagente de pesquisa:
 
-After the report writer is done, make the report available to the user: if you have a tool for sending files to the user (for example SendUserFile), send reports/{research title}.md with it; otherwise, if your environment has a user-visible outputs folder, copy the report there under the same filename; otherwise leave it at reports/{research title}.md. Then read the finalized report and send the user a brief summary (aim for 3-5 sentences) that says where the full report is (sent to them, in the outputs folder, or its absolute path).
+> Pesquise a crise da cadeia de suprimentos de semicondutores e a situação atual em 2026.
+>
+> Objetivo: Compilar um relatório denso de fatos, cobrindo a situação atual, as soluções em andamento e as perspectivas futuras, com cronogramas específicos e dados quantitativos quando disponíveis.
+>
+> Perguntas-chave:
+>  - Quais são os gargalos atuais?
+>  - Quais são os aumentos de capacidade projetados com a construção de novas fábricas?
+>  - Quais fatores geopolíticos afetam as cadeias de suprimentos?
+>  - Quando os especialistas preveem que a oferta atenderá à demanda?
+>
+> Fontes sugeridas:
+> - Relatórios trimestrais recentes dos grandes fabricantes de chips, como TSMC, Samsung e Intel, encontrados nas páginas de relações com investidores ou na base SEC EDGAR
+> - Relatórios do setor da SEMI, Gartner e IDC com análise de mercado e projeções
+> - Respostas governamentais, incluindo o andamento da implementação do CHIPS Act dos EUA em commerce.gov, do EU Chips Act em ec.europa.eu e de iniciativas semelhantes no Japão, na Coreia do Sul e em Taiwan, pelos respectivos portais governamentais
+>
+> Restrições:
+> - Deve refletir o estado atual em 2026, com problemas anteriores claramente indicados como tais
+>
+> Salve suas anotações de saída em {absolute path of your working directory}/research_notes/Semiconductor supply chain outlook 2026/semiconductor_supply_chain.md
+>
+> **Como primeiro passo, você deve ler {path_to_skill}/references/researcher.md para obter as instruções de como conduzir a pesquisa.**"
+
+Para garantir que a pesquisa seja feita o mais rápido possível, é essencial que todos os subagentes sejam criados em paralelo, ou seja, que você faça todas as chamadas à ferramenta Agent em um único turno.
+
+### 5. [Só se for absolutamente necessário] Faça uma rodada adicional de pesquisa
+
+Com base nos resumos de tarefa devolvidos pelos subagentes de pesquisa, determine se há lacunas críticas que deixariam o relatório incompleto. Se for considerado absolutamente necessário, crie pesquisadores em paralelo para fechar essas lacunas. Criar pesquisadores adicionais neste passo atrasa a entrega do relatório ao usuário e leva a uma experiência bem pior, então use com extremo cuidado.
+
+**Este passo só pode ser seguido uma vez**: depois que os pesquisadores terminarem, vá imediatamente para o Passo 6, independentemente dos resultados. Se você iniciar mais pesquisa, vai esbarrar em timeouts ou limites de uso, e o usuário nunca receberá uma resposta à pergunta. **Para ajudar a lembrar disso, sempre escreva "Depois que esses pesquisadores terminarem, passarei direto para a coordenação do redator do relatório" ao decidir iniciar pesquisa adicional.**
+
+### 6. Crie o subagente redator do relatório em primeiro plano
+
+Depois que a pesquisa estiver pronta, crie um único subagente redator do relatório. Use a ferramenta Agent (chamada Task em algumas versões) com subagent_type="general-purpose" e run_in_background=false, e preencha os marcadores como no passo 4. Em {a pergunta original do usuário}, declare a pergunta que este relatório deve responder por inteiro: se este pedido retoma ou amplia uma pesquisa anterior, é a pergunta anterior emendada por este pedido (por exemplo "Como a Lei de IA da UE afeta startups, incluindo penalidades?"), e não só a mensagem de acompanhamento. Na linha da pesquisa anterior, informe os caminhos absolutos do relatório anterior e da pasta de anotações que você anotou no passo 2, ou escreva "nenhuma" se você não anotou nada para usar como base ou se o usuário pediu uma refação independente. Siga exatamente o formato abaixo:
+
+```
+Agent(
+  run_in_background=false
+  subagent_type="general-purpose",
+  description="Escrever relatório final",
+  prompt="Leia as anotações em {absolute path of your working directory}/research_notes/{research title}/ e sintetize em um relatório de pesquisa que responda: {a pergunta original do usuário}.
+
+Pesquisa anterior nesta conversa para usar como base: {caminhos absolutos do relatório anterior e da pasta de anotações do passo 2, ou "nenhuma"}
+
+Salve seu relatório final exatamente neste caminho: {absolute path of your working directory}/reports/{research title}.md
+
+**Como primeiro passo, você deve ler {path_to_skill}/references/report-writer.md para obter as instruções de como escrever seu relatório de pesquisa.**"
+)
+```
+
+### 7. Entregue o relatório ao usuário
+
+Depois que o redator do relatório terminar, deixe o relatório à disposição do usuário: se você tiver uma ferramenta para enviar arquivos ao usuário (por exemplo SendUserFile), envie reports/{research title}.md com ela; caso contrário, se o seu ambiente tiver uma pasta de saídas visível ao usuário, copie o relatório para lá com o mesmo nome de arquivo; caso contrário, deixe-o em reports/{research title}.md. Depois leia o relatório finalizado e envie ao usuário um resumo breve (de 3 a 5 frases) que diga onde está o relatório completo (enviado a ele, na pasta de saídas ou o caminho absoluto).
