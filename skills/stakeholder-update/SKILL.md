@@ -4,349 +4,349 @@ description: "Gera uma atualização para stakeholders adaptada ao público e à
 argument-hint: "<update type and audience>"
 ---
 
-# Stakeholder Update
+# Atualização para stakeholders
 
-> If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](../../CONNECTORS.md).
+> Se aparecerem placeholders desconhecidos ou você precisar conferir quais ferramentas estão conectadas, veja [CONNECTORS.md](../../CONNECTORS.md).
 
-Generate a stakeholder update tailored to the audience and cadence.
+Gere uma atualização para stakeholders adaptada ao público e à periodicidade.
 
-## Usage
+## Uso
 
 ```
 /stakeholder-update $ARGUMENTS
 ```
 
-## Workflow
+## Fluxo de trabalho
 
-### 1. Determine Update Type
+### 1. Determine o tipo de atualização
 
-Ask the user what kind of update:
-- **Weekly**: Regular cadence update on progress, blockers, and next steps
-- **Monthly**: Higher-level summary with trends, milestones, and strategic alignment
-- **Launch**: Announcement of a feature or product launch with details and impact
-- **Ad-hoc**: One-off update for a specific situation (escalation, pivot, major decision)
+Pergunte ao usuário que tipo de atualização:
+- **Semanal**: atualização de cadência regular sobre progresso, bloqueios e próximos passos
+- **Mensal**: resumo de nível mais alto, com tendências, marcos e alinhamento estratégico
+- **Lançamento**: anúncio do lançamento de uma funcionalidade ou produto, com detalhes e impacto
+- **Pontual (ad-hoc)**: atualização única para uma situação específica (escalonamento, mudança de rumo, grande decisão)
 
-### 2. Determine Audience
+### 2. Determine o público
 
-Ask who the update is for:
-- **Executives / leadership**: High-level, outcome-focused, strategic framing, brief
-- **Engineering team**: Technical detail, implementation context, blockers, decisions needed
-- **Cross-functional partners**: Context-appropriate detail, focus on shared goals and dependencies
-- **Customers / external**: Benefits-focused, clear timelines, no internal jargon
-- **Board**: Metrics-driven, strategic, risk-focused, very concise
+Pergunte para quem é a atualização:
+- **Executivos / liderança**: alto nível, focada em resultados, com enquadramento estratégico, breve
+- **Time de engenharia**: detalhe técnico, contexto de implementação, bloqueios, decisões necessárias
+- **Parceiros multifuncionais**: detalhe adequado ao contexto, foco em objetivos compartilhados e dependências
+- **Clientes / externo**: focada em benefícios, prazos claros, sem jargão interno
+- **Conselho**: orientada por métricas, estratégica, focada em riscos, muito concisa
 
-### 3. Pull Context from Connected Tools
+### 3. Puxe contexto das ferramentas conectadas
 
-If **~~project tracker** is connected:
-- Pull status of roadmap items and milestones
-- Identify completed items since last update
-- Surface items that are at risk or blocked
-- Pull sprint or iteration progress
+Se o **~~project tracker** estiver conectado:
+- Puxe o status dos itens do roadmap e dos marcos
+- Identifique os itens concluídos desde a última atualização
+- Traga à tona itens em risco ou bloqueados
+- Puxe o progresso da sprint ou iteração
 
-If **~~chat** is connected:
-- Search for relevant team discussions and decisions
-- Find blockers or issues raised in channels
-- Identify key decisions made asynchronously
+Se o **~~chat** estiver conectado:
+- Busque discussões e decisões relevantes do time
+- Encontre bloqueios ou problemas levantados nos canais
+- Identifique decisões-chave tomadas de forma assíncrona
 
-If **~~meeting transcription** is connected:
-- Pull recent meeting notes and discussion summaries
-- Find decisions and action items from relevant meetings
+Se a **~~meeting transcription** estiver conectada:
+- Puxe notas recentes de reuniões e resumos de discussões
+- Encontre decisões e itens de ação das reuniões relevantes
 
-If **~~knowledge base** is connected:
-- Search for recent meeting notes
-- Find decision documents or design reviews
+Se a **~~knowledge base** estiver conectada:
+- Busque notas recentes de reuniões
+- Encontre documentos de decisão ou revisões de design
 
-If no tools are connected, ask the user to provide:
-- What was accomplished since the last update
-- Current blockers or risks
-- Key decisions made or needed
-- What is coming next
+Se nenhuma ferramenta estiver conectada, peça ao usuário que forneça:
+- O que foi realizado desde a última atualização
+- Bloqueios ou riscos atuais
+- Decisões-chave tomadas ou necessárias
+- O que vem a seguir
 
-### 4. Generate the Update
+### 4. Gere a atualização
 
-Structure the update for the target audience using the templates and frameworks below.
+Estruture a atualização para o público-alvo usando os modelos e frameworks abaixo.
 
-**For executives**: TL;DR, status color (G/Y/R), key progress tied to goals, decisions made, risks with mitigation, specific asks, and next milestones. Keep it under 300 words.
+**Para executivos**: TL;DR, cor de status (G/Y/R), progresso-chave ligado às metas, decisões tomadas, riscos com mitigação, pedidos específicos e próximos marcos. Mantenha abaixo de 300 palavras.
 
-**For engineering**: What shipped (with links), what is in progress (with owners), blockers, decisions needed (with options and recommendation), and what is coming next.
+**Para engenharia**: o que foi entregue (com links), o que está em andamento (com responsáveis), bloqueios, decisões necessárias (com opções e recomendação) e o que vem a seguir.
 
-**For cross-functional partners**: What is coming that affects them, what you need from them (with deadlines), decisions that impact their team, and areas open for input.
+**Para parceiros multifuncionais**: o que está chegando e os afeta, o que você precisa deles (com prazos), decisões que impactam o time deles e áreas abertas a contribuições.
 
-**For customers**: What is new (framed as benefits), what is coming soon, known issues with workarounds, and how to provide feedback. No internal jargon.
+**Para clientes**: o que há de novo (enquadrado como benefícios), o que vem em breve, problemas conhecidos com soluções alternativas e como dar feedback. Sem jargão interno.
 
-**For launch announcements**: What launched, why it matters, key details (scope, availability, limitations), success metrics, rollout plan, and feedback channels.
+**Para anúncios de lançamento**: o que foi lançado, por que importa, detalhes-chave (escopo, disponibilidade, limitações), métricas de sucesso, plano de liberação e canais de feedback.
 
-### 5. Review and Deliver
+### 5. Revise e entregue
 
-After generating the update:
-- Ask if the user wants to adjust tone, detail level, or emphasis
-- Offer to format for the delivery channel (email, chat post, doc, slides)
-- If **~~chat** is connected, offer to draft the message for sending
+Depois de gerar a atualização:
+- Pergunte se o usuário quer ajustar o tom, o nível de detalhe ou a ênfase
+- Ofereça formatar para o canal de entrega (e-mail, post de chat, documento, slides)
+- Se o **~~chat** estiver conectado, ofereça redigir a mensagem para envio
 
-## Update Templates by Audience
+## Modelos de atualização por público
 
-### Executive / Leadership Update
-Executives want: strategic context, progress against goals, risks that need their help, decisions that need their input.
+### Atualização para executivos / liderança
+Executivos querem: contexto estratégico, progresso em relação às metas, riscos em que precisam de ajuda, decisões que precisam da opinião deles.
 
-**Format**:
+**Formato**:
 ```
 Status: [Green / Yellow / Red]
 
-TL;DR: [One sentence — the most important thing to know]
+TL;DR: [Uma frase: a coisa mais importante a saber]
 
-Progress:
-- [Outcome achieved, tied to goal/OKR]
-- [Milestone reached, with impact]
-- [Key metric movement]
+Progresso:
+- [Resultado alcançado, ligado à meta/OKR]
+- [Marco atingido, com impacto]
+- [Movimento de métrica-chave]
 
-Risks:
-- [Risk]: [Mitigation plan]. [Ask if needed].
+Riscos:
+- [Risco]: [Plano de mitigação]. [Pedido, se necessário].
 
-Decisions needed:
-- [Decision]: [Options with recommendation]. Need by [date].
+Decisões necessárias:
+- [Decisão]: [Opções com recomendação]. Necessária até [data].
 
-Next milestones:
-- [Milestone] — [Date]
+Próximos marcos:
+- [Marco] — [Data]
 ```
 
-**Tips for executive updates**:
-- Lead with the conclusion, not the journey. Executives want "we shipped X and it moved Y metric" not "we had 14 standups and resolved 23 tickets."
-- Keep it under 200 words. If they want more, they will ask.
-- Status color should reflect YOUR genuine assessment, not what you think they want to hear. Yellow is not a failure — it is good risk management.
-- Only include risks you want help with. Do not list risks you are already handling unless they need to know.
-- Asks must be specific: "Decision on X by Friday" not "support needed."
+**Dicas para atualizações a executivos**:
+- Abra com a conclusão, não com a jornada. Executivos querem "lançamos X e isso moveu a métrica Y", não "tivemos 14 dailies e resolvemos 23 tickets".
+- Mantenha abaixo de 200 palavras. Se quiserem mais, eles pedem.
+- A cor de status deve refletir a SUA avaliação genuína, não o que você acha que eles querem ouvir. Amarelo não é fracasso: é boa gestão de risco.
+- Inclua apenas riscos em que você quer ajuda. Não liste riscos que você já está tratando, a menos que eles precisem saber.
+- Os pedidos devem ser específicos: "Decisão sobre X até sexta", não "preciso de apoio".
 
-### Engineering Team Update
-Engineers want: clear priorities, technical context, blockers resolved, decisions that affect their work.
+### Atualização para o time de engenharia
+Engenheiros querem: prioridades claras, contexto técnico, bloqueios resolvidos, decisões que afetam o trabalho deles.
 
-**Format**:
+**Formato**:
 ```
-Shipped:
-- [Feature/fix] — [Link to PR/ticket]. [Impact if notable].
+Entregue:
+- [Funcionalidade/correção] — [Link do PR/ticket]. [Impacto, se notável].
 
-In progress:
-- [Item] — [Owner]. [Expected completion]. [Blockers if any].
+Em andamento:
+- [Item] — [Responsável]. [Conclusão esperada]. [Bloqueios, se houver].
 
-Decisions:
-- [Decision made]: [Rationale]. [Link to ADR if exists].
-- [Decision needed]: [Context]. [Options]. [Recommendation].
+Decisões:
+- [Decisão tomada]: [Justificativa]. [Link do ADR, se existir].
+- [Decisão necessária]: [Contexto]. [Opções]. [Recomendação].
 
-Priority changes:
-- [What changed and why]
+Mudanças de prioridade:
+- [O que mudou e por quê]
 
-Coming up:
-- [Next items] — [Context on why these are next]
-```
-
-**Tips for engineering updates**:
-- Link to specific tickets, PRs, and documents. Engineers want to click through for details.
-- When priorities change, explain why. Engineers are more bought in when they understand the reason.
-- Be explicit about what is blocking them and what you are doing to unblock it.
-- Do not waste their time with information that does not affect their work.
-
-### Cross-Functional Partner Update
-Partners (design, marketing, sales, support) want: what is coming that affects them, what they need to prepare for, how to give input.
-
-**Format**:
-```
-What's coming:
-- [Feature/launch] — [Date]. [What this means for your team].
-
-What we need from you:
-- [Specific ask] — [Context]. By [date].
-
-Decisions made:
-- [Decision] — [How it affects your team].
-
-Open for input:
-- [Topic we'd love feedback on] — [How to provide it].
+Em breve:
+- [Próximos itens] — [Contexto de por que são os próximos]
 ```
 
-### Customer / External Update
-Customers want: what is new, what is coming, how it benefits them, how to get started.
+**Dicas para atualizações a engenharia**:
+- Dê links para tickets, PRs e documentos específicos. Engenheiros querem clicar para ver os detalhes.
+- Quando as prioridades mudarem, explique por quê. Engenheiros se engajam mais quando entendem o motivo.
+- Seja explícito sobre o que os bloqueia e o que você está fazendo para desbloquear.
+- Não desperdice o tempo deles com informação que não afeta o trabalho.
 
-**Format**:
+### Atualização para parceiros multifuncionais
+Parceiros (design, marketing, vendas, suporte) querem: o que está chegando e os afeta, para o que precisam se preparar, como dar contribuições.
+
+**Formato**:
 ```
-What's new:
-- [Feature] — [Benefit in customer terms]. [How to use it / link].
+O que está chegando:
+- [Funcionalidade/lançamento] — [Data]. [O que isso significa para o seu time].
 
-Coming soon:
-- [Feature] — [Expected timing]. [Why it matters to you].
+O que precisamos de vocês:
+- [Pedido específico] — [Contexto]. Até [data].
 
-Known issues:
-- [Issue] — [Status]. [Workaround if available].
+Decisões tomadas:
+- [Decisão] — [Como afeta o seu time].
+
+Aberto a contribuições:
+- [Tópico sobre o qual adoraríamos feedback] — [Como dar].
+```
+
+### Atualização para clientes / externa
+Clientes querem: o que há de novo, o que vem aí, como os beneficia, como começar.
+
+**Formato**:
+```
+O que há de novo:
+- [Funcionalidade] — [Benefício em termos do cliente]. [Como usar / link].
+
+Em breve:
+- [Funcionalidade] — [Prazo esperado]. [Por que importa para você].
+
+Problemas conhecidos:
+- [Problema] — [Status]. [Solução alternativa, se houver].
 
 Feedback:
-- [How to share feedback or request features]
+- [Como compartilhar feedback ou pedir funcionalidades]
 ```
 
-**Tips for customer updates**:
-- No internal jargon. No ticket numbers. No technical implementation details.
-- Frame everything in terms of what the customer can now DO, not what you built.
-- Be honest about timelines but do not overcommit. "Later this quarter" is better than a date you might miss.
-- Only mention known issues if they are customer-impacting and you have a resolution plan.
+**Dicas para atualizações a clientes**:
+- Sem jargão interno. Sem números de ticket. Sem detalhes técnicos de implementação.
+- Enquadre tudo em termos do que o cliente agora consegue FAZER, não do que você construiu.
+- Seja honesto sobre prazos, mas não prometa demais. "Ainda neste trimestre" é melhor que uma data que você pode perder.
+- Só mencione problemas conhecidos se afetarem o cliente e você tiver um plano de resolução.
 
-## Status Reporting Framework
+## Framework de relatório de status
 
-### Green / Yellow / Red Status
+### Status verde / amarelo / vermelho
 
-**Green** (On Track):
-- Progressing as planned
-- No significant risks or blockers
-- On track to meet commitments and deadlines
-- Use Green when things are genuinely going well — not as a default
+**Verde** (no caminho):
+- Progredindo como planejado
+- Sem riscos ou bloqueios significativos
+- No caminho para cumprir compromissos e prazos
+- Use Verde quando as coisas estão genuinamente indo bem, não como padrão
 
-**Yellow** (At Risk):
-- Progress is slower than planned, or a risk has materialized
-- Mitigation is underway but outcome is uncertain
-- May miss commitments without intervention or scope adjustment
-- Use Yellow proactively — the earlier you flag risk, the more options you have
+**Amarelo** (em risco):
+- O progresso está mais lento que o planejado, ou um risco se materializou
+- A mitigação está em andamento, mas o resultado é incerto
+- Pode perder compromissos sem intervenção ou ajuste de escopo
+- Use Amarelo de forma proativa: quanto mais cedo você sinaliza o risco, mais opções tem
 
-**Red** (Off Track):
-- Significantly behind plan
-- Major blocker or risk without clear mitigation
-- Will miss commitments without significant intervention (scope cut, resource addition, timeline extension)
-- Use Red when you genuinely need help. Do not wait until it is too late.
+**Vermelho** (fora do caminho):
+- Significativamente atrás do plano
+- Grande bloqueio ou risco sem mitigação clara
+- Vai perder compromissos sem intervenção significativa (corte de escopo, reforço de recursos, extensão de prazo)
+- Use Vermelho quando você realmente precisa de ajuda. Não espere até ser tarde demais.
 
-### When to Change Status
-- Move to Yellow at the FIRST sign of risk, not when you are sure things are bad
-- Move to Red when you have exhausted your own options and need escalation
-- Move back to Green only when the risk is genuinely resolved, not just paused
-- Document what changed when you change status — "Moved to Yellow because [reason]"
+### Quando mudar o status
+- Mude para Amarelo no PRIMEIRO sinal de risco, não quando tiver certeza de que as coisas estão ruins
+- Mude para Vermelho quando esgotar as suas próprias opções e precisar de escalonamento
+- Volte para Verde só quando o risco estiver genuinamente resolvido, não apenas pausado
+- Documente o que mudou quando mudar o status: "Mudou para Amarelo porque [motivo]"
 
-## Risk Communication
+## Comunicação de riscos
 
-### ROAM Framework for Risk Management
-- **Resolved**: Risk is no longer a concern. Document how it was resolved.
-- **Owned**: Risk is acknowledged and someone is actively managing it. State the owner and the mitigation plan.
-- **Accepted**: Risk is known but we are choosing to proceed without mitigation. Document the rationale.
-- **Mitigated**: Actions have reduced the risk to an acceptable level. Document what was done.
+### Framework ROAM para gestão de riscos
+- **Resolved (resolvido)**: o risco não é mais uma preocupação. Documente como foi resolvido.
+- **Owned (com dono)**: o risco é reconhecido e alguém o gerencia ativamente. Informe o responsável e o plano de mitigação.
+- **Accepted (aceito)**: o risco é conhecido, mas escolhemos prosseguir sem mitigação. Documente a justificativa.
+- **Mitigated (mitigado)**: ações reduziram o risco a um nível aceitável. Documente o que foi feito.
 
-### Communicating Risks Effectively
-1. **State the risk clearly**: "There is a risk that [thing] happens because [reason]"
-2. **Quantify the impact**: "If this happens, the consequence is [impact]"
-3. **State the likelihood**: "This is [likely/possible/unlikely] because [evidence]"
-4. **Present the mitigation**: "We are managing this by [actions]"
-5. **Make the ask**: "We need [specific help] to further reduce this risk"
+### Comunicando riscos com eficácia
+1. **Declare o risco com clareza**: "Há um risco de que [coisa] aconteça porque [motivo]"
+2. **Quantifique o impacto**: "Se isso acontecer, a consequência é [impacto]"
+3. **Declare a probabilidade**: "Isso é [provável/possível/improvável] porque [evidência]"
+4. **Apresente a mitigação**: "Estamos gerenciando isso por [ações]"
+5. **Faça o pedido**: "Precisamos de [ajuda específica] para reduzir ainda mais esse risco"
 
-### Common Mistakes in Risk Communication
-- Burying risks in good news. Lead with risks when they are important.
-- Being vague: "There might be some delays" — specify what, how long, and why.
-- Presenting risks without mitigations. Every risk should come with a plan.
-- Waiting too long. A risk communicated early is a planning input. A risk communicated late is a fire drill.
+### Erros comuns na comunicação de riscos
+- Enterrar riscos em boas notícias. Abra com os riscos quando forem importantes.
+- Ser vago: "Pode haver alguns atrasos": especifique o quê, quanto tempo e por quê.
+- Apresentar riscos sem mitigações. Todo risco deve vir com um plano.
+- Esperar demais. Um risco comunicado cedo é um insumo de planejamento. Um risco comunicado tarde é um alarme de incêndio.
 
-## Decision Documentation (ADRs)
+## Documentação de decisões (ADRs)
 
-### Architecture Decision Record Format
-Document important decisions for future reference:
+### Formato do Architecture Decision Record
+Documente decisões importantes para referência futura:
 
 ```
-# [Decision Title]
+# [Título da decisão]
 
 ## Status
 [Proposed / Accepted / Deprecated / Superseded by ADR-XXX]
 
 ## Context
-What is the situation that requires a decision? What forces are at play?
+Qual é a situação que exige uma decisão? Que forças estão em jogo?
 
 ## Decision
-What did we decide? State the decision clearly and directly.
+O que decidimos? Declare a decisão de forma clara e direta.
 
 ## Consequences
-What are the implications of this decision?
-- Positive consequences
-- Negative consequences or tradeoffs accepted
-- What this enables or prevents in the future
+Quais são as implicações dessa decisão?
+- Consequências positivas
+- Consequências negativas ou trade-offs aceitos
+- O que isso viabiliza ou impede no futuro
 
 ## Alternatives Considered
-What other options were evaluated?
-For each: what was it, why was it rejected?
+Que outras opções foram avaliadas?
+Para cada uma: o que era, por que foi rejeitada?
 ```
 
-### When to Write an ADR
-- Strategic product decisions (which market segment to target, which platform to support)
-- Significant technical decisions (architecture choices, vendor selection, build vs buy)
-- Controversial decisions where people disagreed (document the rationale for future reference)
-- Decisions that constrain future options (choosing a technology, signing a partnership)
-- Decisions you expect people to question later (capture the context while it is fresh)
+### Quando escrever um ADR
+- Decisões estratégicas de produto (qual segmento de mercado atingir, qual plataforma suportar)
+- Decisões técnicas significativas (escolhas de arquitetura, seleção de fornecedor, construir ou comprar)
+- Decisões polêmicas em que as pessoas discordaram (documente a justificativa para referência futura)
+- Decisões que restringem opções futuras (escolher uma tecnologia, assinar uma parceria)
+- Decisões que você espera que as pessoas questionem depois (registre o contexto enquanto está fresco)
 
-### Tips for Decision Documentation
-- Write ADRs close to when the decision is made, not weeks later
-- Include who was involved in the decision and who made the final call
-- Document the context generously — future readers will not have today's context
-- It is okay to document decisions that were wrong in hindsight — add a "superseded by" link
-- Keep them short. One page is better than five.
+### Dicas para documentação de decisões
+- Escreva os ADRs perto do momento da decisão, não semanas depois
+- Inclua quem esteve envolvido na decisão e quem deu a palavra final
+- Documente o contexto com generosidade: os leitores futuros não terão o contexto de hoje
+- Tudo bem documentar decisões que se mostraram erradas em retrospecto: adicione um link "superseded by"
+- Mantenha-os curtos. Uma página é melhor que cinco.
 
-## Meeting Facilitation
+## Facilitação de reuniões
 
-### Stand-up / Daily Sync
-**Purpose**: Surface blockers, coordinate work, maintain momentum.
-**Format**: Each person shares:
-- What they accomplished since last sync
-- What they are working on next
-- What is blocking them
+### Stand-up / sincronização diária
+**Objetivo**: trazer à tona bloqueios, coordenar o trabalho, manter o ritmo.
+**Formato**: cada pessoa compartilha:
+- O que realizou desde a última sincronização
+- No que vai trabalhar a seguir
+- O que a bloqueia
 
-**Facilitation tips**:
-- Keep it to 15 minutes. If discussions emerge, take them offline.
-- Focus on blockers — this is the highest-value part of standup
-- Track blockers and follow up on resolution
-- Cancel standup if there is nothing to sync on. Respect people's time.
+**Dicas de facilitação**:
+- Limite a 15 minutos. Se surgirem discussões, leve para fora da reunião.
+- Foque nos bloqueios: é a parte de maior valor do stand-up
+- Acompanhe os bloqueios e faça o seguimento até a resolução
+- Cancele o stand-up se não houver nada a sincronizar. Respeite o tempo das pessoas.
 
-### Sprint / Iteration Planning
-**Purpose**: Commit to work for the next sprint. Align on priorities and scope.
-**Format**:
-1. Review: what shipped last sprint, what carried over, what was cut
-2. Priorities: what are the most important things to accomplish this sprint
-3. Capacity: how much can the team take on (account for PTO, on-call, meetings)
-4. Commitment: select items from the backlog that fit capacity and priorities
-5. Dependencies: flag any cross-team or external dependencies
+### Planejamento de sprint / iteração
+**Objetivo**: comprometer-se com o trabalho da próxima sprint. Alinhar prioridades e escopo.
+**Formato**:
+1. Revisão: o que foi entregue na última sprint, o que sobrou, o que foi cortado
+2. Prioridades: quais são as coisas mais importantes a realizar nesta sprint
+3. Capacidade: quanto o time consegue assumir (considere férias, plantões, reuniões)
+4. Compromisso: selecione itens do backlog que cabem na capacidade e nas prioridades
+5. Dependências: sinalize quaisquer dependências entre times ou externas
 
-**Facilitation tips**:
-- Come with a proposed priority order. Do not ask the team to prioritize from scratch.
-- Push back on overcommitment. It is better to commit to less and deliver reliably.
-- Ensure every item has a clear owner and clear acceptance criteria.
-- Flag items that are underscoped or have hidden complexity.
+**Dicas de facilitação**:
+- Chegue com uma ordem de prioridade proposta. Não peça ao time para priorizar do zero.
+- Resista ao excesso de compromisso. É melhor se comprometer com menos e entregar de forma confiável.
+- Garanta que todo item tenha um responsável claro e critérios de aceite claros.
+- Sinalize itens subdimensionados ou com complexidade escondida.
 
-### Retrospective
-**Purpose**: Reflect on what went well, what did not, and what to change.
-**Format**:
-1. Set the stage: remind the team of the goal and create psychological safety
-2. Gather data: what went well, what did not go well, what was confusing
-3. Generate insights: identify patterns and root causes
-4. Decide actions: pick 1-3 specific improvements to try next sprint
-5. Close: thank people for honest feedback
+### Retrospectiva
+**Objetivo**: refletir sobre o que foi bem, o que não foi e o que mudar.
+**Formato**:
+1. Prepare o terreno: lembre o time do objetivo e crie segurança psicológica
+2. Reúna dados: o que foi bem, o que não foi bem, o que foi confuso
+3. Gere insights: identifique padrões e causas-raiz
+4. Decida ações: escolha 1-3 melhorias específicas para tentar na próxima sprint
+5. Encerre: agradeça às pessoas pelo feedback honesto
 
-**Facilitation tips**:
-- Create psychological safety. People must feel safe to be honest.
-- Focus on systems and processes, not individuals.
-- Limit to 1-3 action items. More than that and nothing changes.
-- Follow up on previous retro action items. If you never follow up, people stop engaging.
-- Vary the retro format occasionally to prevent staleness.
+**Dicas de facilitação**:
+- Crie segurança psicológica. As pessoas precisam se sentir seguras para ser honestas.
+- Foque em sistemas e processos, não em indivíduos.
+- Limite a 1-3 itens de ação. Mais que isso e nada muda.
+- Faça o seguimento dos itens de ação da retrospectiva anterior. Se você nunca faz, as pessoas deixam de se engajar.
+- Varie o formato da retrospectiva de vez em quando para evitar a monotonia.
 
-### Stakeholder Review / Demo
-**Purpose**: Show progress, gather feedback, build alignment.
-**Format**:
-1. Context: remind stakeholders of the goal and what they saw last time
-2. Demo: show what was built. Use real product, not slides.
-3. Metrics: share any early data or feedback
-4. Feedback: structured time for questions and input
-5. Next steps: what is coming next and when the next review will be
+### Revisão com stakeholders / demonstração
+**Objetivo**: mostrar progresso, coletar feedback, construir alinhamento.
+**Formato**:
+1. Contexto: lembre os stakeholders do objetivo e do que viram da última vez
+2. Demonstração: mostre o que foi construído. Use o produto real, não slides.
+3. Métricas: compartilhe quaisquer dados ou feedback iniciais
+4. Feedback: tempo estruturado para perguntas e contribuições
+5. Próximos passos: o que vem a seguir e quando será a próxima revisão
 
-**Facilitation tips**:
-- Demo the real product whenever possible. Slides are not demos.
-- Frame feedback collection: "What feedback do you have on X?" is better than "Any thoughts?"
-- Capture feedback visibly and commit to addressing it (or explaining why not)
-- Set expectations about what kind of feedback is actionable at this stage
+**Dicas de facilitação**:
+- Demonstre o produto real sempre que possível. Slides não são demonstrações.
+- Enquadre a coleta de feedback: "Que feedback você tem sobre X?" é melhor que "Alguma ideia?"
+- Registre o feedback de forma visível e comprometa-se a tratá-lo (ou a explicar por que não)
+- Alinhe expectativas sobre que tipo de feedback é acionável nesta etapa
 
-## Output Format
+## Formato de saída
 
-Keep updates scannable. Use bold for key points, bullets for lists. Executive updates should be under 300 words. Engineering updates can be longer but should still be structured for skimming.
+Mantenha as atualizações fáceis de percorrer. Use negrito para pontos-chave e tópicos para listas. Atualizações a executivos devem ter menos de 300 palavras. Atualizações a engenharia podem ser mais longas, mas ainda estruturadas para leitura dinâmica.
 
-## Tips
+## Dicas
 
-- The most common mistake in stakeholder updates is burying the lead. Start with the most important thing.
-- Status colors (Green/Yellow/Red) should reflect reality, not optimism. Yellow is not a failure — it is good risk communication.
-- Asks should be specific and actionable. "We need help" is not an ask. "We need a decision on X by Friday" is.
-- For executives, frame everything in terms of outcomes and goals, not activities and tasks.
-- If there is bad news, lead with it. Do not hide it after good news.
-- Match the length to the audience's attention. Executives get a few bullets. Engineering gets the details they need.
+- O erro mais comum em atualizações para stakeholders é enterrar a informação principal. Comece pela coisa mais importante.
+- As cores de status (Green/Yellow/Red) devem refletir a realidade, não o otimismo. Amarelo não é fracasso: é boa comunicação de risco.
+- Os pedidos devem ser específicos e acionáveis. "Precisamos de ajuda" não é um pedido. "Precisamos de uma decisão sobre X até sexta" é.
+- Para executivos, enquadre tudo em termos de resultados e metas, não de atividades e tarefas.
+- Se houver más notícias, abra com elas. Não as esconda depois das boas.
+- Ajuste o tamanho à atenção do público. Executivos recebem alguns tópicos. Engenharia recebe os detalhes de que precisa.
