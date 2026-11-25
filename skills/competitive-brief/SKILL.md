@@ -4,165 +4,165 @@ description: "Cria um briefing de análise competitiva sobre um ou mais concorre
 argument-hint: "<competitor or feature area>"
 ---
 
-# Competitive Brief
+# Briefing competitivo
 
-> If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](../../CONNECTORS.md).
+> Se aparecerem placeholders desconhecidos ou você precisar conferir quais ferramentas estão conectadas, veja [CONNECTORS.md](../../CONNECTORS.md).
 
-Create a competitive analysis brief for one or more competitors or a feature area.
+Crie um briefing de análise competitiva sobre um ou mais concorrentes ou uma área de funcionalidade.
 
-## Usage
+## Uso
 
 ```
 /competitive-brief $ARGUMENTS
 ```
 
-## Workflow
+## Fluxo de trabalho
 
-### 1. Scope the Analysis
+### 1. Delimite a análise
 
-Ask the user:
-- **Competitor(s)**: Which specific competitor(s) to analyze? Or a feature area to compare across competitors?
-- **Focus**: Full product comparison, specific feature area, pricing/packaging, go-to-market, or positioning?
-- **Context**: What decision will this inform? (product strategy, sales enablement, investor/board materials, feature prioritization)
+Pergunte ao usuário:
+- **Concorrente(s)**: quais concorrentes específicos analisar? Ou uma área de funcionalidade para comparar entre concorrentes?
+- **Foco**: comparação completa de produto, uma área de funcionalidade específica, preços/empacotamento, go-to-market ou posicionamento?
+- **Contexto**: que decisão isto vai embasar? (estratégia de produto, capacitação de vendas, materiais para investidores/conselho, priorização de funcionalidades)
 
-### 2. Research
+### 2. Pesquise
 
-**Via web search**:
-- Product pages and feature lists
-- Pricing pages and packaging
-- Recent product launches, blog posts, and changelogs
-- Press coverage and analyst reports
-- Customer reviews and ratings (G2, Capterra, TrustRadius)
-- Job postings (signal of strategic direction)
-- Social media and community discussions
+**Por busca na web**:
+- Páginas de produto e listas de funcionalidades
+- Páginas de preços e empacotamento
+- Lançamentos recentes de produto, posts de blog e changelogs
+- Cobertura de imprensa e relatórios de analistas
+- Avaliações e notas de clientes (G2, Capterra, TrustRadius)
+- Vagas de emprego (sinal da direção estratégica)
+- Redes sociais e discussões em comunidades
 
-If **~~knowledge base** is connected:
-- Search for existing competitive analysis documents
-- Find win/loss reports or sales battle cards
-- Pull prior competitive research
+Se a **~~knowledge base** estiver conectada:
+- Busque documentos de análise competitiva existentes
+- Encontre relatórios de ganhos/perdas ou battle cards de vendas
+- Puxe pesquisas competitivas anteriores
 
-If **~~chat** is connected:
-- Search for competitive mentions in sales or product channels
-- Find recent deal feedback involving competitors
+Se o **~~chat** estiver conectado:
+- Busque menções a concorrentes em canais de vendas ou de produto
+- Encontre feedback recente de negócios envolvendo concorrentes
 
-### 3. Generate the Brief
+### 3. Gere o briefing
 
-#### Competitor Overview
-For each competitor:
-- Company summary: founding, size, funding/revenue if public, target market
-- Product positioning: how they describe themselves, who they target
-- Recent momentum: launches, funding, partnerships, customer wins
+#### Visão geral dos concorrentes
+Para cada concorrente:
+- Resumo da empresa: fundação, tamanho, financiamento/receita se for aberta, mercado-alvo
+- Posicionamento de produto: como se descrevem, quem têm como alvo
+- Momento recente: lançamentos, financiamento, parcerias, clientes conquistados
 
-#### Feature Comparison
-Compare capabilities across key areas relevant to the analysis. See **Feature Comparison Matrices** below for rating scales and matrix templates.
+#### Comparação de funcionalidades
+Compare as capacidades nas áreas-chave relevantes para a análise. Veja **Matrizes de comparação de funcionalidades** abaixo para escalas de avaliação e modelos de matriz.
 
-#### Positioning Analysis
-Analyze how each competitor positions themselves — target customer, category claim, key differentiator, and value proposition. See **Positioning Analysis Frameworks** below for the positioning statement template and message architecture levels.
+#### Análise de posicionamento
+Analise como cada concorrente se posiciona: cliente-alvo, declaração de categoria, principal diferencial e proposta de valor. Veja **Frameworks de análise de posicionamento** abaixo para o modelo de declaração de posicionamento e os níveis da arquitetura de mensagem.
 
-#### Strengths and Weaknesses
-For each competitor:
-- **Strengths**: Where they genuinely excel. What customers praise.
-- **Weaknesses**: Where they fall short. What customers complain about.
-- Be honest and evidence-based — do not dismiss competitors or inflate their weaknesses.
+#### Pontos fortes e fracos
+Para cada concorrente:
+- **Pontos fortes**: onde realmente se destacam. O que os clientes elogiam.
+- **Pontos fracos**: onde ficam devendo. Do que os clientes reclamam.
+- Seja honesto e baseie-se em evidências: não menospreze concorrentes nem infle os pontos fracos deles.
 
-#### Opportunities
-Based on the analysis:
-- Where are there gaps in competitor offerings we could exploit?
-- What are customers asking for that no one provides well?
-- Where are competitors making bets we disagree with?
-- What market shifts could advantage our approach?
+#### Oportunidades
+Com base na análise:
+- Onde há lacunas nas ofertas dos concorrentes que podemos explorar?
+- O que os clientes pedem que ninguém entrega bem?
+- Onde os concorrentes estão fazendo apostas com as quais discordamos?
+- Que mudanças de mercado poderiam favorecer a nossa abordagem?
 
-#### Threats
-- Where are competitors investing heavily?
-- What competitive moves could disrupt our position?
-- Where are we most vulnerable?
-- What would a "nightmare scenario" competitive move look like?
+#### Ameaças
+- Onde os concorrentes estão investindo pesado?
+- Que movimentos competitivos poderiam abalar a nossa posição?
+- Onde somos mais vulneráveis?
+- Como seria um movimento competitivo de "cenário de pesadelo"?
 
-#### Strategic Implications
-Tie the analysis back to product strategy:
-- What should we build, accelerate, or deprioritize based on this analysis?
-- Where should we differentiate vs. achieve parity?
-- How should we adjust positioning or messaging?
-- What should we monitor going forward?
+#### Implicações estratégicas
+Amarre a análise de volta à estratégia de produto:
+- O que devemos construir, acelerar ou despriorizar com base nesta análise?
+- Onde devemos nos diferenciar e onde buscar paridade?
+- Como devemos ajustar o posicionamento ou a mensagem?
+- O que devemos monitorar daqui para frente?
 
-### 4. Follow Up
+### 4. Acompanhamento
 
-After generating the brief:
-- Ask if the user wants to dive deeper on any section
-- Offer to create a one-page summary for executives
-- Offer to create sales battle cards for competitive deals
-- Offer to draft a "how to win against [competitor]" guide
-- Offer to set up a monitoring plan for competitive moves
+Depois de gerar o briefing:
+- Pergunte se o usuário quer se aprofundar em alguma seção
+- Ofereça criar um resumo de uma página para executivos
+- Ofereça criar battle cards de vendas para negócios competitivos
+- Ofereça redigir um guia "como vencer o [concorrente]"
+- Ofereça montar um plano de monitoramento dos movimentos competitivos
 
-## Competitive Landscape Mapping
+## Mapeamento do cenário competitivo
 
-### Identifying the Competitive Set
-Define competitors at multiple levels:
+### Identificando o conjunto competitivo
+Defina os concorrentes em vários níveis:
 
-**Direct competitors**: Products that solve the same problem for the same users in the same way.
-- These are the products your customers actively evaluate against you
-- They appear in your deals, in customer comparisons, in review site matchups
+**Concorrentes diretos**: produtos que resolvem o mesmo problema para os mesmos usuários do mesmo jeito.
+- São os produtos com que seus clientes ativamente comparam você
+- Aparecem nos seus negócios, nas comparações de clientes, nos confrontos de sites de avaliação
 
-**Indirect competitors**: Products that solve the same problem but differently.
-- Different approach to the same user need (e.g., spreadsheets vs dedicated project management tool)
-- Include "non-consumption" — sometimes the competitor is doing nothing or using a manual process
+**Concorrentes indiretos**: produtos que resolvem o mesmo problema de outro jeito.
+- Abordagem diferente para a mesma necessidade do usuário (por exemplo, planilhas versus uma ferramenta dedicada de gestão de projetos)
+- Inclua o "não consumo": às vezes o concorrente é não fazer nada ou usar um processo manual
 
-**Adjacent competitors**: Products that do not compete today but could.
-- Companies with similar technology, customer base, or distribution that could expand into your space
-- Larger platforms that could add your functionality as a feature
-- Startups attacking a niche that could grow into your core market
+**Concorrentes adjacentes**: produtos que não competem hoje, mas poderiam.
+- Empresas com tecnologia, base de clientes ou distribuição semelhantes que poderiam se expandir para o seu espaço
+- Plataformas maiores que poderiam adicionar a sua funcionalidade como um recurso
+- Startups atacando um nicho que poderia crescer até virar o seu mercado principal
 
-**Substitute solutions**: Entirely different ways users solve the underlying need.
-- Hiring a person instead of buying software
-- Using a general-purpose tool (Excel, email) instead of a specialized one
-- Outsourcing the process entirely
+**Soluções substitutas**: formas totalmente diferentes de os usuários resolverem a necessidade de fundo.
+- Contratar uma pessoa em vez de comprar software
+- Usar uma ferramenta de uso geral (Excel, e-mail) em vez de uma especializada
+- Terceirizar o processo por completo
 
-### Landscape Map
-Position competitors on meaningful dimensions:
+### Mapa do cenário
+Posicione os concorrentes em dimensões significativas:
 
-**Common axes**:
-- Breadth vs depth (suite vs point solution)
-- SMB vs enterprise (market segment focus)
-- Self-serve vs sales-led (go-to-market approach)
-- Simple vs powerful (product complexity)
-- Horizontal vs vertical (general purpose vs industry-specific)
+**Eixos comuns**:
+- Amplitude versus profundidade (suíte versus solução pontual)
+- PME versus corporativo (foco de segmento de mercado)
+- Autoatendimento versus vendas assistidas (abordagem go-to-market)
+- Simples versus poderoso (complexidade do produto)
+- Horizontal versus vertical (uso geral versus específico de um setor)
 
-Choose axes that reveal strategic positioning differences relevant to your market. The right axes make competitive dynamics visible.
+Escolha eixos que revelem diferenças de posicionamento estratégico relevantes para o seu mercado. Os eixos certos tornam visível a dinâmica competitiva.
 
-### Monitoring the Landscape
-Track competitive movements over time:
-- Product launches and feature releases (changelogs, blog posts, press releases)
-- Pricing and packaging changes
-- Funding rounds and acquisitions
-- Key hires and job postings (signal strategic direction)
-- Customer wins and losses (especially your wins/losses)
-- Analyst and review coverage
-- Partnership announcements
+### Monitorando o cenário
+Acompanhe os movimentos competitivos ao longo do tempo:
+- Lançamentos de produto e de funcionalidades (changelogs, posts de blog, comunicados à imprensa)
+- Mudanças de preços e de empacotamento
+- Rodadas de financiamento e aquisições
+- Contratações-chave e vagas abertas (sinal da direção estratégica)
+- Clientes ganhos e perdidos (principalmente os seus ganhos/perdas)
+- Cobertura de analistas e de avaliações
+- Anúncios de parcerias
 
-## Feature Comparison Matrices
+## Matrizes de comparação de funcionalidades
 
-### Building a Feature Comparison
-1. **Define capability areas**: Group features into functional categories that matter to buyers (not your internal architecture). Use the categories buyers use when evaluating.
-2. **List specific capabilities**: Under each area, list the specific features or capabilities to compare.
-3. **Rate each competitor**: Use a consistent rating scale.
+### Montando uma comparação de funcionalidades
+1. **Defina áreas de capacidade**: agrupe as funcionalidades em categorias funcionais que importam aos compradores (não pela sua arquitetura interna). Use as categorias que os compradores usam ao avaliar.
+2. **Liste capacidades específicas**: sob cada área, liste as funcionalidades ou capacidades específicas a comparar.
+3. **Avalie cada concorrente**: use uma escala de avaliação consistente.
 
-### Rating Scale Options
+### Opções de escala de avaliação
 
-**Simple (recommended for most cases)**:
-- Strong: Market-leading capability. Deep functionality, well-executed.
-- Adequate: Functional capability. Gets the job done but not differentiated.
-- Weak: Exists but limited. Significant gaps or poor execution.
-- Absent: Does not have this capability.
+**Simples (recomendada para a maioria dos casos)**:
+- Strong: capacidade líder de mercado. Funcionalidade profunda, bem executada.
+- Adequate: capacidade funcional. Resolve, mas sem diferencial.
+- Weak: existe, mas limitada. Lacunas significativas ou execução fraca.
+- Absent: não tem essa capacidade.
 
-**Detailed (for deep-dive comparisons)**:
-- 5: Best-in-class. Defines the standard others aspire to.
-- 4: Strong. Fully-featured and well-executed.
-- 3: Adequate. Meets basic needs without differentiation.
-- 2: Limited. Exists but with significant gaps.
-- 1: Minimal. Barely functional or in early beta.
-- 0: Absent. Not available.
+**Detalhada (para comparações aprofundadas)**:
+- 5: Melhor da categoria. Define o padrão que os outros almejam.
+- 4: Forte. Completa e bem executada.
+- 3: Adequada. Atende às necessidades básicas sem diferenciação.
+- 2: Limitada. Existe, mas com lacunas significativas.
+- 1: Mínima. Mal funcional ou em beta inicial.
+- 0: Ausente. Não disponível.
 
-### Comparison Matrix Template
+### Modelo de matriz de comparação
 ```
 | Capability Area | Our Product | Competitor A | Competitor B |
 |----------------|-------------|-------------|-------------|
@@ -173,130 +173,130 @@ Track competitive movements over time:
 |   [Feature 3]  | Strong      | Strong      | Adequate    |
 ```
 
-### Tips for Feature Comparison
-- Rate based on real product experience, customer feedback, and reviews — not just marketing claims
-- Features exist on a spectrum. "Has feature X" is less useful than "How well does it do X?"
-- Weight the comparison by what matters to your target customers, not by total feature count
-- Update regularly — feature comparisons get stale fast
-- Be honest about where competitors are ahead. A comparison that always shows you winning is not credible.
-- Include the "why it matters" for each capability area. Not all features matter equally to buyers.
+### Dicas para a comparação de funcionalidades
+- Avalie com base em experiência real de produto, feedback de clientes e avaliações, não só em alegações de marketing
+- Funcionalidades existem em um espectro. "Tem a funcionalidade X" é menos útil que "Quão bem ela faz X?"
+- Pondere a comparação pelo que importa aos seus clientes-alvo, não pelo total de funcionalidades
+- Atualize com regularidade: comparações de funcionalidades envelhecem rápido
+- Seja honesto sobre onde os concorrentes estão à frente. Uma comparação que sempre mostra você vencendo não é crível.
+- Inclua o "por que importa" de cada área de capacidade. Nem todas as funcionalidades importam igualmente aos compradores.
 
-## Positioning Analysis Frameworks
+## Frameworks de análise de posicionamento
 
-### Positioning Statement Analysis
-For each competitor, extract their positioning:
+### Análise da declaração de posicionamento
+Para cada concorrente, extraia o posicionamento:
 
-**Template**: For [target customer] who [need/problem], [Product] is a [category] that [key benefit]. Unlike [competitor/alternative], [Product] [key differentiator].
+**Modelo**: Para [cliente-alvo] que [necessidade/problema], [Produto] é uma [categoria] que [benefício principal]. Diferentemente de [concorrente/alternativa], [Produto] [principal diferencial].
 
-**Sources for positioning**:
-- Homepage headline and subheadline
-- Product description on app stores or review sites
-- Sales pitch decks (sometimes leaked or shared by prospects)
-- Analyst briefing materials
-- Earnings call language (for public companies)
+**Fontes de posicionamento**:
+- Título e subtítulo da página inicial
+- Descrição do produto em lojas de apps ou sites de avaliação
+- Apresentações de vendas (às vezes vazadas ou compartilhadas por prospects)
+- Materiais de briefing para analistas
+- Linguagem de teleconferências de resultados (para empresas de capital aberto)
 
-### Message Architecture Analysis
-How does each competitor communicate value?
+### Análise da arquitetura de mensagem
+Como cada concorrente comunica valor?
 
-**Level 1 — Category**: What category do they claim? (CRM, project management, collaboration platform)
-**Level 2 — Differentiator**: What makes them different within that category? (AI-powered, all-in-one, developer-first)
-**Level 3 — Value Proposition**: What outcome do they promise? (Close deals faster, ship products faster, never miss a deadline)
-**Level 4 — Proof Points**: What evidence do they provide? (Customer logos, metrics, awards, case studies)
+**Nível 1 — Categoria**: que categoria reivindicam? (CRM, gestão de projetos, plataforma de colaboração)
+**Nível 2 — Diferencial**: o que os torna diferentes dentro dessa categoria? (movido a IA, tudo-em-um, voltado a desenvolvedores)
+**Nível 3 — Proposta de valor**: que resultado prometem? (Fechar negócios mais rápido, lançar produtos mais rápido, nunca perder um prazo)
+**Nível 4 — Provas**: que evidências apresentam? (Logos de clientes, métricas, prêmios, estudos de caso)
 
-### Positioning Gaps and Opportunities
-Look for:
-- **Unclaimed positions**: Value propositions no competitor owns that matter to buyers
-- **Crowded positions**: Claims every competitor makes that have lost meaning
-- **Emerging positions**: New value propositions driven by market changes (AI, remote work, compliance)
-- **Vulnerable positions**: Claims competitors make that they cannot fully deliver on
+### Lacunas e oportunidades de posicionamento
+Procure:
+- **Posições não reivindicadas**: propostas de valor que nenhum concorrente possui e que importam aos compradores
+- **Posições saturadas**: alegações que todo concorrente faz e que perderam o sentido
+- **Posições emergentes**: novas propostas de valor impulsionadas por mudanças de mercado (IA, trabalho remoto, conformidade)
+- **Posições vulneráveis**: alegações dos concorrentes que eles não conseguem cumprir por completo
 
-## Win/Loss Analysis Methodology
+## Metodologia de análise de ganhos e perdas
 
-### Conducting Win/Loss Analysis
-Win/loss analysis reveals why you actually win and lose deals. It is the most actionable competitive intelligence.
+### Conduzindo a análise de ganhos e perdas
+A análise de ganhos e perdas revela por que você realmente ganha e perde negócios. É a inteligência competitiva mais acionável.
 
-**Data sources**:
-- CRM notes from sales team (available immediately, but biased)
-- Customer interviews shortly after decision (most valuable, least biased)
-- Churned customer surveys or exit interviews
-- Prospect surveys (for lost deals)
+**Fontes de dados**:
+- Anotações de CRM do time de vendas (disponíveis de imediato, mas enviesadas)
+- Entrevistas com clientes logo após a decisão (as mais valiosas e menos enviesadas)
+- Pesquisas com clientes que cancelaram ou entrevistas de saída
+- Pesquisas com prospects (em negócios perdidos)
 
-### Win/Loss Interview Questions
-For wins:
-- What problem were you trying to solve?
-- What alternatives did you evaluate? (Reveals competitive set)
-- Why did you choose us over alternatives?
-- What almost made you choose someone else?
-- What would we need to lose for you to reconsider?
+### Perguntas para entrevistas de ganho/perda
+Para ganhos:
+- Que problema vocês tentavam resolver?
+- Que alternativas avaliaram? (Revela o conjunto competitivo)
+- Por que nos escolheram em vez das alternativas?
+- O que quase os fez escolher outra pessoa?
+- O que teríamos que perder para vocês reconsiderarem?
 
-For losses:
-- What problem were you trying to solve?
-- What did you end up choosing? Why?
-- Where did our product fall short?
-- What could we have done differently?
-- Would you reconsider us in the future? Under what conditions?
+Para perdas:
+- Que problema vocês tentavam resolver?
+- O que acabaram escolhendo? Por quê?
+- Onde o nosso produto ficou devendo?
+- O que poderíamos ter feito de diferente?
+- Reconsiderariam nos escolher no futuro? Em que condições?
 
-### Analyzing Win/Loss Data
-- Track win/loss reasons over time. Are patterns changing?
-- Segment by deal type: enterprise vs SMB, new vs expansion, industry vertical
-- Identify the top 3-5 reasons for wins and losses
-- Distinguish between product reasons (features, quality) and non-product reasons (pricing, brand, relationship, timing)
-- Calculate competitive win rates by competitor: what % of deals involving each competitor do you win?
+### Analisando dados de ganhos/perdas
+- Acompanhe os motivos de ganho/perda ao longo do tempo. Os padrões estão mudando?
+- Segmente por tipo de negócio: corporativo versus PME, novo versus expansão, vertical de setor
+- Identifique os 3-5 principais motivos de ganhos e de perdas
+- Distinga motivos de produto (funcionalidades, qualidade) de motivos alheios ao produto (preço, marca, relacionamento, momento)
+- Calcule taxas de vitória por concorrente: que % dos negócios envolvendo cada concorrente você ganha?
 
-### Common Win/Loss Patterns
-- **Feature gap**: Competitor has a specific capability you lack that is a dealbreaker
-- **Integration advantage**: Competitor integrates with tools the buyer already uses
-- **Pricing structure**: Not always cheaper — sometimes different pricing model (per-seat vs usage-based) fits better
-- **Incumbent advantage**: Buyer sticks with what they have because switching cost is too high
-- **Sales execution**: Better demo, faster response, more relevant case studies
-- **Brand/trust**: Buyer chooses the safer or more well-known option
+### Padrões comuns de ganho/perda
+- **Lacuna de funcionalidade**: o concorrente tem uma capacidade específica que você não tem e que decide o negócio
+- **Vantagem de integração**: o concorrente se integra a ferramentas que o comprador já usa
+- **Estrutura de preços**: nem sempre mais barato: às vezes um modelo de preços diferente (por usuário versus por uso) se encaixa melhor
+- **Vantagem do incumbente**: o comprador fica com o que tem porque o custo de troca é alto demais
+- **Execução de vendas**: demonstração melhor, resposta mais rápida, estudos de caso mais relevantes
+- **Marca/confiança**: o comprador escolhe a opção mais segura ou mais conhecida
 
-## Market Trend Identification
+## Identificação de tendências de mercado
 
-### Sources for Trend Identification
-- **Industry analyst reports**: Gartner, Forrester, IDC for market sizing and trends
-- **Venture capital**: What are VCs funding? Investment themes signal where smart money sees opportunity.
-- **Conference themes**: What are industry events focusing on? What topics draw the biggest audiences?
-- **Technology shifts**: New platforms, APIs, or capabilities that enable new product categories
-- **Regulatory changes**: New regulations that create requirements or opportunities
-- **Customer behavior changes**: How are user expectations evolving? (e.g., mobile-first, AI-assisted, privacy-conscious)
-- **Talent movement**: Where are top people going? What skills are in demand?
+### Fontes para identificar tendências
+- **Relatórios de analistas do setor**: Gartner, Forrester, IDC para dimensionamento e tendências de mercado
+- **Capital de risco**: o que os VCs estão financiando? Temas de investimento sinalizam onde o dinheiro inteligente vê oportunidade.
+- **Temas de conferências**: em que os eventos do setor estão focando? Que assuntos atraem os maiores públicos?
+- **Mudanças tecnológicas**: novas plataformas, APIs ou capacidades que viabilizam novas categorias de produto
+- **Mudanças regulatórias**: novas regulamentações que criam requisitos ou oportunidades
+- **Mudanças no comportamento do cliente**: como as expectativas dos usuários estão evoluindo? (por exemplo, mobile-first, assistido por IA, atento à privacidade)
+- **Movimento de talentos**: para onde estão indo as melhores pessoas? Que habilidades estão em demanda?
 
-### Trend Analysis Framework
-For each trend identified:
+### Framework de análise de tendências
+Para cada tendência identificada:
 
-1. **What is changing?**: Describe the trend clearly and specifically
-2. **Why now?**: What is driving this change? (Technology, regulation, behavior, economics)
-3. **Who is affected?**: Which customer segments or market categories?
-4. **What is the timeline?**: Is this happening now, in 1-2 years, or 3-5 years?
-5. **What is the implication for us?**: How should this influence our product strategy?
-6. **What are competitors doing?**: How are competitors responding to this trend?
+1. **O que está mudando?**: descreva a tendência de forma clara e específica
+2. **Por que agora?**: o que impulsiona essa mudança? (tecnologia, regulação, comportamento, economia)
+3. **Quem é afetado?**: quais segmentos de clientes ou categorias de mercado?
+4. **Qual é o cronograma?**: está acontecendo agora, em 1-2 anos ou em 3-5 anos?
+5. **Qual é a implicação para nós?**: como isso deve influenciar a nossa estratégia de produto?
+6. **O que os concorrentes estão fazendo?**: como os concorrentes estão respondendo a essa tendência?
 
-### Separating Signal from Noise
-- **Signals**: Trends backed by behavioral data, growing investment, regulatory action, or customer demand
-- **Noise**: Trends backed only by media hype, conference buzz, or competitor announcements without customer traction
-- Test trends against your own customer data: are YOUR customers asking for this or experiencing this change?
-- Be wary of "trend of the year" hype cycles. Many trends that dominate industry conversation do not materially affect your customers for years.
+### Separando sinal de ruído
+- **Sinais**: tendências sustentadas por dados comportamentais, investimento crescente, ação regulatória ou demanda de clientes
+- **Ruído**: tendências sustentadas apenas por hype da mídia, burburinho de conferências ou anúncios de concorrentes sem tração entre clientes
+- Teste as tendências contra os seus próprios dados de clientes: SEUS clientes estão pedindo isso ou vivendo essa mudança?
+- Desconfie dos ciclos de hype da "tendência do ano". Muitas tendências que dominam a conversa do setor não afetam materialmente seus clientes por anos.
 
-### Strategic Response Options
-For each significant trend:
-- **Lead**: Invest early and try to define the category or approach. High risk, high reward.
-- **Fast follow**: Wait for early signals of customer demand, then move quickly. Lower risk but harder to differentiate.
-- **Monitor**: Track the trend but do not invest yet. Set triggers for when to act.
-- **Ignore**: Explicitly decide this trend is not relevant to your strategy. Document why.
+### Opções de resposta estratégica
+Para cada tendência significativa:
+- **Liderar**: invista cedo e tente definir a categoria ou a abordagem. Alto risco, alta recompensa.
+- **Seguir rápido**: espere sinais iniciais de demanda dos clientes e depois se mova rápido. Risco menor, mas mais difícil de diferenciar.
+- **Monitorar**: acompanhe a tendência mas ainda não invista. Defina gatilhos para quando agir.
+- **Ignorar**: decida explicitamente que a tendência não é relevante para a sua estratégia. Documente o motivo.
 
-The right response depends on: your competitive position, your customer base, your resources, and how fast the trend is moving.
+A resposta certa depende de: sua posição competitiva, sua base de clientes, seus recursos e a velocidade com que a tendência avança.
 
-## Output Format
+## Formato de saída
 
-Use tables for feature comparisons. Use clear headers for each section. Keep the strategic implications section concise and actionable — this is where the value is for the reader.
+Use tabelas para comparações de funcionalidades. Use títulos claros para cada seção. Mantenha a seção de implicações estratégicas concisa e acionável: é onde está o valor para o leitor.
 
-## Tips
+## Dicas
 
-- Be honest about competitor strengths. Dismissing competitors makes the analysis useless.
-- Focus on what matters to customers, not what matters to product teams. Customers do not care about architecture elegance.
-- Pricing is hard to compare fairly. Note the caveats (different packaging, usage-based vs seat-based, enterprise custom pricing).
-- Job postings are underrated competitive intelligence. A competitor hiring ML engineers signals a strategic direction.
-- Customer reviews are gold. They reveal what real users love and hate, unfiltered by marketing.
-- The most valuable part of competitive analysis is the "so what" — the strategic implications. Do not skip this.
-- Competitive analysis has a shelf life. Note the date and flag areas that change quickly.
+- Seja honesto sobre os pontos fortes dos concorrentes. Menosprezar concorrentes torna a análise inútil.
+- Concentre-se no que importa aos clientes, não no que importa aos times de produto. Clientes não ligam para a elegância da arquitetura.
+- Preços são difíceis de comparar com justiça. Anote as ressalvas (empacotamento diferente, baseado em uso versus por usuário, preços corporativos sob medida).
+- Vagas de emprego são uma inteligência competitiva subestimada. Um concorrente contratando engenheiros de ML sinaliza uma direção estratégica.
+- Avaliações de clientes são ouro. Revelam o que usuários reais amam e odeiam, sem o filtro do marketing.
+- A parte mais valiosa da análise competitiva é o "e daí?": as implicações estratégicas. Não a pule.
+- A análise competitiva tem prazo de validade. Anote a data e sinalize as áreas que mudam rápido.
