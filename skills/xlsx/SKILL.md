@@ -4,101 +4,100 @@ description: "Use esta skill sempre que um arquivo de planilha for a entrada ou 
 license: Complete terms in LICENSE.txt
 ---
 
-# XLSX creation, editing, and analysis
+# Criação, edição e análise de XLSX
 
-| Task | Approach |
+| Tarefa | Abordagem |
 |---|---|
-| **Create** or **edit** with formulas/formatting | `openpyxl` — see gotchas below |
-| **Bulk data** in or out | `pandas` (`read_excel`, `to_excel`) |
-| **Quick look** at a sheet | `markitdown file.xlsx` — `## SheetName` per sheet; reads `.xlsm` too. No cell coordinates, so don't plan edits from it |
-| **Read** a model (formulas *and* values) | two `load_workbook` passes — see gotchas |
+| **Criar** ou **editar** com fórmulas/formatação | `openpyxl`; veja as armadilhas abaixo |
+| **Dados em massa** de entrada ou saída | `pandas` (`read_excel`, `to_excel`) |
+| **Olhada rápida** em uma planilha | `markitdown file.xlsx`: `## NomeDaAba` por aba; lê `.xlsm` também. Sem coordenadas de célula, então não planeje edições a partir dele |
+| **Ler** um modelo (fórmulas *e* valores) | duas passagens de `load_workbook`; veja as armadilhas |
 
-> `openpyxl`, `pandas`, and `markitdown` are preinstalled — do not run `pip install` first; write the script and import directly. Only if an import fails (or the `markitdown` command is missing): `pip install` the missing package.
+> `openpyxl`, `pandas` e `markitdown` já vêm instalados: não rode `pip install` antes; escreva o script e importe direto. Só se um import falhar (ou o comando `markitdown` não existir): faça `pip install` do pacote que falta.
 
-> Script paths below are relative to this skill's directory.
+> Os caminhos de scripts abaixo são relativos ao diretório desta skill.
 
-## Requirements for every output
+## Requisitos para toda saída
 
-- **Professional font** (Arial, Times New Roman) throughout, unless the user says otherwise.
-- **Zero formula errors.** Never ship while `recalc.py` reports `errors_found`; the one exception is under `not_computed` below. If you think an error predates you, prove it: load the *original* with `data_only=True` and look at that cell. An error you introduced looks exactly like one you inherited.
-- **Use formulas, never hardcoded results.** Write `sheet['B10'] = '=SUM(B2:B9)'`, not the Python-computed total. The sheet must recalculate when its inputs change.
-- **Follow the user's spec literally.** Exact tab names, exact column headers, and the formula they spelled out. A redesign that computes something else fails, however elegant.
-- **Document every assumption and hardcoded number** where the reader will see it — a cell comment, or an adjacent cell at a table's end. Cite a real source when one exists (`Source: Company 10-K, FY2024, Page 45, Revenue Note, [SEC EDGAR URL]`); when the number came from the user, say so plainly.
-- **A workbook *you create* for someone to fill in** needs a short legend naming which cells to edit, and one example row of realistic values showing the expected format. Never add such a row to a file you were asked to edit.
-- **Editing an existing file: match its conventions exactly.** They override every guideline here. Find its designated input cells first — a distinct font color, fill, or shading marks them — write only there, and leave every existing formula untouched.
+- **Fonte profissional** (Arial, Times New Roman) em todo o arquivo, a menos que o usuário diga outra coisa.
+- **Zero erros de fórmula.** Nunca entregue enquanto o `recalc.py` informar `errors_found`; a única exceção está em `not_computed`, abaixo. Se você acha que um erro é anterior ao seu trabalho, prove: carregue o *original* com `data_only=True` e olhe aquela célula. Um erro que você introduziu é idêntico a um herdado.
+- **Use fórmulas, nunca resultados fixos.** Escreva `sheet['B10'] = '=SUM(B2:B9)'`, não o total calculado em Python. A planilha deve recalcular quando as entradas mudarem.
+- **Siga a especificação do usuário ao pé da letra.** Nomes exatos das abas, cabeçalhos exatos das colunas e a fórmula que ele descreveu. Um redesenho que calcula outra coisa falha, por mais elegante que seja.
+- **Documente toda premissa e todo número fixo** onde o leitor vá ver: um comentário de célula ou uma célula ao lado, no fim de uma tabela. Cite uma fonte real quando houver (`Source: Company 10-K, FY2024, Page 45, Revenue Note, [SEC EDGAR URL]`); quando o número veio do usuário, diga isso claramente.
+- **Uma pasta de trabalho que *você cria* para alguém preencher** precisa de uma legenda curta dizendo quais células editar e de uma linha de exemplo com valores realistas mostrando o formato esperado. Nunca adicione essa linha a um arquivo que lhe pediram para editar.
+- **Ao editar um arquivo existente, siga exatamente as convenções dele.** Elas prevalecem sobre todas as diretrizes daqui. Encontre primeiro as células de entrada designadas (uma cor de fonte, preenchimento ou sombreamento distinto as marca), escreva só nelas e deixe todas as fórmulas existentes intactas.
 
-## Recalculate (mandatory whenever the file contains formulas)
+## Recalcular (obrigatório sempre que o arquivo tiver fórmulas)
 
-openpyxl writes formulas as strings with **no cached values**. Until you recalculate, every
-formula cell reads back as `None` to anything reading cached values — `pandas`,
-`load_workbook(data_only=True)`, and most previewers.
+O openpyxl grava as fórmulas como texto, **sem valores em cache**. Até você recalcular, toda
+célula com fórmula é lida como `None` por qualquer coisa que leia valores em cache: `pandas`,
+`load_workbook(data_only=True)` e a maioria dos visualizadores.
 
 ```bash
-python scripts/recalc.py output.xlsx [timeout_seconds]   # default 30
+python scripts/recalc.py output.xlsx [timeout_seconds]   # padrão 30
 ```
 
-LibreOffice computes the formulas **on a copy**, only their values go into your file, and you get JSON:
-`status` (`success` | `errors_found`), `total_formulas`, `total_errors`, and an
-`error_summary` naming up to 100 cells per error type (`locations_truncated` says how many it
-withheld — trust `total_errors`, not the length of the list). Fix what it names and run it
-again. **JSON with an `error` key instead of a `status` means nothing was recalculated**, and
-only that case exits non-zero — `errors_found` exits 0, so never treat a clean exit as a clean
-workbook.
+O LibreOffice calcula as fórmulas **em uma cópia**, só os valores vão para o seu arquivo, e você recebe um JSON:
+`status` (`success` | `errors_found`), `total_formulas`, `total_errors` e um
+`error_summary` com até 100 células por tipo de erro (`locations_truncated` diz quantas
+foram omitidas; confie em `total_errors`, não no tamanho da lista). Corrija o que ele indicar e rode
+de novo. **Um JSON com a chave `error` em vez de `status` significa que nada foi recalculado**, e
+só esse caso sai com código diferente de zero; `errors_found` sai com 0, então nunca trate uma saída limpa como uma pasta de trabalho limpa.
 
-**A green recalc proves your formulas *evaluate*, not that they are *right*.** An off-by-one
-range or a reference to the wrong row yields a clean, error-free file with wrong numbers.
-Write 2–3 formulas first and check they pull the values you expect, before building out a grid.
+**Um recalc verde prova que suas fórmulas *calculam*, não que estão *certas*.** Um
+intervalo deslocado em um ou uma referência à linha errada gera um arquivo limpo, sem erros, com números errados.
+Escreva 2–3 fórmulas primeiro e confira se puxam os valores esperados, antes de montar uma grade inteira.
 
-**`not_computed` lists formulas LibreOffice cannot evaluate, even on `success`**: a function it lacks
-(`_xlfn.XLOOKUP`, `_xlfn.LET`…) or a link to another workbook (`='[1]Returns Analysis'!$B$2`). They
-keep what they held: after an openpyxl save, nothing until Excel opens it. For their numbers sooner,
-read the original with `data_only=True`; keep the formulas. A sound formula depending on a listed one,
-directly or not, reports `#NAME?` too: leave it and tell the user. A cell that tests one
-(`IFERROR(B1,0)`) gets LibreOffice's fallback, and a kept value may be stale: say so. After editing
-sheet XML, delete each changed formula's `<v>`: a mistake that keeps its value is listed, not reported.
+**`not_computed` lista fórmulas que o LibreOffice não consegue avaliar, mesmo com `success`**: uma função que ele não tem
+(`_xlfn.XLOOKUP`, `_xlfn.LET`…) ou um vínculo com outra pasta de trabalho (`='[1]Returns Analysis'!$B$2`). Elas
+mantêm o que continham: depois de salvar com o openpyxl, nada, até o Excel abrir o arquivo. Para obter os números delas antes,
+leia o original com `data_only=True`; mantenha as fórmulas. Uma fórmula correta que dependa de uma listada,
+direta ou indiretamente, também informa `#NAME?`: deixe como está e avise o usuário. Uma célula que testa uma delas
+(`IFERROR(B1,0)`) recebe o valor de contingência do LibreOffice, e um valor mantido pode estar desatualizado: avise. Depois de editar
+o XML de uma planilha, apague o `<v>` de cada fórmula alterada: um erro que mantém o valor é listado, não relatado.
 
-## Choosing formulas that survive verification
+## Escolhendo fórmulas que sobrevivem à verificação
 
-LibreOffice implements fewer functions than Excel, and a formula it cannot evaluate has no value
-until Excel opens the file.
+O LibreOffice implementa menos funções que o Excel, e uma fórmula que ele não consegue avaliar não tem valor
+até o Excel abrir o arquivo.
 
-- **Prefer Excel-2007-era functions** — `SUMIFS`, `INDEX`, `MATCH`, `IFERROR`, `SUMPRODUCT` — which need no prefix.
-- **Six post-2007 functions work, but only with an `_xlfn.` prefix**, because openpyxl writes your formula into the XML verbatim and Excel stores post-2007 names prefixed (its UI hides the prefix): `_xlfn.TEXTJOIN`, `_xlfn.CONCAT`, `_xlfn.IFS`, `_xlfn.SWITCH`, `_xlfn.MAXIFS`, `_xlfn.MINIFS`. Written bare, each yields `#NAME?`.
-- **Never use `XLOOKUP`, `XMATCH`, `SORT`, `FILTER`, `UNIQUE`, or `SEQUENCE`.** The runtime's LibreOffice cannot evaluate them, and one that can fills only the top-left cell of their result, since an openpyxl-written file has no spill metadata. Use `INDEX`/`MATCH` for lookups, and sort, filter, and de-duplicate in Python before writing the cells.
-- A missing `)` is reported as `unbalanced brackets`. Too few arguments (`=ROUND(A1)`) is not: LibreOffice returns a value, and Excel may offer to repair the file.
+- **Prefira funções da era do Excel 2007**: `SUMIFS`, `INDEX`, `MATCH`, `IFERROR`, `SUMPRODUCT`, que não precisam de prefixo.
+- **Seis funções pós-2007 funcionam, mas só com o prefixo `_xlfn.`**, porque o openpyxl grava sua fórmula no XML literalmente e o Excel armazena nomes pós-2007 com prefixo (a interface esconde o prefixo): `_xlfn.TEXTJOIN`, `_xlfn.CONCAT`, `_xlfn.IFS`, `_xlfn.SWITCH`, `_xlfn.MAXIFS`, `_xlfn.MINIFS`. Escritas sem o prefixo, cada uma gera `#NAME?`.
+- **Nunca use `XLOOKUP`, `XMATCH`, `SORT`, `FILTER`, `UNIQUE` nem `SEQUENCE`.** O LibreOffice do ambiente não consegue avaliá-las, e um que consiga preenche só a célula superior esquerda do resultado, já que um arquivo gravado pelo openpyxl não tem metadados de derramamento. Use `INDEX`/`MATCH` para buscas e ordene, filtre e remova duplicatas em Python antes de gravar as células.
+- Um `)` faltando é relatado como `unbalanced brackets`. Argumentos de menos (`=ROUND(A1)`) não: o LibreOffice devolve um valor, e o Excel pode oferecer reparar o arquivo.
 
-## openpyxl gotchas
+## Armadilhas do openpyxl
 
-- **Reading a model takes two loads.** `data_only=True` yields cached values with the formulas gone; the default yields formula strings with no values. One pass cannot give you both.
-- **`data_only=True` is destructive if you save.** That workbook has no formulas left, so saving replaces every one with a literal — permanently.
-- **`data_only=True` on a file openpyxl just wrote returns `None` everywhere** — run `recalc.py` first. (A formula whose result is `""` also reads back as `None`.)
-- **Merged cells: write the top-left anchor only.** Every other cell in the range is a `MergedCell` whose `.value` is read-only.
-- **`.xlsm` loses its macros unless you pass `keep_vba=True`** to `load_workbook`.
-- **A sheet name containing a space must be quoted** in a cross-sheet reference: `='Assumptions Inputs'!$B$5`. Unquoted, it evaluates to `#VALUE!`.
-- **Saving an upload drops its text boxes, shapes and slicers.** First search `xl/drawings/` for `<xdr:sp ` (with the space) and look for an `xl/slicers/` part; if found, tell the user or edit the sheet XML directly.
-- **Nothing mends a malformed workbook**: an unclosed quote in a number format (`'0.00 "USD'`), a defined name starting with `=`, or duplicate or empty table headers are saved as written, and Excel may offer to repair the file.
-- **Partly bold or italic cell text is flattened** unless `load_workbook(rich_text=True)`; such a `.value` is then a `CellRichText`, not a `str`.
-- **Every new formula needs its own `number_format`** (date, %, currency): nothing infers it, so a date shows as `45337` and 30% as `0.3`.
-- **On every new chart set `chart.roundedCorners = False`, `.overlay = False` on its legend and on each title you gave it (`chart.legend`, `chart.title`, `chart.x_axis.title`…), and, if it has axes (not pie or doughnut), `chart.x_axis.delete = False` and `chart.y_axis.delete = False`**, or Excel may draw the title or legend over the plot, round the frame, or draw no axes.
-- **With a `DateAxis`, set `chart.y_axis.crossAx = 500`**, or Excel may offer to repair the file.
+- **Ler um modelo exige dois carregamentos.** `data_only=True` entrega valores em cache sem as fórmulas; o padrão entrega o texto das fórmulas sem valores. Uma passagem não dá os dois.
+- **`data_only=True` é destrutivo se você salvar.** Essa pasta de trabalho não tem mais fórmulas, então salvar substitui todas por valores literais, de forma permanente.
+- **`data_only=True` em um arquivo que o openpyxl acabou de gravar devolve `None` em tudo**: rode o `recalc.py` antes. (Uma fórmula cujo resultado é `""` também é lida como `None`.)
+- **Células mescladas: escreva só na âncora superior esquerda.** Toda outra célula do intervalo é um `MergedCell` cujo `.value` é somente leitura.
+- **`.xlsm` perde as macros, a menos que você passe `keep_vba=True`** ao `load_workbook`.
+- **Um nome de aba com espaço precisa de aspas** em uma referência entre abas: `='Assumptions Inputs'!$B$5`. Sem aspas, resulta em `#VALUE!`.
+- **Salvar um arquivo enviado descarta suas caixas de texto, formas e segmentações.** Primeiro procure em `xl/drawings/` por `<xdr:sp ` (com o espaço) e verifique se há uma parte `xl/slicers/`; se houver, avise o usuário ou edite o XML da planilha diretamente.
+- **Nada conserta uma pasta de trabalho malformada**: uma aspa não fechada em um formato de número (`'0.00 "USD'`), um nome definido começando com `=`, ou cabeçalhos de tabela duplicados ou vazios são salvos como escritos, e o Excel pode oferecer reparar o arquivo.
+- **Texto de célula parcialmente em negrito ou itálico é achatado**, a menos que `load_workbook(rich_text=True)`; nesse caso o `.value` é um `CellRichText`, não um `str`.
+- **Toda fórmula nova precisa do próprio `number_format`** (data, %, moeda): nada o infere, então uma data aparece como `45337` e 30% como `0.3`.
+- **Em todo gráfico novo defina `chart.roundedCorners = False`, `.overlay = False` na legenda e em cada título que você criou (`chart.legend`, `chart.title`, `chart.x_axis.title`…) e, se tiver eixos (não pizza nem rosca), `chart.x_axis.delete = False` e `chart.y_axis.delete = False`**, ou o Excel pode desenhar o título ou a legenda sobre o gráfico, arredondar a moldura ou não desenhar os eixos.
+- **Com um `DateAxis`, defina `chart.y_axis.crossAx = 500`**, ou o Excel pode oferecer reparar o arquivo.
 
-## Financial models
+## Modelos financeiros
 
-Unless the user says otherwise, or the existing file already does something else.
+A menos que o usuário diga outra coisa, ou o arquivo existente já faça de outro jeito.
 
-**Color:** blue text (`0,0,255`) for hardcoded inputs and scenario levers · black for formulas ·
-green (`0,128,0`) for links to another sheet · red (`255,0,0`) for links to another file ·
-yellow fill (`255,255,0`) for key assumptions and cells the user should fill in.
+**Cor:** texto azul (`0,0,255`) para entradas fixas e alavancas de cenário · preto para fórmulas ·
+verde (`0,128,0`) para vínculos com outra aba · vermelho (`255,0,0`) para vínculos com outro arquivo ·
+preenchimento amarelo (`255,255,0`) para premissas-chave e células que o usuário deve preencher.
 
-**Numbers:** currency `$#,##0`, with the unit named in the header (`Revenue ($mm)`) · zeros
-render as `-`, including in percentages (`$#,##0;($#,##0);-`) · negatives in parentheses ·
-percentages `0.0%`, **stored as fractions** (`0.15` renders `15.0%`; storing `15` renders
-`1500.0%`) · valuation multiples `0.0x` · years as text (`"2024"`, never `2,024`).
+**Números:** moeda `$#,##0`, com a unidade no cabeçalho (`Revenue ($mm)`) · zeros
+aparecem como `-`, inclusive em percentuais (`$#,##0;($#,##0);-`) · negativos entre parênteses ·
+percentuais `0.0%`, **armazenados como frações** (`0.15` aparece como `15.0%`; armazenar `15` aparece como
+`1500.0%`) · múltiplos de avaliação `0.0x` · anos como texto (`"2024"`, nunca `2,024`).
 
-**Structure:** every assumption in its own labeled cell, referenced by the formulas that use it
-(`=B5*(1+$B$6)`, never `=B5*1.05`) · formulas consistent across every projection period, since a
-lone edited cell mid-row is the commonest silent error · guard denominators that can be zero.
+**Estrutura:** cada premissa em sua própria célula rotulada, referenciada pelas fórmulas que a usam
+(`=B5*(1+$B$6)`, nunca `=B5*1.05`) · fórmulas consistentes em todos os períodos projetados, já que uma
+única célula editada no meio da linha é o erro silencioso mais comum · proteja denominadores que podem ser zero.
 
-## Dependencies
+## Dependências
 
-`openpyxl`, `pandas`, `markitdown` (pip, preinstalled — install only if an import fails or the command is missing) · LibreOffice (`soffice`, auto-configured for sandboxed environments via `scripts/office/soffice.py`)
+`openpyxl`, `pandas`, `markitdown` (pip, já instalados; instale só se um import falhar ou o comando não existir) · LibreOffice (`soffice`, configurado automaticamente para ambientes isolados via `scripts/office/soffice.py`)
