@@ -10,7 +10,7 @@ Roda **na máquina do usuário** (navegador com interface). Não roda no contain
 ## Regras fixas
 - Nunca gravar senha do certificado em arquivo, commit ou chat. Ela vem de `CERT_PFX_PASSPHRASE` (variável de ambiente).
 - Nunca clicar no envio final do protocolo sem o usuário confirmar naquele cliente.
-- Sessão expirou ou apareceu captcha: parar e pedir ao usuário para resolver na janela aberta.
+- O usuário confirma o login gov.br a cada execução: os scripts abrem a janela, avisam no terminal e esperam (até 10 min) ele concluir login/captcha antes de continuar. Nunca automatizar o login.
 - Aviso por e-mail vai para o endereço do próprio usuário (campo `aviso_email` em `config/clientes.json`). Mandar a cliente só se o usuário pedir.
 
 ## Contexto de uso
@@ -23,7 +23,7 @@ Roda **na máquina do usuário** (navegador com interface). Não roda no contain
 1. `cd alvara-bombeiros-go && npm i playwright` (o navegador do Playwright já deve estar instalado).
 2. `export CERT_PFX_PATH=/caminho/certificado.pfx CERT_PFX_PASSPHRASE='...'`
 3. Copiar `config/clientes.exemplo.json` para `config/clientes.json` e preencher.
-4. `node scripts/login.js` e concluir o login gov.br na janela. O perfil fica em `.perfil/` (fora do git).
+4. Opcional: `node scripts/login.js` para testar o login. Nas rotinas, o login é pedido na própria execução.
 5. `node scripts/mapear.js <url>` salva HTML + screenshot das telas do SIAPI em `saida/mapa/` para preencher `config/seletores.json`. Isso precisa ser feito acompanhando o fluxo real uma vez; os seletores do exemplo são palpites.
 
 ## Acompanhar (rotina)
@@ -37,5 +37,6 @@ Roda **na máquina do usuário** (navegador com interface). Não roda no contain
 3. Mostrar o screenshot ao usuário; com o "ok" dele, rodar com `--enviar`. O número do protocolo e o comprovante vão para `saida/protocolos/<id>/` e o protocolo entra em `clientes.json`.
 
 ## Limites conhecidos
+- Execução sempre com janela visível e usuário presente no login.
 - O SIAPI é JSF (ViewState, ids dinâmicos): seletores quebram quando o site muda. Reexecutar `mapear.js` e ajustar `seletores.json`.
 - Não foi testado contra o site real; a primeira rodada de cada script deve ser acompanhada.

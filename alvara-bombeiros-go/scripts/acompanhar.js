@@ -16,7 +16,7 @@ const pendente = path.join(raiz, 'saida', 'estado-pendente.json');
   const sel = ler(path.join(raiz, 'config', 'seletores.json'), null);
   if (!cfg || !sel) throw new Error('Falta config/clientes.json ou seletores.json');
   const s = sel.andamentos;
-  const ctx = await abrir({ headless: process.argv.includes('--headless') });
+  const ctx = await abrir();
   const page = ctx.pages()[0] || await ctx.newPage();
   const novidades = []; const pend = {};
   try {

@@ -24,12 +24,21 @@ async function abrir({ headless = false } = {}) {
   });
 }
 
-// Detecta tela de login/captcha para parar em vez de insistir.
+// Login é sempre confirmado pelo usuário: se cair na tela de login/captcha,
+// avisa e espera (até 10 min) ele concluir na janela aberta.
 async function garantirSessao(page) {
-  const url = page.url();
-  const txt = (await page.content()).toLowerCase();
-  if (/acesso\.gov\.br|login/.test(url) || txt.includes('captcha')) {
-    throw new Error('Sessão expirada ou captcha. Rode login.js ou resolva na janela e tente de novo.');
+  const precisaLogin = async () => {
+    const url = page.url();
+    const txt = (await page.content()).toLowerCase();
+    return /acesso\.gov\.br|\/login/.test(url) || txt.includes('captcha');
+  };
+  if (!(await precisaLogin())) return;
+  console.log('>>> Faça o login gov.br / resolva o captcha na janela. Aguardando...');
+  const limite = Date.now() + 10 * 60 * 1000;
+  while (await precisaLogin()) {
+    if (Date.now() > limite) throw new Error('Login não concluído em 10 minutos.');
+    await page.waitForTimeout(2000);
   }
+  await page.waitForLoadState('networkidle');
 }
 module.exports = { abrir, garantirSessao, ler, gravar, raiz };
