@@ -4,34 +4,34 @@ description: "Gestão simples de tarefas usando um arquivo TASKS.md compartilhad
 user-invocable: false
 ---
 
-# Task Management
+# Gestão de tarefas
 
-Tasks are tracked in a simple `TASKS.md` file that both you and the user can edit.
+As tarefas ficam em um arquivo simples `TASKS.md`, que você e o usuário podem editar.
 
-## File Location
+## Local do arquivo
 
-**Always use `TASKS.md` in the current working directory.**
+**Sempre use o `TASKS.md` do diretório de trabalho atual.**
 
-- If it exists, read/write to it
-- If it doesn't exist, create it with the template below
+- Se existir, leia e escreva nele
+- Se não existir, crie com o modelo abaixo
 
-## Dashboard Setup (First Run)
+## Configuração do painel (primeira execução)
 
-A visual dashboard is available for managing tasks and memory. **On first interaction with tasks:**
+Há um painel visual para gerenciar tarefas e memória. **Na primeira interação com tarefas:**
 
-1. Check if `dashboard.html` exists in the current working directory
-2. If not, copy it from `${CLAUDE_PLUGIN_ROOT}/skills/dashboard.html` to the current working directory
-3. Inform the user: "I've added the dashboard. Run `/productivity:start` to set up the full system."
+1. Verifique se existe `dashboard.html` no diretório de trabalho atual
+2. Se não existir, copie de `${CLAUDE_PLUGIN_ROOT}/skills/dashboard.html` para o diretório de trabalho atual
+3. Avise o usuário: "Adicionei o painel. Rode `/productivity:start` para configurar o sistema completo."
 
-The task board:
-- Reads and writes to the same `TASKS.md` file
-- Auto-saves changes
-- Watches for external changes (syncs when you edit via CLI)
-- Supports drag-and-drop reordering of tasks and sections
+O quadro de tarefas:
+- Lê e escreve no mesmo arquivo `TASKS.md`
+- Salva as alterações automaticamente
+- Observa mudanças externas (sincroniza quando você edita pela linha de comando)
+- Permite reordenar tarefas e seções arrastando e soltando
 
-## Format & Template
+## Formato e modelo
 
-When creating a new TASKS.md, use this exact template (without example tasks):
+Ao criar um novo TASKS.md, use exatamente este modelo (sem tarefas de exemplo):
 
 ```markdown
 # Tasks
@@ -45,47 +45,47 @@ When creating a new TASKS.md, use this exact template (without example tasks):
 ## Done
 ```
 
-Task format:
-- `- [ ] **Task title** - context, for whom, due date`
-- Sub-bullets for additional details
-- Completed: `- [x] ~~Task~~ (date)`
+Formato da tarefa:
+- `- [ ] **Título da tarefa** - contexto, para quem, prazo`
+- Sub-itens para detalhes adicionais
+- Concluída: `- [x] ~~Tarefa~~ (data)`
 
-## How to Interact
+## Como interagir
 
-**When user asks "what's on my plate" / "my tasks":**
-- Read TASKS.md
-- Summarize Active and Waiting On sections
-- Highlight anything overdue or urgent
+**Quando o usuário perguntar "o que tenho pra fazer" / "minhas tarefas":**
+- Leia o TASKS.md
+- Resuma as seções Active e Waiting On
+- Destaque o que estiver atrasado ou urgente
 
-**When user says "add a task" / "remind me to":**
-- Add to Active section with `- [ ] **Task**` format
-- Include context if provided (who it's for, due date)
+**Quando o usuário disser "adiciona uma tarefa" / "me lembra de":**
+- Adicione na seção Active no formato `- [ ] **Tarefa**`
+- Inclua o contexto, se informado (para quem é, prazo)
 
-**When user says "done with X" / "finished X":**
-- Find the task
-- Change `[ ]` to `[x]`
-- Add strikethrough: `~~task~~`
-- Add completion date
-- Move to Done section
+**Quando o usuário disser "terminei X" / "concluí X":**
+- Encontre a tarefa
+- Troque `[ ]` por `[x]`
+- Adicione o tachado: `~~tarefa~~`
+- Adicione a data de conclusão
+- Mova para a seção Done
 
-**When user asks "what am I waiting on":**
-- Read the Waiting On section
-- Note how long each item has been waiting
+**Quando o usuário perguntar "o que estou esperando":**
+- Leia a seção Waiting On
+- Indique há quanto tempo cada item está esperando
 
-## Conventions
+## Convenções
 
-- **Bold** the task title for scannability
-- Include "for [person]" when it's a commitment to someone
-- Include "due [date]" for deadlines
-- Include "since [date]" for waiting items
-- Sub-bullets for additional context
-- Keep Done section for ~1 week, then clear old items
+- Deixe o título da tarefa em **negrito** para facilitar a leitura rápida
+- Inclua "para [pessoa]" quando for um compromisso com alguém
+- Inclua "prazo [data]" para datas limite
+- Inclua "desde [data]" para itens em espera
+- Use sub-itens para contexto adicional
+- Mantenha a seção Done por cerca de 1 semana e depois limpe os itens antigos
 
-## Extracting Tasks
+## Extração de tarefas
 
-When summarizing meetings or conversations, offer to add extracted tasks:
-- Commitments the user made ("I'll send that over")
-- Action items assigned to them
-- Follow-ups mentioned
+Ao resumir reuniões ou conversas, ofereça adicionar as tarefas extraídas:
+- Compromissos assumidos pelo usuário ("vou te enviar isso")
+- Itens de ação atribuídos a ele
+- Acompanhamentos mencionados
 
-Ask before adding - don't auto-add without confirmation.
+Pergunte antes de adicionar; não adicione automaticamente sem confirmação.

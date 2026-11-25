@@ -4,165 +4,165 @@ description: "Sincroniza tarefas e atualiza a memória com base na sua atividade
 argument-hint: "[--comprehensive]"
 ---
 
-# Update Command
+# Comando update
 
-> If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](../../CONNECTORS.md).
+> Se aparecerem placeholders desconhecidos ou você precisar conferir quais ferramentas estão conectadas, veja [CONNECTORS.md](../../CONNECTORS.md).
 
-Keep your task list and memory current. Two modes:
+Mantenha sua lista de tarefas e sua memória atualizadas. Dois modos:
 
-- **Default:** Sync tasks from external tools, triage stale items, check memory for gaps
-- **`--comprehensive`:** Deep scan chat, email, calendar, docs — flag missed todos and suggest new memories
+- **Padrão:** sincroniza tarefas de ferramentas externas, faz a triagem de itens parados e procura lacunas na memória
+- **`--comprehensive`:** varredura profunda de chat, e-mail, calendário e docs; sinaliza pendências perdidas e sugere novas memórias
 
-## Usage
+## Uso
 
 ```bash
 /productivity:update
 /productivity:update --comprehensive
 ```
 
-## Default Mode
+## Modo padrão
 
-### 1. Load Current State
+### 1. Carregue o estado atual
 
-Read `TASKS.md` and `memory/` directory. If they don't exist, suggest `/productivity:start` first.
+Leia o `TASKS.md` e o diretório `memory/`. Se não existirem, sugira rodar `/productivity:start` antes.
 
-### 2. Sync Tasks from External Sources
+### 2. Sincronize tarefas de fontes externas
 
-Check for available task sources:
-- **Project tracker** (e.g. Asana, Linear, Jira) (if MCP available)
-- **GitHub Issues** (if in a repo): `gh issue list --assignee=@me`
+Veja quais fontes de tarefas estão disponíveis:
+- **Gerenciador de projetos** (ex.: Asana, Linear, Jira) (se houver MCP)
+- **GitHub Issues** (se estiver em um repositório): `gh issue list --assignee=@me`
 
-If no sources are available, skip to Step 3.
+Se não houver fontes disponíveis, pule para o passo 3.
 
-**Fetch tasks assigned to the user** (open/in-progress). Compare against TASKS.md:
+**Busque as tarefas atribuídas ao usuário** (abertas/em andamento). Compare com o TASKS.md:
 
-| External task | TASKS.md match? | Action |
-|---------------|-----------------|--------|
-| Found, not in TASKS.md | No match | Offer to add |
-| Found, already in TASKS.md | Match by title (fuzzy) | Skip |
-| In TASKS.md, not in external | No match | Flag as potentially stale |
-| Completed externally | In Active section | Offer to mark done |
+| Tarefa externa | Existe no TASKS.md? | Ação |
+|----------------|---------------------|------|
+| Encontrada, não está no TASKS.md | Sem correspondência | Oferecer adicionar |
+| Encontrada, já está no TASKS.md | Correspondência pelo título (aproximada) | Ignorar |
+| Está no TASKS.md, não na fonte externa | Sem correspondência | Sinalizar como possivelmente parada |
+| Concluída externamente | Está na seção Active | Oferecer marcar como feita |
 
-Present diff and let user decide what to add/complete.
+Apresente a diferença e deixe o usuário decidir o que adicionar ou concluir.
 
-### 3. Triage Stale Items
+### 3. Faça a triagem de itens parados
 
-Review Active tasks in TASKS.md and flag:
-- Tasks with due dates in the past
-- Tasks in Active for 30+ days
-- Tasks with no context (no person, no project)
+Revise as tarefas Active no TASKS.md e sinalize:
+- Tarefas com prazo no passado
+- Tarefas em Active há 30 dias ou mais
+- Tarefas sem contexto (sem pessoa, sem projeto)
 
-Present each for triage: Mark done? Reschedule? Move to Someday?
+Apresente cada uma para triagem: marcar como feita? Reagendar? Mover para Someday?
 
-### 4. Decode Tasks for Memory Gaps
+### 4. Decodifique as tarefas para achar lacunas na memória
 
-For each task, attempt to decode all entities (people, projects, acronyms, tools, links):
-
-```
-Task: "Send PSR to Todd re: Phoenix blockers"
-
-Decode:
-- PSR → ✓ Pipeline Status Report (in glossary)
-- Todd → ✓ Todd Martinez (in people/)
-- Phoenix → ? Not in memory
-```
-
-Track what's fully decoded vs. what has gaps.
-
-### 5. Fill Gaps
-
-Present unknown terms grouped:
-```
-I found terms in your tasks I don't have context for:
-
-1. "Phoenix" (from: "Send PSR to Todd re: Phoenix blockers")
-   → What's Phoenix?
-
-2. "Maya" (from: "sync with Maya on API design")
-   → Who is Maya?
-```
-
-Add answers to the appropriate memory files (people/, projects/, glossary.md).
-
-### 6. Capture Enrichment
-
-Tasks often contain richer context than memory. Extract and update:
-- **Links** from tasks → add to project/people files
-- **Status changes** ("launch done") → update project status, demote from CLAUDE.md
-- **Relationships** ("Todd's sign-off on Maya's proposal") → cross-reference people
-- **Deadlines** → add to project files
-
-### 7. Report
+Para cada tarefa, tente decodificar todas as entidades (pessoas, projetos, siglas, ferramentas, links):
 
 ```
-Update complete:
-- Tasks: +3 from project tracker (e.g. Asana), 1 completed, 2 triaged
-- Memory: 2 gaps filled, 1 project enriched
-- All tasks decoded ✓
+Tarefa: "Send PSR to Todd re: Phoenix blockers"
+
+Decodificação:
+- PSR → ✓ Pipeline Status Report (no glossário)
+- Todd → ✓ Todd Martinez (em people/)
+- Phoenix → ? Não está na memória
 ```
 
-## Comprehensive Mode (`--comprehensive`)
+Registre o que foi totalmente decodificado e o que tem lacunas.
 
-Everything in Default Mode, plus a deep scan of recent activity.
+### 5. Preencha as lacunas
 
-### Extra Step: Scan Activity Sources
+Apresente os termos desconhecidos agrupados:
+```
+Encontrei nas suas tarefas termos dos quais não tenho contexto:
 
-Gather data from available MCP sources:
-- **Chat:** Search recent messages, read active channels
-- **Email:** Search sent messages
-- **Documents:** List recently touched docs
-- **Calendar:** List recent + upcoming events
+1. "Phoenix" (de: "Send PSR to Todd re: Phoenix blockers")
+   → O que é Phoenix?
 
-### Extra Step: Flag Missed Todos
+2. "Maya" (de: "sync with Maya on API design")
+   → Quem é a Maya?
+```
 
-Compare activity against TASKS.md. Surface action items that aren't tracked:
+Adicione as respostas aos arquivos de memória apropriados (people/, projects/, glossary.md).
+
+### 6. Capture o enriquecimento
+
+As tarefas costumam ter mais contexto que a memória. Extraia e atualize:
+- **Links** das tarefas → adicione aos arquivos de projeto/pessoa
+- **Mudanças de status** ("lançamento concluído") → atualize o status do projeto e retire do CLAUDE.md
+- **Relações** ("aprovação do Todd na proposta da Maya") → faça referência cruzada entre pessoas
+- **Prazos** → adicione aos arquivos de projeto
+
+### 7. Relatório
 
 ```
-## Possible Missing Tasks
+Atualização concluída:
+- Tarefas: +3 do gerenciador de projetos (ex.: Asana), 1 concluída, 2 em triagem
+- Memória: 2 lacunas preenchidas, 1 projeto enriquecido
+- Todas as tarefas decodificadas ✓
+```
 
-From your activity, these look like todos you haven't captured:
+## Modo completo (`--comprehensive`)
 
-1. From chat (Jan 18):
+Tudo do modo padrão, mais uma varredura profunda da atividade recente.
+
+### Passo extra: varra as fontes de atividade
+
+Reúna dados das fontes MCP disponíveis:
+- **Chat:** busque mensagens recentes, leia canais ativos
+- **E-mail:** busque mensagens enviadas
+- **Documentos:** liste docs mexidos recentemente
+- **Calendário:** liste eventos recentes e próximos
+
+### Passo extra: sinalize pendências perdidas
+
+Compare a atividade com o TASKS.md. Mostre itens de ação que não estão registrados:
+
+```
+## Possíveis tarefas faltando
+
+Pela sua atividade, estas parecem pendências que você não registrou:
+
+1. Do chat (18/jan):
    "I'll send the updated mockups by Friday"
-   → Add to TASKS.md?
+   → Adicionar ao TASKS.md?
 
-2. From meeting "Phoenix Standup" (Jan 17):
-   You have a recurring meeting but no Phoenix tasks active
-   → Anything needed here?
+2. Da reunião "Phoenix Standup" (17/jan):
+   Você tem uma reunião recorrente, mas nenhuma tarefa ativa de Phoenix
+   → Falta alguma coisa aqui?
 
-3. From email (Jan 16):
+3. Do e-mail (16/jan):
    "I'll review the API spec this week"
-   → Add to TASKS.md?
+   → Adicionar ao TASKS.md?
 ```
 
-Let user pick which to add.
+Deixe o usuário escolher quais adicionar.
 
-### Extra Step: Suggest New Memories
+### Passo extra: sugira novas memórias
 
-Surface new entities not in memory:
+Mostre entidades novas que não estão na memória:
 
 ```
-## New People (not in memory)
-| Name | Frequency | Context |
-|------|-----------|---------|
-| Maya Rodriguez | 12 mentions | design, UI reviews |
-| Alex K | 8 mentions | DMs about API |
+## Pessoas novas (fora da memória)
+| Nome | Frequência | Contexto |
+|------|------------|----------|
+| Maya Rodriguez | 12 menções | design, revisões de UI |
+| Alex K | 8 menções | DMs sobre API |
 
-## New Projects/Topics
-| Name | Frequency | Context |
-|------|-----------|---------|
-| Starlight | 15 mentions | planning docs, product |
+## Projetos/temas novos
+| Nome | Frequência | Contexto |
+|------|------------|----------|
+| Starlight | 15 menções | docs de planejamento, produto |
 
-## Suggested Cleanup
-- **Horizon project** — No mentions in 30 days. Mark completed?
+## Limpeza sugerida
+- **Projeto Horizon**: sem menções há 30 dias. Marcar como concluído?
 ```
 
-Present grouped by confidence. High-confidence items offered to add directly; low-confidence items asked about.
+Apresente agrupado por confiança. Itens de alta confiança são oferecidos para adicionar direto; os de baixa confiança viram pergunta.
 
-## Notes
+## Observações
 
-- Never auto-add tasks or memories without user confirmation
-- External source links are preserved when available
-- Fuzzy matching on task titles handles minor wording differences
-- Safe to run frequently — only updates when there's new info
-- `--comprehensive` always runs interactively
+- Nunca adicione tarefas ou memórias automaticamente sem confirmação do usuário
+- Os links das fontes externas são preservados quando disponíveis
+- A correspondência aproximada de títulos lida com pequenas diferenças de redação
+- É seguro rodar com frequência: só atualiza quando há informação nova
+- `--comprehensive` sempre roda de forma interativa

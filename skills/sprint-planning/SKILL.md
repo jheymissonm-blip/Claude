@@ -6,89 +6,90 @@ argument-hint: "[sprint name or date range]"
 
 # /sprint-planning
 
-> If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](../../CONNECTORS.md).
+> Se aparecerem placeholders desconhecidos ou você precisar conferir quais ferramentas estão conectadas, veja [CONNECTORS.md](../../CONNECTORS.md).
 
-Plan a sprint by scoping work, estimating capacity, and setting clear goals.
+Planeje uma sprint definindo o escopo, estimando a capacidade e fixando metas claras.
 
-## Usage
+## Uso
 
 ```
 /sprint-planning $ARGUMENTS
 ```
 
-## How It Works
+## Como funciona
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    SPRINT PLANNING                                 │
+│                    PLANEJAMENTO DE SPRINT                          │
 ├─────────────────────────────────────────────────────────────────┤
-│  STANDALONE (always works)                                       │
-│  ✓ Define sprint goals and success criteria                     │
-│  ✓ Estimate team capacity (accounting for PTO, meetings)        │
-│  ✓ Scope and prioritize backlog items                           │
-│  ✓ Identify dependencies and risks                              │
-│  ✓ Generate sprint plan document                                │
+│  INDEPENDENTE (sempre funciona)                                  │
+│  ✓ Define metas e critérios de sucesso da sprint                │
+│  ✓ Estima a capacidade do time (considerando férias e reuniões) │
+│  ✓ Delimita e prioriza os itens do backlog                      │
+│  ✓ Identifica dependências e riscos                             │
+│  ✓ Gera o documento do plano da sprint                          │
 ├─────────────────────────────────────────────────────────────────┤
-│  SUPERCHARGED (when you connect your tools)                      │
-│  + Project tracker: Pull backlog, create sprint, assign items   │
-│  + Calendar: Account for PTO and meetings in capacity           │
-│  + Chat: Share sprint plan with the team                        │
+│  POTENCIALIZADO (quando você conecta suas ferramentas)           │
+│  + Gerenciador de projetos: puxa o backlog, cria a sprint,      │
+│    atribui itens                                                │
+│  + Calendário: considera férias e reuniões na capacidade        │
+│  + Chat: compartilha o plano da sprint com o time               │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## What I Need From You
+## O que preciso de você
 
-- **Team**: Who's on the team and their availability this sprint?
-- **Sprint length**: How many days/weeks?
-- **Backlog**: What's prioritized? (Pull from tracker, paste, or describe)
-- **Carryover**: Anything unfinished from last sprint?
-- **Dependencies**: Anything blocked on other teams?
+- **Time**: quem está no time e qual a disponibilidade de cada um nesta sprint?
+- **Duração da sprint**: quantos dias ou semanas?
+- **Backlog**: o que está priorizado? (puxe do gerenciador, cole ou descreva)
+- **Resíduo**: sobrou algo da sprint anterior?
+- **Dependências**: algo bloqueado por outros times?
 
-## Output
+## Saída
 
 ```markdown
-## Sprint Plan: [Sprint Name]
-**Dates:** [Start] — [End] | **Team:** [X] engineers
-**Sprint Goal:** [One clear sentence about what success looks like]
+## Plano da sprint: [Nome da sprint]
+**Datas:** [Início] — [Fim] | **Time:** [X] engenheiros
+**Meta da sprint:** [Uma frase clara sobre como é o sucesso]
 
-### Capacity
-| Person | Available Days | Allocation | Notes |
-|--------|---------------|------------|-------|
-| [Name] | [X] of [Y] | [X] points/hours | [PTO, on-call, etc.] |
-| **Total** | **[X]** | **[X] points** | |
+### Capacidade
+| Pessoa | Dias disponíveis | Alocação | Observações |
+|--------|------------------|----------|-------------|
+| [Nome] | [X] de [Y] | [X] pontos/horas | [férias, plantão etc.] |
+| **Total** | **[X]** | **[X] pontos** | |
 
-### Sprint Backlog
-| Priority | Item | Estimate | Owner | Dependencies |
-|----------|------|----------|-------|--------------|
-| P0 | [Must ship] | [X] pts | [Person] | [None / Blocked by X] |
-| P1 | [Should ship] | [X] pts | [Person] | [None] |
-| P2 | [Stretch] | [X] pts | [Person] | [None] |
+### Backlog da sprint
+| Prioridade | Item | Estimativa | Responsável | Dependências |
+|------------|------|------------|-------------|--------------|
+| P0 | [Precisa entregar] | [X] pts | [Pessoa] | [Nenhuma / Bloqueado por X] |
+| P1 | [Deveria entregar] | [X] pts | [Pessoa] | [Nenhuma] |
+| P2 | [Extra] | [X] pts | [Pessoa] | [Nenhuma] |
 
-### Planned Capacity: [X] points | Sprint Load: [X] points ([X]% of capacity)
+### Capacidade planejada: [X] pontos | Carga da sprint: [X] pontos ([X]% da capacidade)
 
-### Risks
-| Risk | Impact | Mitigation |
-|------|--------|------------|
-| [Risk] | [What happens] | [What to do] |
+### Riscos
+| Risco | Impacto | Mitigação |
+|-------|---------|-----------|
+| [Risco] | [O que acontece] | [O que fazer] |
 
-### Definition of Done
-- [ ] Code reviewed and merged
-- [ ] Tests passing
-- [ ] Documentation updated (if applicable)
-- [ ] Product sign-off
+### Definição de pronto
+- [ ] Código revisado e mergeado
+- [ ] Testes passando
+- [ ] Documentação atualizada (se aplicável)
+- [ ] Aprovação do produto
 
-### Key Dates
-| Date | Event |
-|------|-------|
-| [Date] | Sprint start |
-| [Date] | Mid-sprint check-in |
-| [Date] | Sprint end / Demo |
-| [Date] | Retro |
+### Datas-chave
+| Data | Evento |
+|------|--------|
+| [Data] | Início da sprint |
+| [Data] | Checagem no meio da sprint |
+| [Data] | Fim da sprint / Demo |
+| [Data] | Retrospectiva |
 ```
 
-## Tips
+## Dicas
 
-1. **Leave buffer** — Plan to 70-80% capacity. You will get interrupts.
-2. **One clear sprint goal** — If you can't state it in one sentence, the sprint is unfocused.
-3. **Identify stretch items** — Know what to cut if things take longer than expected.
-4. **Carry over honestly** — If something didn't ship, understand why before re-committing.
+1. **Deixe folga**: planeje para 70-80% da capacidade. Haverá interrupções.
+2. **Uma meta clara por sprint**: se não dá para dizer em uma frase, a sprint está sem foco.
+3. **Identifique itens extras**: saiba o que cortar se as coisas demorarem mais que o esperado.
+4. **Repasse com honestidade**: se algo não foi entregue, entenda o motivo antes de assumir o compromisso de novo.

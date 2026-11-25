@@ -3,17 +3,17 @@ name: startup-hook-skill
 description: "Criação e desenvolvimento de hooks de inicialização para sessões na nuvem do Claude Code. Use somente quando o usuário pedir um hook SessionStart commitado no repositório. Não serve para configurar um ambiente de nuvem ou preparar um repositório para sessões na nuvem; isso é feito com as ferramentas de ambiente."
 ---
 
-# Startup Hook Skill for Claude Code cloud sessions
+# Skill de hook de inicialização para sessões na nuvem do Claude Code
 
-Create SessionStart hooks that install dependencies so tests and linters work in Claude Code cloud sessions.
+Crie hooks SessionStart que instalam dependências para que testes e linters funcionem nas sessões na nuvem do Claude Code.
 
-If the user asked to set up an environment rather than for a hook, stop here and commit nothing.
-Use `get_environment`, then `create_environment` or `update_environment` as it says, if you have them.
-Otherwise tell the user to set it up in the environment's settings.
+Se o usuário pediu para configurar um ambiente, e não um hook, pare aqui e não faça commit de nada.
+Use `get_environment` e depois `create_environment` ou `update_environment`, conforme ele indicar, se você tiver essas ferramentas.
+Caso contrário, diga ao usuário para configurar nas configurações do ambiente.
 
-## Hook Basics
+## Básico sobre hooks
 
-### Input (via stdin)
+### Entrada (via stdin)
 ```json
 {
   "session_id": "abc123",
@@ -25,7 +25,7 @@ Otherwise tell the user to set it up in the environment's settings.
 }
 ```
 
-### Async Mode
+### Modo assíncrono
 ```bash
 #!/bin/bash
 set -euo pipefail
@@ -35,59 +35,59 @@ echo '{"async": true, "asyncTimeout": 300000}'
 npm install
 ```
 
-The hook runs in background while the session starts. Using async mode reduces latency, but introduces a race condition where the agent loop might depend on something that is being done in the startup hook before it completed.
+O hook roda em segundo plano enquanto a sessão inicia. O modo assíncrono reduz a latência, mas cria uma condição de corrida: o loop do agente pode depender de algo que o hook de inicialização ainda não terminou de fazer.
 
-### Environment Variables
+### Variáveis de ambiente
 
-Available environment variables:
-- `$CLAUDE_PROJECT_DIR` - Repository root path
-- `$CLAUDE_ENV_FILE` - Path to write environment variables
-- `$CLAUDE_CODE_REMOTE` - If running in a remote environment (i.e. a Claude Code cloud session)
+Variáveis de ambiente disponíveis:
+- `$CLAUDE_PROJECT_DIR`: caminho da raiz do repositório
+- `$CLAUDE_ENV_FILE`: caminho para gravar variáveis de ambiente
+- `$CLAUDE_CODE_REMOTE`: indica se está rodando em ambiente remoto (ou seja, uma sessão na nuvem do Claude Code)
 
-Use `$CLAUDE_ENV_FILE` to persist variables for the session:
+Use `$CLAUDE_ENV_FILE` para persistir variáveis durante a sessão:
 ```bash
 echo 'export PYTHONPATH="."' >> "$CLAUDE_ENV_FILE"
 ```
 
-Use `$CLAUDE_CODE_REMOTE` to only run a script in a remote env:
+Use `$CLAUDE_CODE_REMOTE` para executar um script somente em ambiente remoto:
 ```bash
 if [ "${CLAUDE_CODE_REMOTE:-}" != "true" ]; then
   exit 0
 fi
 ```
 
-## Workflow
+## Fluxo de trabalho
 
-Make a todo list for all the tasks in this workflow and work on them one after another
+Monte uma lista de tarefas com todas as etapas deste fluxo e trabalhe nelas uma após a outra
 
-### 1. Analyze Dependencies
+### 1. Analise as dependências
 
-Find dependency manifests and analyze them. Examples:
+Encontre os manifestos de dependências e analise-os. Exemplos:
 - `package.json` / `package-lock.json` → npm
 - `pyproject.toml` / `requirements.txt` → pip/Poetry
 - `Cargo.toml` → cargo
 - `go.mod` → go
 - `Gemfile` → bundler
 
-Additionally, read though any documentation (i.e. README.md or similar) to see if you can get additional context on how the environment setup works
+Além disso, leia a documentação disponível (README.md ou similar) para ver se há mais contexto sobre como funciona a configuração do ambiente
 
-### 2. Design Hook
+### 2. Projete o hook
 
-Create a script that installs dependencies.
+Crie um script que instale as dependências.
 
-**Key principles:**
-- Don't use async mode in the first iteration. Only switch to it if the user asks for it
-- Write the hook only for the web unless user asks otherwise (see $CLAUDE_CODE_REMOTE)
-- The container state gets cached after the hook completes, prefer dependency install methods that take advantage of that (i.e. prefer npm install over npm ci)
-- Be idempotent (safe to run multiple times)
-- Skip an install that is already done. The hook runs at every session start, resume, clear and compact, and a synchronous hook holds the user's message until it ends. Run an install only if a file that decides what gets installed has changed since the install last succeeded (see the template below)
-- Store the hash file inside the directory that the install fills. The file then disappears with the packages. If that directory is in the repository, git must ignore it (for example node_modules, or a .venv that pip installs into), so that `git add` leaves the file out
-- pip into the system Python fills a directory outside the repository. Give that install a check of its own, with its own hash file in that directory: `pyhashes="$(python3 -I -c 'import sysconfig; print(sysconfig.get_path("purelib"))')/.session-start.sha256"`. Install with `python3 -m pip`, the pip of that same Python. A hash file in the repository won't do: an environment can keep the checkout but start a new container without the packages, and the check would then skip an install that is needed
-- For Python, also hash each file that a requirements file includes with `-r` or `-c`. Install the repository's own package editable (`pip install -e .`): a plain `pip install .` copies the code, which the check doesn't hash, so the copy would go stale. If that package has code to compile, install it outside the check, because an editable install doesn't rebuild that code when it changes
-- Put apt packages and global tools outside the checks and ahead of them, and install only what is missing: `if ! command -v shellcheck >/dev/null; then apt-get update; apt-get install -y shellcheck; fi`. For a package with no command, test `dpkg -s libpq-dev >/dev/null 2>&1`. For a tool that the repository pins, test its version too
-- Non-interactive (no user input)
+**Princípios principais:**
+- Não use o modo assíncrono na primeira iteração. Só mude para ele se o usuário pedir
+- Escreva o hook somente para a web, a menos que o usuário peça outra coisa (veja $CLAUDE_CODE_REMOTE)
+- O estado do container é armazenado em cache depois que o hook termina, então prefira métodos de instalação que aproveitem isso (ou seja, prefira npm install a npm ci)
+- Seja idempotente (seguro de rodar várias vezes)
+- Pule instalações que já foram feitas. O hook roda a cada início de sessão, retomada, clear e compact, e um hook síncrono segura a mensagem do usuário até terminar. Rode uma instalação somente se um arquivo que determina o que é instalado tiver mudado desde a última instalação bem-sucedida (veja o modelo abaixo)
+- Guarde o arquivo de hashes dentro do diretório que a instalação preenche. Assim o arquivo some junto com os pacotes. Se esse diretório estiver no repositório, o git deve ignorá-lo (por exemplo node_modules, ou um .venv onde o pip instala), para que o `git add` deixe o arquivo de fora
+- O pip no Python do sistema preenche um diretório fora do repositório. Dê a essa instalação uma verificação própria, com seu próprio arquivo de hashes nesse diretório: `pyhashes="$(python3 -I -c 'import sysconfig; print(sysconfig.get_path("purelib"))')/.session-start.sha256"`. Instale com `python3 -m pip`, o pip desse mesmo Python. Um arquivo de hashes no repositório não serve: um ambiente pode manter o checkout mas iniciar um container novo sem os pacotes, e a verificação então pularia uma instalação necessária
+- Em Python, calcule também o hash de cada arquivo que um arquivo de requirements inclui com `-r` ou `-c`. Instale o pacote do próprio repositório em modo editável (`pip install -e .`): um `pip install .` simples copia o código, que a verificação não calcula, e a cópia ficaria desatualizada. Se esse pacote tiver código a compilar, instale-o fora da verificação, porque uma instalação editável não recompila esse código quando ele muda
+- Coloque pacotes apt e ferramentas globais fora das verificações e antes delas, e instale somente o que estiver faltando: `if ! command -v shellcheck >/dev/null; then apt-get update; apt-get install -y shellcheck; fi`. Para um pacote sem comando, teste `dpkg -s libpq-dev >/dev/null 2>&1`. Para uma ferramenta que o repositório fixa em uma versão, teste também a versão
+- Não interativo (sem entrada do usuário)
 
-### 3. Create Hook File
+### 3. Crie o arquivo do hook
 
 ```bash
 mkdir -p .claude/hooks
@@ -99,33 +99,33 @@ echo '{"async": true, "asyncTimeout": 300000}'
 
 cd "${CLAUDE_PROJECT_DIR:-.}"
 
-# Install apt packages and global tools here, and only those that are missing
+# Instale aqui os pacotes apt e as ferramentas globais, somente os que estiverem faltando
 
-# Run the install only if a listed file has changed since the install last succeeded
+# Rode a instalação somente se um arquivo listado tiver mudado desde a última instalação bem-sucedida
 hashes=node_modules/.session-start.sha256
 if ! sha256sum --check --status "$hashes" 2>/dev/null; then
-  # Delete the old hashes first, so a failed install runs again next time
+  # Apague os hashes antigos primeiro, para que uma instalação que falhou rode de novo na próxima vez
   rm -f "$hashes"
 
-  # Install dependencies here. A failed install must end the script (no "|| true")
+  # Instale as dependências aqui. Uma instalação que falhar deve encerrar o script (sem "|| true")
 
-  # List this script and every file that decides what gets installed
-  # (in a workspace, each package's manifest too)
+  # Liste este script e todo arquivo que determina o que é instalado
+  # (em um workspace, inclua também o manifesto de cada pacote)
   sha256sum .claude/hooks/session-start.sh package.json package-lock.json 2>/dev/null > "$hashes" || rm -f "$hashes"
 fi
 
-# If the repository installs with pip into the system Python, check that install
-# the same way, with its hash file in that Python's package directory
+# Se o repositório instala com pip no Python do sistema, verifique essa instalação
+# da mesma forma, com o arquivo de hashes no diretório de pacotes desse Python
 
-# Steps that every session needs, such as writing to $CLAUDE_ENV_FILE, go here
+# Passos que toda sessão precisa, como gravar em $CLAUDE_ENV_FILE, ficam aqui
 EOF
 
 chmod +x .claude/hooks/session-start.sh
 ```
 
-### 4. Register in Settings
+### 4. Registre nas configurações
 
-Add to `.claude/settings.json` (create if doesn't exist):
+Adicione em `.claude/settings.json` (crie se não existir):
 ```json
 {
   "hooks": {
@@ -143,43 +143,43 @@ Add to `.claude/settings.json` (create if doesn't exist):
 }
 ```
 
-If `.claude/settings.json` exists, merge the hooks configuration.
+Se `.claude/settings.json` já existir, mescle a configuração de hooks.
 
-### 5. Validate Hook
+### 5. Valide o hook
 
-Run the hook script directly:
+Execute o script do hook diretamente:
 
 ```bash
 CLAUDE_CODE_REMOTE=true ./.claude/hooks/session-start.sh
 ```
 
-IMPORTANT: Verify dependencies are installed and script completes successfully.
+IMPORTANTE: verifique se as dependências foram instaladas e se o script termina com sucesso.
 
-Run it a second time and verify that it skips every install. Then, for each check, change the content of one of its hashed files, verify that its install runs again, and restore the file.
+Rode uma segunda vez e verifique se ele pula todas as instalações. Depois, para cada verificação, altere o conteúdo de um dos arquivos com hash, confirme que a instalação roda de novo e restaure o arquivo.
 
-### 6. Validate Linter
+### 6. Valide o linter
 
-IMPORTANT: Figure out what the right command is to run the linters and run it for an example file. No need to lint the whole project. If there are any issues, update the startup script accordingly and re-test.
+IMPORTANTE: descubra qual é o comando certo para rodar os linters e execute-o em um arquivo de exemplo. Não é preciso rodar o lint no projeto inteiro. Se houver problemas, atualize o script de inicialização e teste de novo.
 
-### 7. Validate Test
+### 7. Valide os testes
 
-IMPORTANT: Figure out what the right command is to run the tests and run it for one test. No need to run the whole test suite. If there are any issues, update the startup script accordingly and re-test.
+IMPORTANTE: descubra qual é o comando certo para rodar os testes e execute-o em um teste. Não é preciso rodar a suíte inteira. Se houver problemas, atualize o script de inicialização e teste de novo.
 
-### 8. Commit and push
+### 8. Commit e push
 
-Make a commit and push it to the remote branch
+Faça um commit e envie para a branch remota
 
-## Wrap up
+## Encerramento
 
-We're all done. In your last message to the user, Provide a detailed summary to the user with the format below:
+Terminamos. Na sua última mensagem ao usuário, forneça um resumo detalhado no formato abaixo:
 
-* Summary of the changes made
-* Validation results
-  1. ✅/‼️ Session hook execution (include details if it failed)
-  2. ✅/‼️ linter execution (include details if it failed)
-  3. ✅/‼️ test execution (include details if it failed)
-* Hook execution mode: Syncronous
-  * inform user that hook is running syncronous and the below trade-offs. Let them know that we can change it to async if they prefer faster session startup.
-    * Pros: Guarantees dependencies are installed before your session starts, preventing race conditions where Claude might try to run tests or linters before they're ready
-    * Cons: Your remote session will only start once the session start hook is completed
-* inform user that once they merge the session start hook into their repo's default branch, all future sessions will use it.
+* Resumo das alterações feitas
+* Resultados da validação
+  1. ✅/‼️ Execução do hook de sessão (inclua detalhes se falhou)
+  2. ✅/‼️ Execução do linter (inclua detalhes se falhou)
+  3. ✅/‼️ Execução dos testes (inclua detalhes se falhou)
+* Modo de execução do hook: síncrono
+  * informe ao usuário que o hook roda de forma síncrona e quais são as compensações abaixo. Diga que podemos mudar para assíncrono se ele preferir uma inicialização de sessão mais rápida.
+    * Vantagens: garante que as dependências estejam instaladas antes de a sessão começar, evitando condições de corrida em que o Claude tentaria rodar testes ou linters antes de estarem prontos
+    * Desvantagens: sua sessão remota só começa depois que o hook de início de sessão terminar
+* informe ao usuário que, depois de mesclar o hook de início de sessão na branch padrão do repositório, todas as sessões futuras vão usá-lo.

@@ -4,193 +4,193 @@ description: "Sistema de memória em dois níveis que faz do Claude um verdadeir
 user-invocable: false
 ---
 
-# Memory Management
+# Gestão de memória
 
-Memory makes Claude your workplace collaborator - someone who speaks your internal language.
+A memória faz do Claude um colaborador de trabalho, alguém que fala a linguagem interna da sua empresa.
 
-## The Goal
+## O objetivo
 
-Transform shorthand into understanding:
-
-```
-User: "ask todd to do the PSR for oracle"
-              ↓ Claude decodes
-"Ask Todd Martinez (Finance lead) to prepare the Pipeline Status Report
- for the Oracle Systems deal ($2.3M, closing Q2)"
-```
-
-Without memory, that request is meaningless. With memory, Claude knows:
-- **todd** → Todd Martinez, Finance lead, prefers Slack
-- **PSR** → Pipeline Status Report (weekly sales doc)
-- **oracle** → Oracle Systems deal, not the company
-
-## Architecture
+Transformar jargão em entendimento:
 
 ```
-CLAUDE.md          ← Hot cache (~30 people, common terms)
+Usuário: "pede pro todd fazer o PSR da oracle"
+              ↓ Claude decodifica
+"Peça ao Todd Martinez (líder de Finanças) para preparar o Pipeline Status Report
+ do negócio com a Oracle Systems (US$ 2,3 mi, fechamento no 2º tri)"
+```
+
+Sem memória, esse pedido não faz sentido. Com memória, o Claude sabe:
+- **todd** → Todd Martinez, líder de Finanças, prefere Slack
+- **PSR** → Pipeline Status Report (documento semanal de vendas)
+- **oracle** → o negócio com a Oracle Systems, não a empresa
+
+## Arquitetura
+
+```
+CLAUDE.md          ← Cache quente (~30 pessoas, termos comuns)
 memory/
-  glossary.md      ← Full decoder ring (everything)
-  people/          ← Complete profiles
-  projects/        ← Project details
-  context/         ← Company, teams, tools
+  glossary.md      ← Glossário completo (tudo)
+  people/          ← Perfis completos
+  projects/        ← Detalhes de projetos
+  context/         ← Empresa, times, ferramentas
 ```
 
-**CLAUDE.md (Hot Cache):**
-- Top ~30 people you interact with most
-- ~30 most common acronyms/terms
-- Active projects (5-15)
-- Your preferences
-- **Goal: Cover 90% of daily decoding needs**
+**CLAUDE.md (cache quente):**
+- As ~30 pessoas com quem você mais interage
+- Os ~30 acrônimos/termos mais comuns
+- Projetos ativos (5-15)
+- Suas preferências
+- **Meta: cobrir 90% das necessidades diárias de decodificação**
 
-**memory/glossary.md (Full Glossary):**
-- Complete decoder ring - everyone, every term
-- Searched when something isn't in CLAUDE.md
-- Can grow indefinitely
+**memory/glossary.md (glossário completo):**
+- Glossário completo: todas as pessoas, todos os termos
+- Consultado quando algo não está no CLAUDE.md
+- Pode crescer indefinidamente
 
 **memory/people/, projects/, context/:**
-- Rich detail when needed for execution
-- Full profiles, history, context
+- Detalhe rico quando necessário para executar
+- Perfis completos, histórico, contexto
 
-## Lookup Flow
+## Fluxo de consulta
 
 ```
-User: "ask todd about the PSR for phoenix"
+Usuário: "pergunta pro todd sobre o PSR do phoenix"
 
-1. Check CLAUDE.md (hot cache)
-   → Todd? ✓ Todd Martinez, Finance
+1. Consulte o CLAUDE.md (cache quente)
+   → Todd? ✓ Todd Martinez, Finanças
    → PSR? ✓ Pipeline Status Report
-   → Phoenix? ✓ DB migration project
+   → Phoenix? ✓ Projeto de migração de banco de dados
 
-2. If not found → search memory/glossary.md
-   → Full glossary has everyone/everything
+2. Se não achar → busque em memory/glossary.md
+   → O glossário completo tem todas as pessoas e termos
 
-3. If still not found → ask user
-   → "What does X mean? I'll remember it."
+3. Se ainda não achar → pergunte ao usuário
+   → "O que X significa? Vou lembrar."
 ```
 
-This tiered approach keeps CLAUDE.md lean (~100 lines) while supporting unlimited scale in memory/.
+Essa abordagem em camadas mantém o CLAUDE.md enxuto (~100 linhas) e permite escala ilimitada em memory/.
 
-## File Locations
+## Localização dos arquivos
 
-- **Working memory:** `CLAUDE.md` in current working directory
-- **Deep memory:** `memory/` subdirectory
+- **Memória de trabalho:** `CLAUDE.md` no diretório de trabalho atual
+- **Memória profunda:** subdiretório `memory/`
 
-## Working Memory Format (CLAUDE.md)
+## Formato da memória de trabalho (CLAUDE.md)
 
-Use tables for compactness. Target ~50-80 lines total.
+Use tabelas para ficar compacto. Meta de ~50-80 linhas no total.
 
 ```markdown
 # Memory
 
 ## Me
-[Name], [Role] on [Team]. [One sentence about what I do.]
+[Nome], [Cargo] em [Time]. [Uma frase sobre o que eu faço.]
 
 ## People
 | Who | Role |
 |-----|------|
-| **Todd** | Todd Martinez, Finance lead |
-| **Sarah** | Sarah Chen, Engineering (Platform) |
-| **Greg** | Greg Wilson, Sales |
-→ Full list: memory/glossary.md, profiles: memory/people/
+| **Todd** | Todd Martinez, líder de Finanças |
+| **Sarah** | Sarah Chen, Engenharia (Plataforma) |
+| **Greg** | Greg Wilson, Vendas |
+→ Lista completa: memory/glossary.md, perfis: memory/people/
 
 ## Terms
 | Term | Meaning |
 |------|---------|
 | PSR | Pipeline Status Report |
-| P0 | Drop everything priority |
-| standup | Daily 9am sync |
-→ Full glossary: memory/glossary.md
+| P0 | Prioridade máxima, largue tudo |
+| standup | Sincronização diária às 9h |
+→ Glossário completo: memory/glossary.md
 
 ## Projects
 | Name | What |
 |------|------|
-| **Phoenix** | DB migration, Q2 launch |
-| **Horizon** | Mobile app redesign |
-→ Details: memory/projects/
+| **Phoenix** | Migração de banco de dados, lançamento no 2º tri |
+| **Horizon** | Redesenho do app mobile |
+→ Detalhes: memory/projects/
 
 ## Preferences
-- 25-min meetings with buffers
-- Async-first, Slack over email
-- No meetings Friday afternoons
+- Reuniões de 25 min com intervalos
+- Assíncrono primeiro, Slack em vez de e-mail
+- Sem reuniões nas tardes de sexta
 ```
 
-## Deep Memory Format (memory/)
+## Formato da memória profunda (memory/)
 
-**memory/glossary.md** - The decoder ring:
+**memory/glossary.md**, o decodificador:
 ```markdown
 # Glossary
 
-Workplace shorthand, acronyms, and internal language.
+Jargões, siglas e linguagem interna do ambiente de trabalho.
 
 ## Acronyms
 | Term | Meaning | Context |
 |------|---------|---------|
-| PSR | Pipeline Status Report | Weekly sales doc |
-| OKR | Objectives & Key Results | Quarterly planning |
-| P0/P1/P2 | Priority levels | P0 = drop everything |
+| PSR | Pipeline Status Report | Documento semanal de vendas |
+| OKR | Objectives & Key Results | Planejamento trimestral |
+| P0/P1/P2 | Níveis de prioridade | P0 = largue tudo |
 
 ## Internal Terms
 | Term | Meaning |
 |------|---------|
-| standup | Daily 9am sync in #engineering |
-| the migration | Project Phoenix database work |
-| ship it | Deploy to production |
-| escalate | Loop in leadership |
+| standup | Sincronização diária às 9h no #engineering |
+| a migração | Trabalho de banco de dados do Projeto Phoenix |
+| ship it | Fazer deploy em produção |
+| escalar | Envolver a liderança |
 
 ## Nicknames → Full Names
 | Nickname | Person |
 |----------|--------|
-| Todd | Todd Martinez (Finance) |
-| T | Also Todd Martinez |
+| Todd | Todd Martinez (Finanças) |
+| T | Também Todd Martinez |
 
 ## Project Codenames
 | Codename | Project |
 |----------|---------|
-| Phoenix | Database migration |
-| Horizon | New mobile app |
+| Phoenix | Migração de banco de dados |
+| Horizon | Novo app mobile |
 ```
 
-**memory/people/{name}.md:**
+**memory/people/{nome}.md:**
 ```markdown
 # Todd Martinez
 
-**Also known as:** Todd, T
-**Role:** Finance Lead
-**Team:** Finance
-**Reports to:** CFO (Michael Chen)
+**Também conhecido como:** Todd, T
+**Cargo:** Líder de Finanças
+**Time:** Finanças
+**Reporta a:** CFO (Michael Chen)
 
-## Communication
-- Prefers Slack DM
-- Quick responses, very direct
-- Best time: mornings
+## Comunicação
+- Prefere DM no Slack
+- Responde rápido, muito direto
+- Melhor horário: manhãs
 
-## Context
-- Handles all PSRs and financial reporting
-- Key contact for deal approvals over $500k
-- Works closely with Sales on forecasting
+## Contexto
+- Cuida de todos os PSRs e relatórios financeiros
+- Contato principal para aprovações de negócios acima de US$ 500 mil
+- Trabalha de perto com Vendas na projeção de receita
 
-## Notes
-- Cubs fan, likes talking baseball
+## Observações
+- Torcedor do Cubs, gosta de falar de beisebol
 ```
 
-**memory/projects/{name}.md:**
+**memory/projects/{nome}.md:**
 ```markdown
-# Project Phoenix
+# Projeto Phoenix
 
-**Codename:** Phoenix
-**Also called:** "the migration"
-**Status:** Active, launching Q2
+**Codinome:** Phoenix
+**Também chamado de:** "a migração"
+**Status:** Ativo, lançamento no 2º tri
 
-## What It Is
-Database migration from legacy Oracle to PostgreSQL.
+## O que é
+Migração de banco de dados do Oracle legado para PostgreSQL.
 
-## Key People
-- Sarah - tech lead
-- Todd - budget owner
-- Greg - stakeholder (sales impact)
+## Pessoas-chave
+- Sarah: líder técnica
+- Todd: dono do orçamento
+- Greg: stakeholder (impacto em vendas)
 
-## Context
-$1.2M budget, 6-month timeline. Critical path for Horizon project.
+## Contexto
+Orçamento de US$ 1,2 mi, prazo de 6 meses. Caminho crítico para o projeto Horizon.
 ```
 
 **memory/context/company.md:**
@@ -200,124 +200,124 @@ $1.2M budget, 6-month timeline. Critical path for Horizon project.
 ## Tools & Systems
 | Tool | Used for | Internal name |
 |------|----------|---------------|
-| Slack | Communication | - |
-| Asana | Engineering tasks | - |
-| Salesforce | CRM | "SF" or "the CRM" |
+| Slack | Comunicação | - |
+| Asana | Tarefas de engenharia | - |
+| Salesforce | CRM | "SF" ou "o CRM" |
 | Notion | Docs/wiki | - |
 
 ## Teams
 | Team | What they do | Key people |
 |------|--------------|------------|
-| Platform | Infrastructure | Sarah (lead) |
-| Finance | Money stuff | Todd (lead) |
-| Sales | Revenue | Greg |
+| Plataforma | Infraestrutura | Sarah (líder) |
+| Finanças | Dinheiro | Todd (líder) |
+| Vendas | Receita | Greg |
 
 ## Processes
 | Process | What it means |
 |---------|---------------|
-| Weekly sync | Monday 10am all-hands |
-| Ship review | Thursday deploy approval |
+| Sync semanal | Segunda, 10h, todos juntos |
+| Ship review | Aprovação de deploy na quinta |
 ```
 
-## How to Interact
+## Como interagir
 
-### Decoding User Input (Tiered Lookup)
+### Decodificando o que o usuário escreve (consulta em camadas)
 
-**Always** decode shorthand before acting on requests:
+**Sempre** decodifique o jargão antes de agir sobre pedidos:
 
 ```
-1. CLAUDE.md (hot cache)     → Check first, covers 90% of cases
-2. memory/glossary.md        → Full glossary if not in hot cache
-3. memory/people/, projects/ → Rich detail when needed
-4. Ask user                  → Unknown term? Learn it.
+1. CLAUDE.md (cache quente)  → Consulte primeiro, cobre 90% dos casos
+2. memory/glossary.md        → Glossário completo se não estiver no cache quente
+3. memory/people/, projects/ → Detalhe rico quando necessário
+4. Pergunte ao usuário       → Termo desconhecido? Aprenda.
 ```
 
-Example:
+Exemplo:
 ```
-User: "ask todd to do the PSR for oracle"
+Usuário: "pede pro todd fazer o PSR da oracle"
 
-CLAUDE.md lookup:
-  "todd" → Todd Martinez, Finance ✓
+Consulta ao CLAUDE.md:
+  "todd" → Todd Martinez, Finanças ✓
   "PSR" → Pipeline Status Report ✓
-  "oracle" → (not in hot cache)
+  "oracle" → (não está no cache quente)
 
-memory/glossary.md lookup:
-  "oracle" → Oracle Systems deal ($2.3M) ✓
+Consulta ao memory/glossary.md:
+  "oracle" → negócio com a Oracle Systems (US$ 2,3 mi) ✓
 
-Now Claude can act with full context.
+Agora o Claude pode agir com o contexto completo.
 ```
 
-### Adding Memory
+### Adicionando à memória
 
-When user says "remember this" or "X means Y":
+Quando o usuário disser "lembra disso" ou "X significa Y":
 
-1. **Glossary items** (acronyms, terms, shorthand):
-   - Add to memory/glossary.md
-   - If frequently used, add to CLAUDE.md Quick Glossary
+1. **Itens de glossário** (siglas, termos, jargão):
+   - Adicione em memory/glossary.md
+   - Se for muito usado, adicione ao Quick Glossary do CLAUDE.md
 
-2. **People:**
-   - Create/update memory/people/{name}.md
-   - Add to CLAUDE.md Key People if important
-   - **Capture nicknames** - critical for decoding
+2. **Pessoas:**
+   - Crie ou atualize memory/people/{nome}.md
+   - Adicione em Key People no CLAUDE.md se for importante
+   - **Registre os apelidos**: essencial para decodificar
 
-3. **Projects:**
-   - Create/update memory/projects/{name}.md
-   - Add to CLAUDE.md Active Projects if current
-   - **Capture codenames** - "Phoenix", "the migration", etc.
+3. **Projetos:**
+   - Crie ou atualize memory/projects/{nome}.md
+   - Adicione em Active Projects no CLAUDE.md se for atual
+   - **Registre os codinomes**: "Phoenix", "a migração" etc.
 
-4. **Preferences:** Add to CLAUDE.md Preferences section
+4. **Preferências:** adicione na seção Preferences do CLAUDE.md
 
-### Recalling Memory
+### Relembrando a memória
 
-When user asks "who is X" or "what does X mean":
+Quando o usuário perguntar "quem é X" ou "o que X significa":
 
-1. Check CLAUDE.md first
-2. Check memory/ for full detail
-3. If not found: "I don't know what X means yet. Can you tell me?"
+1. Consulte primeiro o CLAUDE.md
+2. Consulte memory/ para o detalhe completo
+3. Se não achar: "Ainda não sei o que X significa. Pode me dizer?"
 
-### Progressive Disclosure
+### Divulgação progressiva
 
-1. Load CLAUDE.md for quick parsing of any request
-2. Dive into memory/ when you need full context for execution
-3. Example: drafting an email to todd about the PSR
-   - CLAUDE.md tells you Todd = Todd Martinez, PSR = Pipeline Status Report
-   - memory/people/todd-martinez.md tells you he prefers Slack, is direct
+1. Carregue o CLAUDE.md para interpretar rápido qualquer pedido
+2. Aprofunde em memory/ quando precisar de contexto completo para executar
+3. Exemplo: redigir um e-mail para o todd sobre o PSR
+   - O CLAUDE.md diz que Todd = Todd Martinez, PSR = Pipeline Status Report
+   - memory/people/todd-martinez.md diz que ele prefere Slack e é direto
 
-## Bootstrapping
+## Montagem inicial
 
-Use `/productivity:start` to initialize by scanning your chat, calendar, email, and documents. Extracts people, projects, and starts building the glossary.
+Use `/productivity:start` para inicializar varrendo seu chat, calendário, e-mail e documentos. Extrai pessoas e projetos e começa a montar o glossário.
 
-## Conventions
+## Convenções
 
-- **Bold** terms in CLAUDE.md for scannability
-- Keep CLAUDE.md under ~100 lines (the "hot 30" rule)
-- Filenames: lowercase, hyphens (`todd-martinez.md`, `project-phoenix.md`)
-- Always capture nicknames and alternate names
-- Glossary tables for easy lookup
-- When something's used frequently, promote it to CLAUDE.md
-- When something goes stale, demote it to memory/ only
+- Deixe termos em **negrito** no CLAUDE.md para leitura rápida
+- Mantenha o CLAUDE.md abaixo de ~100 linhas (a regra dos "30 quentes")
+- Nomes de arquivo: minúsculas, hífens (`todd-martinez.md`, `project-phoenix.md`)
+- Sempre registre apelidos e nomes alternativos
+- Use tabelas de glossário para consulta fácil
+- Quando algo for muito usado, promova para o CLAUDE.md
+- Quando algo ficar obsoleto, rebaixe para somente memory/
 
-## What Goes Where
+## O que vai onde
 
-| Type | CLAUDE.md (Hot Cache) | memory/ (Full Storage) |
-|------|----------------------|------------------------|
-| Person | Top ~30 frequent contacts | glossary.md + people/{name}.md |
-| Acronym/term | ~30 most common | glossary.md (complete list) |
-| Project | Active projects only | glossary.md + projects/{name}.md |
-| Nickname | In Key People if top 30 | glossary.md (all nicknames) |
-| Company context | Quick reference only | context/company.md |
-| Preferences | All preferences | - |
-| Historical/stale | ✗ Remove | ✓ Keep in memory/ |
+| Tipo | CLAUDE.md (cache quente) | memory/ (armazenamento completo) |
+|------|--------------------------|----------------------------------|
+| Pessoa | ~30 contatos mais frequentes | glossary.md + people/{nome}.md |
+| Sigla/termo | ~30 mais comuns | glossary.md (lista completa) |
+| Projeto | Somente projetos ativos | glossary.md + projects/{nome}.md |
+| Apelido | Em Key People se estiver entre os 30 | glossary.md (todos os apelidos) |
+| Contexto da empresa | Só referência rápida | context/company.md |
+| Preferências | Todas as preferências | - |
+| Histórico/obsoleto | ✗ Remover | ✓ Manter em memory/ |
 
-## Promotion / Demotion
+## Promoção / rebaixamento
 
-**Promote to CLAUDE.md when:**
-- You use a term/person frequently
-- It's part of active work
+**Promova para o CLAUDE.md quando:**
+- Você usa o termo/pessoa com frequência
+- Faz parte do trabalho ativo
 
-**Demote to memory/ only when:**
-- Project completed
-- Person no longer frequent contact
-- Term rarely used
+**Rebaixe para somente memory/ quando:**
+- O projeto foi concluído
+- A pessoa deixou de ser contato frequente
+- O termo é raramente usado
 
-This keeps CLAUDE.md fresh and relevant.
+Isso mantém o CLAUDE.md atual e relevante.

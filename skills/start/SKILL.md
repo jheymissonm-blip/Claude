@@ -3,156 +3,156 @@ name: start
 description: "Inicializa o sistema de produtividade e abre o painel. Use ao configurar o plugin pela primeira vez, ao montar a memória de trabalho a partir da sua lista de tarefas existente ou ao decodificar os jargões (apelidos, siglas, codinomes de projetos) que você usa nas suas pendências."
 ---
 
-# Start Command
+# Comando start
 
-> If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](../../CONNECTORS.md).
+> Se aparecerem placeholders desconhecidos ou você precisar conferir quais ferramentas estão conectadas, veja [CONNECTORS.md](../../CONNECTORS.md).
 
-Initialize the task and memory systems, then open the unified dashboard.
+Inicialize os sistemas de tarefas e de memória e depois abra o painel unificado.
 
-## Instructions
+## Instruções
 
-### 1. Check What Exists
+### 1. Verifique o que já existe
 
-Check the working directory for:
-- `TASKS.md` — task list
-- `CLAUDE.md` — working memory
-- `memory/` — deep memory directory
-- `dashboard.html` — the visual UI
+Procure no diretório de trabalho:
+- `TASKS.md`: lista de tarefas
+- `CLAUDE.md`: memória de trabalho
+- `memory/`: diretório da memória profunda
+- `dashboard.html`: a interface visual
 
-### 2. Create What's Missing
+### 2. Crie o que estiver faltando
 
-**If `TASKS.md` doesn't exist:** Create it with the standard template (see task-management skill). Place it in the current working directory.
+**Se `TASKS.md` não existir:** crie com o modelo padrão (veja a skill task-management). Coloque no diretório de trabalho atual.
 
-**If `dashboard.html` doesn't exist:** Copy it from `${CLAUDE_PLUGIN_ROOT}/skills/dashboard.html` to the current working directory.
+**Se `dashboard.html` não existir:** copie de `${CLAUDE_PLUGIN_ROOT}/skills/dashboard.html` para o diretório de trabalho atual.
 
-**If `CLAUDE.md` and `memory/` don't exist:** This is a fresh setup — after opening the dashboard, begin the memory bootstrap workflow (see below). Place these in the current working directory.
+**Se `CLAUDE.md` e `memory/` não existirem:** é uma configuração nova. Depois de abrir o painel, inicie o fluxo de montagem da memória (veja abaixo). Coloque-os no diretório de trabalho atual.
 
-### 3. Open the Dashboard
+### 3. Abra o painel
 
-Do NOT use `open` or `xdg-open` — in Cowork, the agent runs in a VM and shell open commands won't reach the user's browser. Instead, tell the user: "Dashboard is ready at `dashboard.html`. Open it from your file browser to get started."
+NÃO use `open` nem `xdg-open`: no Cowork o agente roda em uma VM e comandos de shell para abrir arquivos não chegam ao navegador do usuário. Em vez disso, diga ao usuário: "O painel está pronto em `dashboard.html`. Abra pelo seu gerenciador de arquivos para começar."
 
-### 4. Orient the User
+### 4. Oriente o usuário
 
-If everything was already initialized:
+Se tudo já estava inicializado:
 ```
-Dashboard open. Your tasks and memory are both loaded.
-- /productivity:update to sync tasks and check memory
-- /productivity:update --comprehensive for a deep scan of all activity
-```
-
-If memory hasn't been bootstrapped yet, continue to step 5.
-
-### 5. Bootstrap Memory (First Run Only)
-
-Only do this if `CLAUDE.md` and `memory/` don't exist yet.
-
-The best source of workplace language is the user's actual task list. Real tasks = real shorthand.
-
-**Ask the user:**
-```
-Where do you keep your todos or task list? This could be:
-- A local file (e.g., TASKS.md, todo.txt)
-- An app (e.g. Asana, Linear, Jira, Notion, Todoist)
-- A notes file
-
-I'll use your tasks to learn your workplace shorthand.
+Painel aberto. Suas tarefas e sua memória foram carregadas.
+- /productivity:update para sincronizar tarefas e checar a memória
+- /productivity:update --comprehensive para uma varredura profunda de toda a atividade
 ```
 
-**Once you have access to the task list:**
+Se a memória ainda não foi montada, siga para o passo 5.
 
-For each task item, analyze it for potential shorthand:
-- Names that might be nicknames
-- Acronyms or abbreviations
-- Project references or codenames
-- Internal terms or jargon
+### 5. Monte a memória (somente na primeira execução)
 
-**For each item, decode it interactively:**
+Só faça isto se `CLAUDE.md` e `memory/` ainda não existirem.
 
+A melhor fonte da linguagem do ambiente de trabalho é a lista de tarefas real do usuário. Tarefas reais = jargão real.
+
+**Pergunte ao usuário:**
 ```
-Task: "Send PSR to Todd re: Phoenix blockers"
+Onde você guarda seus afazeres ou sua lista de tarefas? Pode ser:
+- Um arquivo local (ex.: TASKS.md, todo.txt)
+- Um app (ex.: Asana, Linear, Jira, Notion, Todoist)
+- Um arquivo de anotações
 
-I see some terms I want to make sure I understand:
-
-1. **PSR** - What does this stand for?
-2. **Todd** - Who is Todd? (full name, role)
-3. **Phoenix** - Is this a project codename? What's it about?
+Vou usar suas tarefas para aprender o jargão do seu trabalho.
 ```
 
-Continue through each task, asking only about terms you haven't already decoded.
+**Quando tiver acesso à lista de tarefas:**
 
-### 6. Optional Comprehensive Scan
+Para cada tarefa, procure possíveis jargões:
+- Nomes que podem ser apelidos
+- Siglas ou abreviações
+- Referências a projetos ou codinomes
+- Termos internos ou gírias
 
-After task list decoding, offer:
+**Para cada item, decodifique de forma interativa:**
+
 ```
-Do you want me to do a comprehensive scan of your messages, emails, and documents?
-This takes longer but builds much richer context about the people, projects, and terms in your work.
+Tarefa: "Send PSR to Todd re: Phoenix blockers"
 
-Or we can stick with what we have and add context later.
+Vejo alguns termos que quero ter certeza de que entendi:
+
+1. **PSR** - O que significa?
+2. **Todd** - Quem é o Todd? (nome completo, cargo)
+3. **Phoenix** - É o codinome de um projeto? Sobre o que é?
 ```
 
-**If they choose comprehensive scan:**
+Siga por cada tarefa, perguntando só sobre termos que você ainda não decodificou.
 
-Gather data from available MCP sources:
-- **Chat:** Recent messages, channels, DMs
-- **Email:** Sent messages, recipients
-- **Documents:** Recent docs, collaborators
-- **Calendar:** Meetings, attendees
+### 6. Varredura completa opcional
 
-Build a braindump of people, projects, and terms found. Present findings grouped by confidence:
-- **Ready to add** (high confidence) — offer to add directly
-- **Needs clarification** — ask the user
-- **Low frequency / unclear** — note for later
+Depois de decodificar a lista de tarefas, ofereça:
+```
+Quer que eu faça uma varredura completa das suas mensagens, e-mails e documentos?
+Demora mais, mas cria um contexto muito mais rico sobre as pessoas, projetos e termos do seu trabalho.
 
-### 7. Write Memory Files
+Ou podemos seguir com o que temos e acrescentar contexto depois.
+```
 
-From everything gathered, create:
+**Se escolherem a varredura completa:**
 
-**CLAUDE.md** (working memory, ~50-80 lines):
+Reúna dados das fontes MCP disponíveis:
+- **Chat:** mensagens recentes, canais, DMs
+- **E-mail:** mensagens enviadas, destinatários
+- **Documentos:** docs recentes, colaboradores
+- **Calendário:** reuniões, participantes
+
+Monte um levantamento livre de pessoas, projetos e termos encontrados. Apresente os achados agrupados por confiança:
+- **Pronto para adicionar** (alta confiança): ofereça adicionar direto
+- **Precisa de esclarecimento**: pergunte ao usuário
+- **Pouco frequente / incerto**: anote para depois
+
+### 7. Escreva os arquivos de memória
+
+Com tudo o que foi reunido, crie:
+
+**CLAUDE.md** (memória de trabalho, ~50-80 linhas):
 ```markdown
 # Memory
 
 ## Me
-[Name], [Role] on [Team].
+[Nome], [Cargo] em [Time].
 
 ## People
 | Who | Role |
 |-----|------|
-| **[Nickname]** | [Full Name], [role] |
+| **[Apelido]** | [Nome completo], [cargo] |
 
 ## Terms
 | Term | Meaning |
 |------|---------|
-| [acronym] | [expansion] |
+| [sigla] | [significado] |
 
 ## Projects
 | Name | What |
 |------|------|
-| **[Codename]** | [description] |
+| **[Codinome]** | [descrição] |
 
 ## Preferences
-- [preferences discovered]
+- [preferências descobertas]
 ```
 
-**memory/** directory:
-- `memory/glossary.md` — full decoder ring (acronyms, terms, nicknames, codenames)
-- `memory/people/{name}.md` — individual profiles
-- `memory/projects/{name}.md` — project details
-- `memory/context/company.md` — teams, tools, processes
+Diretório **memory/**:
+- `memory/glossary.md`: o glossário completo (siglas, termos, apelidos, codinomes)
+- `memory/people/{nome}.md`: perfis individuais
+- `memory/projects/{nome}.md`: detalhes dos projetos
+- `memory/context/company.md`: times, ferramentas, processos
 
-### 8. Report Results
+### 8. Informe os resultados
 
 ```
-Productivity system ready:
-- Tasks: TASKS.md (X items)
-- Memory: X people, X terms, X projects
-- Dashboard: open in browser
+Sistema de produtividade pronto:
+- Tarefas: TASKS.md (X itens)
+- Memória: X pessoas, X termos, X projetos
+- Painel: abra no navegador
 
-Use /productivity:update to keep things current (add --comprehensive for a deep scan).
+Use /productivity:update para manter tudo atualizado (adicione --comprehensive para uma varredura profunda).
 ```
 
-## Notes
+## Observações
 
-- If memory is already initialized, this just opens the dashboard
-- Nicknames are critical — always capture how people are actually referred to
-- If a source isn't available, skip it and note the gap
-- Memory grows organically through natural conversation after bootstrap
+- Se a memória já estiver inicializada, o comando só abre o painel
+- Apelidos são essenciais: sempre registre como as pessoas são chamadas na prática
+- Se uma fonte não estiver disponível, pule e anote a lacuna
+- Depois da montagem, a memória cresce de forma orgânica nas conversas do dia a dia

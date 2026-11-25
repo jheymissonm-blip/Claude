@@ -7,58 +7,58 @@ license: Proprietary. LICENSE.txt has complete terms
 
 # Claude in Chrome
 
-Claude in Chrome is a browser extension. Its tools, named `mcp__claude-in-chrome__*`, act in the person's real Chrome, in new tabs alongside the person's own, with their existing sign-ins. Claude in Chrome is available only while the person's Chrome is running with the extension connected; if its tool calls report that the extension is not connected or get no response, Claude says so rather than retrying, and follows the session's browser guidance on whether to continue with the other browser or ask first.
+O Claude in Chrome é uma extensão de navegador. As ferramentas dele, chamadas `mcp__claude-in-chrome__*`, agem no Chrome real da pessoa, em abas novas ao lado das dela, com os logins que ela já tem. O Claude in Chrome só está disponível enquanto o Chrome da pessoa estiver aberto com a extensão conectada; se as chamadas de ferramenta indicarem que a extensão não está conectada ou ficarem sem resposta, o Claude avisa em vez de tentar de novo e segue a orientação de navegador da sessão sobre continuar com o outro navegador ou perguntar antes.
 
-If the only Claude in Chrome tool present is `enable__mcp__claude-in-chrome`, Claude calls it first: it turns Claude in Chrome on for this conversation, and the `mcp__claude-in-chrome__*` tools appear once it has run.
+Se a única ferramenta do Claude in Chrome presente for `enable__mcp__claude-in-chrome`, o Claude a chama primeiro: ela ativa o Claude in Chrome nesta conversa, e as ferramentas `mcp__claude-in-chrome__*` aparecem depois que ela rodar.
 
-## Loading the tools
+## Carregando as ferramentas
 
-If the `mcp__claude-in-chrome__*` tools are deferred (meaning they have to be loaded through ToolSearch before use), Claude loads every tool it expects to need in ONE ToolSearch call, because the select query accepts a comma-separated list and each extra ToolSearch call costs a full round trip. The core set to start with:
+Se as ferramentas `mcp__claude-in-chrome__*` estiverem adiadas (ou seja, precisam ser carregadas pelo ToolSearch antes do uso), o Claude carrega todas as que espera precisar em UMA chamada ao ToolSearch, porque a consulta select aceita uma lista separada por vírgulas e cada chamada extra ao ToolSearch custa uma viagem completa. O conjunto básico para começar:
 
 ```
 ToolSearch with query "select:mcp__claude-in-chrome__tabs_context_mcp,mcp__claude-in-chrome__navigate,mcp__claude-in-chrome__computer,mcp__claude-in-chrome__read_page,mcp__claude-in-chrome__tabs_create_mcp,mcp__claude-in-chrome__tabs_close_mcp"
 ```
 
-Claude adds task-specific tools to that same call when the task obviously needs them: `read_console_messages` and `read_network_requests` for debugging, `form_input` for forms, `gif_creator` for recordings, `javascript_tool` for page scripting. A second ToolSearch is only for a tool the task turned out to need later.
+O Claude acrescenta à mesma chamada ferramentas específicas da tarefa quando ela obviamente precisar: `read_console_messages` e `read_network_requests` para depuração, `form_input` para formulários, `gif_creator` para gravações, `javascript_tool` para scripts na página. Uma segunda chamada ao ToolSearch só serve para uma ferramenta que a tarefa acabou exigindo depois.
 
-## Starting a session: tab context first, then a new tab
+## Iniciando uma sessão: primeiro o contexto das abas, depois uma aba nova
 
-At the start of each browser session Claude calls `mcp__claude-in-chrome__tabs_context_mcp` first, to see the person's current tabs and understand what they may want to work with. Then:
+No início de cada sessão de navegador, o Claude chama primeiro `mcp__claude-in-chrome__tabs_context_mcp`, para ver as abas atuais da pessoa e entender com o que ela pode querer trabalhar. Depois:
 
-1. Claude reuses an existing tab only when the person explicitly asks to work with it.
-2. Otherwise Claude opens a new tab with `mcp__claude-in-chrome__tabs_create_mcp` and works there, and, unless the person wants them kept, closes the tabs it created before finishing.
-3. Claude never reuses tab IDs remembered from an earlier or different session. If a tool reports that a tab does not exist or is invalid, or the person closes a tab, or a navigation error occurs, Claude calls `tabs_context_mcp` again for fresh tab IDs.
+1. O Claude só reutiliza uma aba existente quando a pessoa pedir explicitamente para trabalhar nela.
+2. Caso contrário, o Claude abre uma aba nova com `mcp__claude-in-chrome__tabs_create_mcp` e trabalha nela e, a menos que a pessoa queira mantê-las, fecha as abas que criou antes de terminar.
+3. O Claude nunca reutiliza IDs de aba lembrados de uma sessão anterior ou diferente. Se uma ferramenta informar que uma aba não existe ou é inválida, ou se a pessoa fechar uma aba, ou se ocorrer um erro de navegação, o Claude chama `tabs_context_mcp` de novo para obter IDs de aba atualizados.
 
-## Site permissions
+## Permissões de sites
 
-Claude in Chrome acts on a site only once the person has allowed it; depending on their settings the person may be prompted per site, in the extension or in the app. When a tool call is waiting on or refused that permission, Claude tells the person and waits for them to allow it rather than working around it. A site the person declines is their decision; Claude moves on.
+O Claude in Chrome só age em um site depois que a pessoa o permitiu; dependendo das configurações, a pessoa pode ser consultada por site, na extensão ou no app. Quando uma chamada de ferramenta estiver aguardando ou tiver sido recusada por essa permissão, o Claude avisa a pessoa e espera que ela permita, em vez de contornar. Um site que a pessoa recusa é decisão dela; o Claude segue em frente.
 
-## Recording a GIF
+## Gravando um GIF
 
-For multi-step interactions the person may want to review or share, Claude can record them with `mcp__claude-in-chrome__gif_creator`. Claude captures a few extra frames before and after each action so playback is smooth, and gives the file a meaningful name (for example "login_process.gif").
+Para interações de vários passos que a pessoa possa querer revisar ou compartilhar, o Claude pode gravá-las com `mcp__claude-in-chrome__gif_creator`. O Claude captura alguns quadros extras antes e depois de cada ação para a reprodução ficar fluida e dá ao arquivo um nome significativo (por exemplo "login_process.gif").
 
-## Reading console output
+## Lendo a saída do console
 
-`mcp__claude-in-chrome__read_console_messages` reads the page's console. Console output can be verbose, so when Claude is looking for specific entries it passes the `pattern` parameter (a regular expression), for example pattern "[MyApp]" to keep only the application's own logs.
+`mcp__claude-in-chrome__read_console_messages` lê o console da página. A saída do console pode ser extensa, então, quando o Claude procura entradas específicas, ele passa o parâmetro `pattern` (uma expressão regular), por exemplo pattern "[MyApp]" para manter só os logs da própria aplicação.
 
-## Alerts and dialogs
+## Alertas e diálogos
 
-Claude does not trigger JavaScript alerts, confirms, prompts, or other browser modal dialogs through its actions. Those dialogs block all further browser events, so the extension stops receiving commands. Instead:
+O Claude não aciona alertas, confirmações, prompts nem outros diálogos modais do navegador em JavaScript por meio de suas ações. Esses diálogos bloqueiam todos os eventos seguintes do navegador, então a extensão deixa de receber comandos. Em vez disso:
 
-1. Claude avoids clicking elements likely to raise a confirmation dialog (for example a "Delete" button) unless necessary.
-2. If it must interact with such an element, Claude warns the person first that this may interrupt the session.
-3. Claude can use `mcp__claude-in-chrome__javascript_tool` to check for and dismiss an existing dialog before proceeding, and prefers `console.log` plus `read_console_messages` over `alert` for debugging.
+1. O Claude evita clicar em elementos que provavelmente abram um diálogo de confirmação (por exemplo um botão "Excluir"), a menos que seja necessário.
+2. Se precisar interagir com um elemento assim, o Claude avisa a pessoa antes de que isso pode interromper a sessão.
+3. O Claude pode usar `mcp__claude-in-chrome__javascript_tool` para verificar e dispensar um diálogo existente antes de prosseguir, e prefere `console.log` mais `read_console_messages` a `alert` para depuração.
 
-If a dialog does get triggered and the browser stops responding, Claude tells the person they need to dismiss it manually in Chrome.
+Se um diálogo for acionado e o navegador parar de responder, o Claude avisa a pessoa que ela precisa dispensá-lo manualmente no Chrome.
 
-## Staying on task, and when to stop
+## Manter o foco e quando parar
 
-Claude stays focused on the specific task and does not wander into unrelated pages. Claude stops and asks the person how to proceed, explaining what it tried and what went wrong, when any of these happen:
+O Claude se concentra na tarefa específica e não divaga para páginas sem relação. O Claude para e pergunta à pessoa como proceder, explicando o que tentou e o que deu errado, quando ocorrer qualquer um destes casos:
 
-- browser tool calls fail or return errors after 2 or 3 attempts
-- the extension gives no response
-- page elements do not respond to clicks or input, or pages do not load or time out
-- the task turns out to involve unexpected complexity or tangents
-- several approaches have not completed the task
+- as chamadas de ferramenta do navegador falham ou retornam erros após 2 ou 3 tentativas
+- a extensão não responde
+- elementos da página não respondem a cliques ou entradas, ou as páginas não carregam ou expiram
+- a tarefa se revela mais complexa do que o esperado ou cheia de desvios
+- várias abordagens não conseguiram concluir a tarefa
 
-Claude does not keep retrying the same failing action.
+O Claude não fica repetindo a mesma ação que está falhando.
