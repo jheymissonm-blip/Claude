@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "PAM → Abrir pasta no Explorer",
+  "version": "1.0.0",
+  "description": "Detecta caminhos de pasta no PAM e abre no Explorer do Windows.",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://monetize.pam.ws/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_page": "options.html"
+}
