@@ -4,247 +4,247 @@ description: "Escreve uma especificação de funcionalidade ou PRD a partir de u
 argument-hint: "<feature or problem statement>"
 ---
 
-# Write Spec
+# Escrever uma especificação
 
-> If you see unfamiliar placeholders or need to check which tools are connected, see [CONNECTORS.md](../../CONNECTORS.md).
+> Se aparecerem placeholders desconhecidos ou você precisar conferir quais ferramentas estão conectadas, veja [CONNECTORS.md](../../CONNECTORS.md).
 
-Write a feature specification or product requirements document (PRD).
+Escreva uma especificação de funcionalidade ou um documento de requisitos de produto (PRD).
 
-## Usage
+## Uso
 
 ```
 /write-spec $ARGUMENTS
 ```
 
-## Workflow
+## Fluxo de trabalho
 
-### 1. Understand the Feature
+### 1. Entenda a funcionalidade
 
-Ask the user what they want to spec. Accept any of:
-- A feature name ("SSO support")
-- A problem statement ("Enterprise customers keep asking for centralized auth")
-- A user request ("Users want to export their data as CSV")
-- A vague idea ("We should do something about onboarding drop-off")
+Pergunte ao usuário o que ele quer especificar. Aceite qualquer um destes:
+- Um nome de funcionalidade ("suporte a SSO")
+- Um problema ("Clientes corporativos continuam pedindo autenticação centralizada")
+- Um pedido de usuário ("Usuários querem exportar seus dados em CSV")
+- Uma ideia vaga ("Deveríamos fazer algo sobre a desistência no onboarding")
 
-### 2. Gather Context
+### 2. Reúna contexto
 
-Ask the user for the following. Be conversational — do not dump all questions at once. Ask the most important ones first and fill in gaps as you go:
+Pergunte ao usuário o seguinte. Seja conversacional: não despeje todas as perguntas de uma vez. Faça primeiro as mais importantes e preencha as lacunas ao longo da conversa:
 
-- **User problem**: What problem does this solve? Who experiences it?
-- **Target users**: Which user segment(s) does this serve?
-- **Success metrics**: How will we know this worked?
-- **Constraints**: Technical constraints, timeline, regulatory requirements, dependencies
-- **Prior art**: Has this been attempted before? Are there existing solutions?
+- **Problema do usuário**: que problema isto resolve? Quem o vive?
+- **Usuários-alvo**: que segmento(s) de usuários isto atende?
+- **Métricas de sucesso**: como saberemos que funcionou?
+- **Restrições**: restrições técnicas, prazo, exigências regulatórias, dependências
+- **Referências anteriores**: isso já foi tentado antes? Há soluções existentes?
 
-### 3. Pull Context from Connected Tools
+### 3. Puxe contexto das ferramentas conectadas
 
-If **~~project tracker** is connected:
-- Search for related tickets, epics, or features
-- Pull in any existing requirements or acceptance criteria
-- Identify dependencies on other work items
+Se o **~~project tracker** estiver conectado:
+- Busque tickets, épicos ou funcionalidades relacionados
+- Traga requisitos ou critérios de aceite existentes
+- Identifique dependências de outros itens de trabalho
 
-If **~~knowledge base** is connected:
-- Search for related research documents, prior specs, or design docs
-- Pull in relevant user research findings
-- Find related meeting notes or decision records
+Se a **~~knowledge base** estiver conectada:
+- Busque documentos de pesquisa, especificações anteriores ou documentos de design relacionados
+- Traga achados relevantes de pesquisa com usuários
+- Encontre atas de reuniões ou registros de decisão relacionados
 
-If **~~design** is connected:
-- Pull related mockups, wireframes, or design explorations
-- Search for design system components relevant to the feature
+Se o **~~design** estiver conectado:
+- Traga mockups, wireframes ou explorações de design relacionados
+- Busque componentes do design system relevantes para a funcionalidade
 
-If these tools are not connected, work entirely from what the user provides. Do not ask the user to connect tools — just proceed with available information.
+Se essas ferramentas não estiverem conectadas, trabalhe inteiramente com o que o usuário fornecer. Não peça ao usuário para conectar ferramentas: apenas siga com as informações disponíveis.
 
-### 4. Generate the PRD
+### 4. Gere o PRD
 
-Produce a structured PRD with these sections. See **PRD Structure** below for detailed guidance on what each section should contain.
+Produza um PRD estruturado com estas seções. Veja **Estrutura do PRD** abaixo para orientação detalhada sobre o que cada seção deve conter.
 
-- **Problem Statement**: The user problem, who is affected, and impact of not solving it (2-3 sentences)
-- **Goals**: 3-5 specific, measurable outcomes tied to user or business metrics
-- **Non-Goals**: 3-5 things explicitly out of scope, with brief rationale for each
-- **User Stories**: Standard format ("As a [user type], I want [capability] so that [benefit]"), grouped by persona
-- **Requirements**: Categorized as Must-Have (P0), Nice-to-Have (P1), and Future Considerations (P2), each with acceptance criteria
-- **Success Metrics**: Leading indicators (change quickly) and lagging indicators (change over time), with specific targets
-- **Open Questions**: Unresolved questions tagged with who needs to answer (engineering, design, legal, data)
-- **Timeline Considerations**: Hard deadlines, dependencies, and phasing
+- **Declaração do problema**: o problema do usuário, quem é afetado e o impacto de não resolvê-lo (2-3 frases)
+- **Objetivos**: 3-5 resultados específicos e mensuráveis ligados a métricas de usuário ou de negócio
+- **Não objetivos**: 3-5 coisas explicitamente fora do escopo, com uma breve justificativa para cada uma
+- **Histórias de usuário**: formato padrão ("Como [tipo de usuário], quero [capacidade] para que [benefício]"), agrupadas por persona
+- **Requisitos**: categorizados como Obrigatórios (P0), Desejáveis (P1) e Considerações futuras (P2), cada um com critérios de aceite
+- **Métricas de sucesso**: indicadores antecedentes (mudam rápido) e indicadores de resultado (mudam com o tempo), com metas específicas
+- **Perguntas em aberto**: perguntas não resolvidas, marcadas com quem precisa responder (engenharia, design, jurídico, dados)
+- **Considerações de cronograma**: prazos rígidos, dependências e faseamento
 
-### 5. Review and Iterate
+### 5. Revise e itere
 
-After generating the PRD:
-- Ask the user if any sections need adjustment
-- Offer to expand on specific sections
-- Offer to create follow-up artifacts (design brief, engineering ticket breakdown, stakeholder pitch)
+Depois de gerar o PRD:
+- Pergunte ao usuário se alguma seção precisa de ajuste
+- Ofereça detalhar seções específicas
+- Ofereça criar artefatos de continuidade (briefing de design, quebra em tickets de engenharia, pitch para stakeholders)
 
-## PRD Structure
+## Estrutura do PRD
 
-### Problem Statement
-- Describe the user problem in 2-3 sentences
-- Who experiences this problem and how often
-- What is the cost of not solving it (user pain, business impact, competitive risk)
-- Ground this in evidence: user research, support data, metrics, or customer feedback
+### Declaração do problema
+- Descreva o problema do usuário em 2-3 frases
+- Quem vive esse problema e com que frequência
+- Qual é o custo de não resolvê-lo (dor do usuário, impacto no negócio, risco competitivo)
+- Fundamente em evidências: pesquisa com usuários, dados de suporte, métricas ou feedback de clientes
 
-### Goals
-- 3-5 specific, measurable outcomes this feature should achieve
-- Each goal should answer: "How will we know this succeeded?"
-- Distinguish between user goals (what users get) and business goals (what the company gets)
-- Goals should be outcomes, not outputs ("reduce time to first value by 50%" not "build onboarding wizard")
+### Objetivos
+- 3-5 resultados específicos e mensuráveis que esta funcionalidade deve alcançar
+- Cada objetivo deve responder: "Como saberemos que isto deu certo?"
+- Distinga objetivos do usuário (o que os usuários ganham) de objetivos de negócio (o que a empresa ganha)
+- Objetivos devem ser resultados, não entregas ("reduzir em 50% o tempo até o primeiro valor", não "construir um assistente de onboarding")
 
-### Non-Goals
-- 3-5 things this feature explicitly will NOT do
-- Adjacent capabilities that are out of scope for this version
-- For each non-goal, briefly explain why it is out of scope (not enough impact, too complex, separate initiative, premature)
-- Non-goals prevent scope creep during implementation and set expectations with stakeholders
+### Não objetivos
+- 3-5 coisas que esta funcionalidade explicitamente NÃO fará
+- Capacidades adjacentes que estão fora do escopo desta versão
+- Para cada não objetivo, explique brevemente por que está fora do escopo (pouco impacto, complexo demais, iniciativa separada, prematuro)
+- Os não objetivos evitam o aumento de escopo durante a implementação e alinham expectativas com os stakeholders
 
-### User Stories
-Write user stories in standard format: "As a [user type], I want [capability] so that [benefit]"
+### Histórias de usuário
+Escreva histórias de usuário no formato padrão: "Como [tipo de usuário], quero [capacidade] para que [benefício]"
 
-Guidelines:
-- The user type should be specific enough to be meaningful ("enterprise admin" not just "user")
-- The capability should describe what they want to accomplish, not how
-- The benefit should explain the "why" — what value does this deliver
-- Include edge cases: error states, empty states, boundary conditions
-- Include different user types if the feature serves multiple personas
-- Order by priority — most important stories first
+Diretrizes:
+- O tipo de usuário deve ser específico o bastante para ter significado ("administrador corporativo", não apenas "usuário")
+- A capacidade deve descrever o que ele quer realizar, não como
+- O benefício deve explicar o "porquê": que valor isto entrega
+- Inclua casos de borda: estados de erro, estados vazios, condições-limite
+- Inclua diferentes tipos de usuário se a funcionalidade atender a várias personas
+- Ordene por prioridade: as histórias mais importantes primeiro
 
-Example:
-- "As a team admin, I want to configure SSO for my organization so that my team members can log in with their corporate credentials"
-- "As a team member, I want to be automatically redirected to my company's SSO login so that I do not need to remember a separate password"
-- "As a team admin, I want to see which members have logged in via SSO so that I can verify the rollout is working"
+Exemplo:
+- "Como administrador de equipe, quero configurar o SSO da minha organização para que os membros da equipe possam entrar com as credenciais corporativas"
+- "Como membro da equipe, quero ser redirecionado automaticamente ao login SSO da minha empresa para não precisar lembrar de uma senha separada"
+- "Como administrador de equipe, quero ver quais membros entraram via SSO para poder verificar se a implantação está funcionando"
 
-### Requirements
+### Requisitos
 
-**Must-Have (P0)**: The feature cannot ship without these. These represent the minimum viable version of the feature. Ask: "If we cut this, does the feature still solve the core problem?" If no, it is P0.
+**Obrigatórios (P0)**: a funcionalidade não pode ser lançada sem eles. Representam a versão mínima viável. Pergunte: "Se cortarmos isto, a funcionalidade ainda resolve o problema central?" Se não, é P0.
 
-**Nice-to-Have (P1)**: Significantly improves the experience but the core use case works without them. These often become fast follow-ups after launch.
+**Desejáveis (P1)**: melhoram bastante a experiência, mas o caso de uso central funciona sem eles. Costumam virar entregas rápidas logo após o lançamento.
 
-**Future Considerations (P2)**: Explicitly out of scope for v1 but we want to design in a way that supports them later. Documenting these prevents accidental architectural decisions that make them hard later.
+**Considerações futuras (P2)**: explicitamente fora do escopo da v1, mas queremos projetar de um jeito que os suporte depois. Documentá-los evita decisões arquiteturais acidentais que os tornem difíceis mais tarde.
 
-For each requirement:
-- Write a clear, unambiguous description of the expected behavior
-- Include acceptance criteria (see below)
-- Note any technical considerations or constraints
-- Flag dependencies on other teams or systems
+Para cada requisito:
+- Escreva uma descrição clara e inequívoca do comportamento esperado
+- Inclua critérios de aceite (veja abaixo)
+- Anote quaisquer considerações ou restrições técnicas
+- Sinalize dependências de outros times ou sistemas
 
-### Open Questions
-- Questions that need answers before or during implementation
-- Tag each with who should answer (engineering, design, legal, data, stakeholder)
-- Distinguish between blocking questions (must answer before starting) and non-blocking (can resolve during implementation)
+### Perguntas em aberto
+- Perguntas que precisam de resposta antes ou durante a implementação
+- Marque cada uma com quem deve responder (engenharia, design, jurídico, dados, stakeholder)
+- Distinga perguntas bloqueantes (precisam de resposta antes de começar) de não bloqueantes (podem ser resolvidas durante a implementação)
 
-### Timeline Considerations
-- Hard deadlines (contractual commitments, events, compliance dates)
-- Dependencies on other teams' work or releases
-- Suggested phasing if the feature is too large for one release
+### Considerações de cronograma
+- Prazos rígidos (compromissos contratuais, eventos, datas de conformidade)
+- Dependências do trabalho ou de lançamentos de outros times
+- Faseamento sugerido se a funcionalidade for grande demais para uma única entrega
 
-## User Story Writing
+## Escrita de histórias de usuário
 
-Good user stories are:
-- **Independent**: Can be developed and delivered on their own
-- **Negotiable**: Details can be discussed, the story is not a contract
-- **Valuable**: Delivers value to the user (not just the team)
-- **Estimable**: The team can roughly estimate the effort
-- **Small**: Can be completed in one sprint/iteration
-- **Testable**: There is a clear way to verify it works
+Boas histórias de usuário são:
+- **Independentes**: podem ser desenvolvidas e entregues por conta própria
+- **Negociáveis**: os detalhes podem ser discutidos, a história não é um contrato
+- **Valiosas**: entregam valor ao usuário (não só ao time)
+- **Estimáveis**: o time consegue estimar o esforço de modo aproximado
+- **Pequenas**: podem ser concluídas em uma sprint/iteração
+- **Testáveis**: há uma forma clara de verificar que funcionam
 
-### Common Mistakes in User Stories
-- Too vague: "As a user, I want the product to be faster" — what specifically should be faster?
-- Solution-prescriptive: "As a user, I want a dropdown menu" — describe the need, not the UI widget
-- No benefit: "As a user, I want to click a button" — why? What does it accomplish?
-- Too large: "As a user, I want to manage my team" — break this into specific capabilities
-- Internal focus: "As the engineering team, we want to refactor the database" — this is a task, not a user story
+### Erros comuns em histórias de usuário
+- Vagas demais: "Como usuário, quero que o produto seja mais rápido": o que exatamente deve ficar mais rápido?
+- Prescritivas quanto à solução: "Como usuário, quero um menu suspenso": descreva a necessidade, não o componente de interface
+- Sem benefício: "Como usuário, quero clicar em um botão": por quê? O que isso realiza?
+- Grandes demais: "Como usuário, quero gerenciar minha equipe": quebre em capacidades específicas
+- Foco interno: "Como time de engenharia, queremos refatorar o banco de dados": isso é uma tarefa, não uma história de usuário
 
-## Requirements Categorization
+## Categorização de requisitos
 
-### MoSCoW Framework
-- **Must have**: Without these, the feature is not viable. Non-negotiable.
-- **Should have**: Important but not critical for launch. High-priority fast follows.
-- **Could have**: Desirable if time permits. Will not delay delivery if cut.
-- **Won't have (this time)**: Explicitly out of scope. May revisit in future versions.
+### Framework MoSCoW
+- **Must have**: sem eles, a funcionalidade não é viável. Inegociáveis.
+- **Should have**: importantes, mas não críticos para o lançamento. Entregas rápidas de alta prioridade.
+- **Could have**: desejáveis se houver tempo. Não atrasam a entrega se cortados.
+- **Won't have (desta vez)**: explicitamente fora do escopo. Podem ser revisitados em versões futuras.
 
-### Tips for Categorization
-- Be ruthless about P0s. The tighter the must-have list, the faster you ship and learn.
-- If everything is P0, nothing is P0. Challenge every must-have: "Would we really not ship without this?"
-- P1s should be things you are confident you will build soon, not a wish list.
-- P2s are architectural insurance — they guide design decisions even though you are not building them now.
+### Dicas de categorização
+- Seja implacável com os P0. Quanto mais enxuta a lista de obrigatórios, mais rápido você lança e aprende.
+- Se tudo é P0, nada é P0. Questione cada obrigatório: "Realmente não lançaríamos sem isto?"
+- Os P1 devem ser coisas que você tem confiança de que vai construir em breve, não uma lista de desejos.
+- Os P2 são um seguro arquitetural: orientam decisões de design mesmo que você não os esteja construindo agora.
 
-## Success Metrics Definition
+## Definição de métricas de sucesso
 
-### Leading Indicators
-Metrics that change quickly after launch (days to weeks):
-- **Adoption rate**: % of eligible users who try the feature
-- **Activation rate**: % of users who complete the core action
-- **Task completion rate**: % of users who successfully accomplish their goal
-- **Time to complete**: How long the core workflow takes
-- **Error rate**: How often users encounter errors or dead ends
-- **Feature usage frequency**: How often users return to use the feature
+### Indicadores antecedentes
+Métricas que mudam rápido depois do lançamento (dias a semanas):
+- **Taxa de adoção**: % dos usuários elegíveis que experimentam a funcionalidade
+- **Taxa de ativação**: % dos usuários que completam a ação central
+- **Taxa de conclusão de tarefa**: % dos usuários que conseguem alcançar seu objetivo
+- **Tempo para concluir**: quanto tempo leva o fluxo central
+- **Taxa de erro**: com que frequência os usuários encontram erros ou becos sem saída
+- **Frequência de uso da funcionalidade**: com que frequência os usuários voltam a usá-la
 
-### Lagging Indicators
-Metrics that take time to develop (weeks to months):
-- **Retention impact**: Does this feature improve user retention?
-- **Revenue impact**: Does this drive upgrades, expansion, or new revenue?
-- **NPS / satisfaction change**: Does this improve how users feel about the product?
-- **Support ticket reduction**: Does this reduce support load?
-- **Competitive win rate**: Does this help win more deals?
+### Indicadores de resultado
+Métricas que levam tempo para se desenvolver (semanas a meses):
+- **Impacto na retenção**: esta funcionalidade melhora a retenção de usuários?
+- **Impacto na receita**: isto gera upgrades, expansão ou receita nova?
+- **Mudança no NPS / satisfação**: isto melhora o que os usuários sentem pelo produto?
+- **Redução de chamados de suporte**: isto reduz a carga de suporte?
+- **Taxa de vitória competitiva**: isto ajuda a ganhar mais negócios?
 
-### Setting Targets
-- Targets should be specific: "50% adoption within 30 days" not "high adoption"
-- Base targets on comparable features, industry benchmarks, or explicit hypotheses
-- Set a "success" threshold and a "stretch" target
-- Define the measurement method: what tool, what query, what time window
-- Specify when you will evaluate: 1 week, 1 month, 1 quarter post-launch
+### Definindo metas
+- As metas devem ser específicas: "50% de adoção em 30 dias", não "alta adoção"
+- Baseie as metas em funcionalidades comparáveis, referências do setor ou hipóteses explícitas
+- Defina um limiar de "sucesso" e uma meta "ambiciosa"
+- Defina o método de medição: que ferramenta, que consulta, que janela de tempo
+- Especifique quando avaliará: 1 semana, 1 mês, 1 trimestre após o lançamento
 
-## Acceptance Criteria
+## Critérios de aceite
 
-Write acceptance criteria in Given/When/Then format or as a checklist:
+Escreva critérios de aceite no formato Dado/Quando/Então ou como lista de verificação:
 
-**Given/When/Then**:
-- Given [precondition or context]
-- When [action the user takes]
-- Then [expected outcome]
+**Dado/Quando/Então**:
+- Dado [pré-condição ou contexto]
+- Quando [ação que o usuário realiza]
+- Então [resultado esperado]
 
-Example:
-- Given the admin has configured SSO for their organization
-- When a team member visits the login page
-- Then they are automatically redirected to the organization's SSO provider
+Exemplo:
+- Dado que o administrador configurou o SSO da organização
+- Quando um membro da equipe acessa a página de login
+- Então ele é redirecionado automaticamente ao provedor de SSO da organização
 
-**Checklist format**:
-- [ ] Admin can enter SSO provider URL in organization settings
-- [ ] Team members see "Log in with SSO" button on login page
-- [ ] SSO login creates a new account if one does not exist
-- [ ] SSO login links to existing account if email matches
-- [ ] Failed SSO attempts show a clear error message
+**Formato de lista de verificação**:
+- [ ] O administrador consegue informar a URL do provedor de SSO nas configurações da organização
+- [ ] Os membros da equipe veem o botão "Entrar com SSO" na página de login
+- [ ] O login via SSO cria uma conta nova se não existir uma
+- [ ] O login via SSO vincula a uma conta existente se o e-mail coincidir
+- [ ] Tentativas de SSO que falham mostram uma mensagem de erro clara
 
-### Tips for Acceptance Criteria
-- Cover the happy path, error cases, and edge cases
-- Be specific about the expected behavior, not the implementation
-- Include what should NOT happen (negative test cases)
-- Each criterion should be independently testable
-- Avoid ambiguous words: "fast", "user-friendly", "intuitive" — define what these mean concretely
+### Dicas para critérios de aceite
+- Cubra o caminho feliz, os casos de erro e os casos de borda
+- Seja específico sobre o comportamento esperado, não sobre a implementação
+- Inclua o que NÃO deve acontecer (casos de teste negativos)
+- Cada critério deve ser testável de forma independente
+- Evite palavras ambíguas: "rápido", "amigável", "intuitivo": defina concretamente o que significam
 
-## Scope Management
+## Gestão de escopo
 
-### Recognizing Scope Creep
-Scope creep happens when:
-- Requirements keep getting added after the spec is approved
-- "Small" additions accumulate into a significantly larger project
-- The team is building features no user asked for ("while we're at it...")
-- The launch date keeps moving without explicit re-scoping
-- Stakeholders add requirements without removing anything
+### Reconhecendo o aumento de escopo
+O aumento de escopo acontece quando:
+- Requisitos continuam sendo adicionados depois que a especificação foi aprovada
+- Adições "pequenas" se acumulam em um projeto bem maior
+- O time constrói funcionalidades que nenhum usuário pediu ("já que estamos aqui...")
+- A data de lançamento continua se movendo sem um novo escopo explícito
+- Stakeholders adicionam requisitos sem remover nada
 
-### Preventing Scope Creep
-- Write explicit non-goals in every spec
-- Require that any scope addition comes with a scope removal or timeline extension
-- Separate "v1" from "v2" clearly in the spec
-- Review the spec against the original problem statement — does everything serve it?
-- Time-box investigations: "If we cannot figure out X in 2 days, we cut it"
-- Create a "parking lot" for good ideas that are not in scope
+### Prevenindo o aumento de escopo
+- Escreva não objetivos explícitos em toda especificação
+- Exija que toda adição de escopo venha com uma remoção de escopo ou extensão de prazo
+- Separe claramente a "v1" da "v2" na especificação
+- Revise a especificação contra a declaração original do problema: tudo a serve?
+- Limite no tempo as investigações: "Se não descobrirmos X em 2 dias, cortamos"
+- Crie um "estacionamento" para boas ideias que estão fora do escopo
 
-## Output Format
+## Formato de saída
 
-Use markdown with clear headers. Keep the document scannable — busy stakeholders should be able to read just the headers and bold text to get the gist.
+Use markdown com títulos claros. Mantenha o documento fácil de percorrer: stakeholders ocupados devem conseguir ler só os títulos e o texto em negrito para captar a ideia geral.
 
-## Tips
+## Dicas
 
-- Be opinionated about scope. It is better to have a tight, well-defined spec than an expansive vague one.
-- If the user's idea is too big for one spec, suggest breaking it into phases and spec the first phase.
-- Success metrics should be specific and measurable, not vague ("improve user experience").
-- Non-goals are as important as goals. They prevent scope creep during implementation.
-- Open questions should be genuinely open — do not include questions you can answer from context.
+- Seja opinativo quanto ao escopo. É melhor uma especificação enxuta e bem definida do que uma expansiva e vaga.
+- Se a ideia do usuário é grande demais para uma única especificação, sugira dividir em fases e especifique a primeira.
+- As métricas de sucesso devem ser específicas e mensuráveis, não vagas ("melhorar a experiência do usuário").
+- Os não objetivos são tão importantes quanto os objetivos. Evitam o aumento de escopo durante a implementação.
+- As perguntas em aberto devem ser genuinamente em aberto: não inclua perguntas que você pode responder pelo contexto.
