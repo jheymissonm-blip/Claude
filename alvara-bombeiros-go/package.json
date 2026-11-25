@@ -1,0 +1,1 @@
+{ "name": "alvara-bombeiros-go", "private": true, "dependencies": { "playwright": "^1.46.0" } }

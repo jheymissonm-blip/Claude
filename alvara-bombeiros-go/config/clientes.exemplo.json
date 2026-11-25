@@ -1,0 +1,12 @@
+{
+  "aviso_email": "voce@exemplo.com",
+  "clientes": [
+    {
+      "id": "cliente-001",
+      "nome": "Empresa Exemplo LTDA",
+      "cnpj": "00.000.000/0001-00",
+      "pasta_docs": "/caminho/para/docs/cliente-001",
+      "protocolos": ["2026000000"]
+    }
+  ]
+}

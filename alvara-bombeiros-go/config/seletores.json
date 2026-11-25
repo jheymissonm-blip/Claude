@@ -1,0 +1,16 @@
+{
+  "_aviso": "Palpites. Ajustar depois de rodar mapear.js nas telas reais.",
+  "url_andamentos": "https://siapi.bombeiros.go.gov.br/listarAndamentosWeb.jsf",
+  "andamentos": {
+    "campo_protocolo": "input[id$='protocolo'], input[id*='numero']",
+    "botao_pesquisar": "button:has-text('Pesquisar'), input[value='Pesquisar']",
+    "linhas": "table tbody tr"
+  },
+  "protocolar": {
+    "url_novo": "COLOCAR_URL_DA_TELA_DE_NOVO_PROCESSO",
+    "campos": {},
+    "upload": "input[type='file']",
+    "botao_enviar": "COLOCAR_SELETOR_DO_BOTAO_FINAL"
+  },
+  "checklist": ["Projeto/PSCIP", "ART/RRT", "Documento do imóvel", "Comprovante da taxa"]
+}

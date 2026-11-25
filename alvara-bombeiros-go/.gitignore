@@ -1,0 +1,6 @@
+.perfil/
+saida/
+estado/
+config/clientes.json
+*.pfx
+*.p12
