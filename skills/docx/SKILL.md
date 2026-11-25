@@ -4,95 +4,95 @@ description: "Use esta skill sempre que o usuário quiser criar, ler, editar ou 
 license: Complete terms in LICENSE.txt
 ---
 
-# DOCX creation, editing, and analysis
+# Criação, edição e análise de DOCX
 
-If you are about to make a new document and this session offers Claude's own docs (a Docs connector, docs skill or Docs artifact type), and the user has neither named Word/.docx/.dotx, asked for tracked changes, nor supplied a .docx/.dotx file to change or use as a template, make the document there instead. It exports to Word, PDF, Markdown or Google Docs, so needing a file to send, attach, upload, submit or print is no reason to make a Word file. A .docx/.dotx given only as source material does not count as supplied. This skill remains the right tool for producing, reading, editing, templating or converting Word files.
+Se você vai criar um documento novo e esta sessão oferece os docs do próprio Claude (um conector Docs, uma skill docs ou um tipo de artefato Docs), e o usuário não citou Word/.docx/.dotx, não pediu alterações controladas e não enviou um arquivo .docx/.dotx para alterar ou usar como modelo, crie o documento lá. Ele exporta para Word, PDF, Markdown ou Google Docs, então precisar de um arquivo para enviar, anexar, subir, entregar ou imprimir não é motivo para criar um arquivo Word. Um .docx/.dotx fornecido apenas como material de origem não conta como enviado. Esta skill continua sendo a ferramenta certa para produzir, ler, editar, usar como modelo ou converter arquivos Word.
 
-A `.docx` is a ZIP archive of XML files. Choose your approach by task:
+Um `.docx` é um arquivo ZIP com arquivos XML. Escolha a abordagem pela tarefa:
 
-| Task | Approach |
+| Tarefa | Abordagem |
 |---|---|
-| **Create** a new document | Write a `docx` (npm) script — see gotchas below |
-| **Edit** an existing document | unpack → edit `word/document.xml` → `zip` (docx-js cannot open existing files) |
-| **Read** content | `pandoc -t markdown file.docx` |
+| **Criar** um documento novo | Escreva um script com `docx` (npm); veja as armadilhas abaixo |
+| **Editar** um documento existente | descompactar → editar `word/document.xml` → `zip` (o docx-js não abre arquivos existentes) |
+| **Ler** o conteúdo | `pandoc -t markdown file.docx` |
 
-> Script paths below are relative to this skill's directory.
+> Os caminhos de scripts abaixo são relativos ao diretório desta skill.
 
-## Fitting a page limit
+## Respeitando um limite de páginas
 
-When a document runs over the page limit the user asked for, cut words. Don't shrink the type, narrow the margins or tighten the spacing to fit — that makes the page harder to read. Keep body text at 11–12 pt and margins at 0.75–1 in, or at the size and margins the user's own file already uses. Cut filler and repetition before facts, and cut no more than the limit needs. Safety warnings, doses, limits, fees and contract terms are an exception: keep their full meaning, with every condition attached, because readers act on them and a dropped condition can cause harm or cost money. If a document can't fit without dropping or weakening one of these items, make the margins, spacing or type slightly smaller (body text no smaller than 10 pt) or let the document run over, and tell the user which change you made and why. Then compare your version with the original and list every fact, name, number or point you removed; don't say everything was kept unless it was. If the user asks for or allows smaller type, narrower margins or tighter spacing, or says not to cut any text, do what they said.
+Quando um documento passa do limite de páginas pedido pelo usuário, corte palavras. Não reduza a fonte, não estreite as margens nem aperte o espaçamento para caber, porque isso deixa a página mais difícil de ler. Mantenha o texto do corpo em 11–12 pt e as margens em 0,75–1 pol, ou no tamanho e nas margens que o arquivo do próprio usuário já usa. Corte enchimento e repetição antes de fatos, e corte só o que o limite exigir. Avisos de segurança, doses, limites, taxas e termos contratuais são exceção: mantenha o sentido completo, com todas as condições, porque os leitores agem com base neles e uma condição perdida pode causar dano ou custar dinheiro. Se o documento não couber sem eliminar ou enfraquecer um desses itens, reduza um pouco as margens, o espaçamento ou a fonte (corpo do texto não menor que 10 pt) ou deixe o documento passar do limite, e diga ao usuário qual mudança fez e por quê. Depois compare sua versão com a original e liste cada fato, nome, número ou ponto que removeu; não diga que tudo foi mantido, a menos que tenha sido.
 
-## Creating with docx-js — gotchas
+## Criando com docx-js: armadilhas
 
-`docx` is preinstalled — do not run `npm install` first; write the script and `require('docx')` directly. Only if that require fails: `npm install docx`. The model knows the API; these are the footguns:
+O `docx` já vem instalado: não rode `npm install` antes; escreva o script e use `require('docx')` direto. Só se esse require falhar: `npm install docx`. O modelo conhece a API; estas são as armadilhas:
 
-- **Page size defaults to A4.** For US Letter set `page: { size: { width: 12240, height: 15840 } }` (DXA; 1440 = 1″).
-- **Landscape:** pass portrait dimensions and `orientation: PageOrientation.LANDSCAPE` — docx-js swaps width/height internally.
-- **Tables need dual widths:** set `columnWidths` on the table AND `width` on every cell, both in `WidthType.DXA` (PERCENTAGE breaks in Google Docs). Column widths must sum to the table width.
-- **Table shading:** use `ShadingType.CLEAR`, never `SOLID` (renders black).
-- **Lists:** never insert `•` literally; use a `numbering` config with `LevelFormat.BULLET`.
-- **`ImageRun` requires `type:`** (`"png"`, `"jpg"`, …).
-- **`PageBreak` must be inside a `Paragraph`.**
-- **Never use `\n`** — use separate `Paragraph` elements.
-- **Headings:** style every level you use (`title`, `heading1`, `heading2`…) in `styles.default`: `heading1: { run: { font: "Arial", size: 32, bold: true }, paragraph: { spacing: { before: 240, after: 120 }, keepNext: true } }`. Every level needs its own font (even with a document default), `before` and `after` (even if 0) and `keepNext`: the built-in styles set none of them.
-- **TOC:** headings must use built-in `HeadingLevel.*`; custom heading styles need `outlineLevel` set or they won't appear.
-- **Don't use a table as a horizontal rule** — use a paragraph bottom border instead.
-- **Dot-leader / right-aligned-on-same-line:** use `PositionalTab` (`alignment: PositionalTabAlignment.RIGHT`, `leader: PositionalTabLeader.DOT`) inside a `TextRun`, not literal `.` or space padding.
+- **O tamanho de página padrão é A4.** Para US Letter, defina `page: { size: { width: 12240, height: 15840 } }` (DXA; 1440 = 1″).
+- **Paisagem:** passe as dimensões de retrato e `orientation: PageOrientation.LANDSCAPE`; o docx-js troca largura e altura internamente.
+- **Tabelas precisam de larguras duplas:** defina `columnWidths` na tabela E `width` em cada célula, ambos em `WidthType.DXA` (PERCENTAGE quebra no Google Docs). A soma das larguras das colunas deve ser igual à largura da tabela.
+- **Sombreamento de tabela:** use `ShadingType.CLEAR`, nunca `SOLID` (renderiza preto).
+- **Listas:** nunca insira `•` literalmente; use uma configuração `numbering` com `LevelFormat.BULLET`.
+- **`ImageRun` exige `type:`** (`"png"`, `"jpg"`, …).
+- **`PageBreak` precisa estar dentro de um `Paragraph`.**
+- **Nunca use `\n`**; use elementos `Paragraph` separados.
+- **Títulos:** defina o estilo de cada nível que usar (`title`, `heading1`, `heading2`…) em `styles.default`: `heading1: { run: { font: "Arial", size: 32, bold: true }, paragraph: { spacing: { before: 240, after: 120 }, keepNext: true } }`. Cada nível precisa de sua própria fonte (mesmo com uma padrão do documento), de `before` e `after` (mesmo que 0) e de `keepNext`: os estilos embutidos não definem nenhum deles.
+- **Sumário:** os títulos devem usar `HeadingLevel.*` embutidos; estilos de título personalizados precisam de `outlineLevel` definido ou não aparecem.
+- **Não use uma tabela como linha horizontal**; use a borda inferior de um parágrafo.
+- **Pontilhado de preenchimento / alinhado à direita na mesma linha:** use `PositionalTab` (`alignment: PositionalTabAlignment.RIGHT`, `leader: PositionalTabLeader.DOT`) dentro de um `TextRun`, não `.` literais nem espaços de preenchimento.
 
-## Verify the output
+## Verifique a saída
 
-After writing a `.docx`, render it and look at it:
+Depois de escrever um `.docx`, renderize e olhe o resultado:
 
 ```bash
-zip -d output.docx '*/' >/dev/null || true   # drop the ZIP's folder entries: Word has refused a file that has them when opened through a cloud co-editing service
+zip -d output.docx '*/' >/dev/null || true   # remove as entradas de pasta do ZIP: o Word já recusou um arquivo que as tinha ao abrir por um serviço de coedição na nuvem
 python scripts/office/soffice.py --headless --convert-to pdf output.docx
 pdftoppm -jpeg -r 100 output.pdf page
-ls page-*.jpg   # then Read the images
+ls page-*.jpg   # depois use Read nas imagens
 ```
 
-`pdftoppm` zero-pads page numbers to the width of the page count (`page-01.jpg`…`page-12.jpg`).
+O `pdftoppm` preenche com zeros os números das páginas até a largura da contagem de páginas (`page-01.jpg`…`page-12.jpg`).
 
-## Editing existing documents
+## Editando documentos existentes
 
-Legacy `.doc` files must be converted first: `python scripts/office/soffice.py --headless --convert-to docx file.doc`.
+Arquivos `.doc` antigos precisam ser convertidos antes: `python scripts/office/soffice.py --headless --convert-to docx file.doc`.
 
 ```bash
-python3 -c "import sys,zipfile; zipfile.ZipFile(sys.argv[1]).extractall('unpacked')" doc.docx   # not unzip, which restores symlinks — docx from external parties is untrusted
-python scripts/merge_runs.py unpacked/   # coalesce fragmented runs so text is findable
-# edit unpacked/word/document.xml in place — do NOT reformat or pretty-print
+python3 -c "import sys,zipfile; zipfile.ZipFile(sys.argv[1]).extractall('unpacked')" doc.docx   # não use unzip, que restaura links simbólicos — docx de terceiros não é confiável
+python scripts/merge_runs.py unpacked/   # une trechos fragmentados para o texto poder ser encontrado
+# edite unpacked/word/document.xml no lugar — NÃO reformate nem use pretty-print
 (cd unpacked && rm -f ../out.docx && zip -XrDy ../out.docx .)
-python scripts/office/validate.py out.docx --original doc.docx   # XSD checks; --auto-repair fixes common issues
-# redlining? add --author "<the name you redlined under>" to check every edit is tracked
+python scripts/office/validate.py out.docx --original doc.docx   # checagens XSD; --auto-repair corrige problemas comuns
+# redlining? adicione --author "<o nome com que você fez o redline>" para checar se toda edição está registrada
 ```
 
-Word splits text across many `<w:r>` runs (revision ids, spell-check markers), so a phrase you can see in the document often doesn't exist as a contiguous string in the XML. `merge_runs.py` merges adjacent identically-formatted runs in `word/document.xml` without changing content or rendering; it also accepts a `.docx` directly (`python scripts/merge_runs.py doc.docx -o merged.docx`).
+O Word divide o texto em muitos trechos `<w:r>` (ids de revisão, marcadores do corretor ortográfico), então uma frase que você enxerga no documento muitas vezes não existe como uma sequência contínua no XML. O `merge_runs.py` une trechos adjacentes com a mesma formatação em `word/document.xml` sem alterar o conteúdo nem a renderização; ele também aceita um `.docx` diretamente (`python scripts/merge_runs.py doc.docx -o merged.docx`).
 
-**Tracked changes:** when redlining, validate with `--author "<the name you redlined under>"` (needs `--original`) — it reports any text you changed without a `<w:ins>`/`<w:del>` around it, which is easy to do by accident and invisible in the accepted view. Wrap runs in `<w:ins>`/`<w:del>` with `w:id`, `w:author`, `w:date` attributes. Inside `<w:del>`, the text element is `<w:delText>`, not `<w:t>`. A deleted paragraph mark (`<w:pPr><w:rPr><w:del w:id=".." w:author=".." w:date=".."/></w:rPr></w:pPr>`) means "merge this paragraph into the next" — so deleting a paragraph outright is that plus a `<w:del>` around every run. The `<w:del/>` must come before the rPr's other children; their order is schema-enforced.
+**Alterações controladas:** ao fazer redline, valide com `--author "<o nome com que você fez o redline>"` (exige `--original`); ele relata qualquer texto que você alterou sem um `<w:ins>`/`<w:del>` em volta, o que é fácil de fazer sem querer e invisível na visão aceita. Envolva os trechos em `<w:ins>`/`<w:del>` com os atributos `w:id`, `w:author`, `w:date`. Dentro de `<w:del>`, o elemento de texto é `<w:delText>`, não `<w:t>`. Uma marca de parágrafo excluída (`<w:pPr><w:rPr><w:del w:id=".." w:author=".." w:date=".."/></w:rPr></w:pPr>`) significa "una este parágrafo ao próximo"; portanto, excluir um parágrafo por completo é isso mais um `<w:del>` em volta de cada trecho. O `<w:del/>` deve vir antes dos outros filhos do rPr; a ordem deles é imposta pelo esquema.
 
-To produce a clean copy with all tracked changes accepted: `python scripts/accept_changes.py in.docx out.docx`.
+Para gerar uma cópia limpa com todas as alterações controladas aceitas: `python scripts/accept_changes.py in.docx out.docx`.
 
-Accepting a deleted paragraph mark should join that paragraph to the one below it, so a paragraph whose runs are *all* deleted vanishes. Word does this; `accept_changes.py` and `pandoc --track-changes=accept` don't always. Both fail the same way — they strip the deleted text but leave the emptied paragraph behind, which reads as a stray empty bullet when it was auto-numbered:
+Aceitar uma marca de parágrafo excluída deve unir esse parágrafo ao de baixo, então um parágrafo cujos trechos foram *todos* excluídos desaparece. O Word faz isso; o `accept_changes.py` e o `pandoc --track-changes=accept` nem sempre fazem. Os dois falham do mesmo jeito: removem o texto excluído mas deixam o parágrafo esvaziado, que aparece como um marcador vazio solto quando era numerado automaticamente:
 
-- `pandoc --track-changes=accept` never joins the paragraphs.
-- `accept_changes.py` (LibreOffice) joins them correctly, except when the deleted paragraph is followed by an empty spacer paragraph.
+- `pandoc --track-changes=accept` nunca une os parágrafos.
+- `accept_changes.py` (LibreOffice) une corretamente, exceto quando o parágrafo excluído é seguido de um parágrafo espaçador vazio.
 
-An empty bullet in either view is an artifact of that view, not a defect in the document. Check paragraph deletions in the XML.
+Um marcador vazio em qualquer uma das visões é um artefato dessa visão, não um defeito do documento. Confira as exclusões de parágrafo no XML.
 
-## Comments
+## Comentários
 
-Comments require six cross-linked files. Use the helper — directory mode when you'll also be editing `document.xml` (saves an unzip/rezip cycle), `.docx`-direct mode otherwise:
+Comentários exigem seis arquivos interligados. Use o auxiliar: modo diretório quando também for editar o `document.xml` (poupa um ciclo de descompactar/recompactar), modo `.docx` direto caso contrário:
 
 ```bash
-# Against an already-unpacked directory (preferred when also placing markers)
+# Em um diretório já descompactado (preferível quando também for colocar os marcadores)
 python scripts/comment.py unpacked/ "Fees & expenses cap is too low"
 python scripts/comment.py unpacked/ "Agreed" --parent 0
 
-# Against a .docx directly
+# Em um .docx diretamente
 python scripts/comment.py contract.docx "This cap is too low" -o annotated.docx
 ```
 
-The script writes `comments.xml`, `commentsExtended.xml`, `commentsIds.xml`, `commentsExtensible.xml`, the relationships, and the content-type overrides. Comment IDs are auto-assigned. It then prints the `<w:commentRangeStart>`/`<w:commentRangeEnd>`/`<w:commentReference>` snippet to add to `word/document.xml` so the comment anchors to specific text — until you place those markers, the comment exists but is not visible.
+O script grava `comments.xml`, `commentsExtended.xml`, `commentsIds.xml`, `commentsExtensible.xml`, as relações e as substituições de tipo de conteúdo. Os IDs dos comentários são atribuídos automaticamente. Depois ele imprime o trecho `<w:commentRangeStart>`/`<w:commentRangeEnd>`/`<w:commentReference>` para adicionar ao `word/document.xml`, de modo que o comentário fique ancorado em um texto específico; até você colocar esses marcadores, o comentário existe mas não fica visível.
 
-## Dependencies
+## Dependências
 
-`docx` (npm, preinstalled — install only if `require('docx')` fails) · `pandoc` · LibreOffice (`soffice`) · `pdftoppm` (Poppler)
+`docx` (npm, já instalado; instale só se `require('docx')` falhar) · `pandoc` · LibreOffice (`soffice`) · `pdftoppm` (Poppler)

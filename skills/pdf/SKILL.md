@@ -4,32 +4,32 @@ description: "Use esta skill sempre que o usuário quiser fazer qualquer coisa c
 license: Complete terms in LICENSE.txt
 ---
 
-# PDF Processing Guide
+# Guia de processamento de PDF
 
-## Overview
+## Visão geral
 
-This guide covers essential PDF processing operations using Python libraries and command-line tools. For advanced features, JavaScript libraries, and detailed examples, see REFERENCE.md. If you need to fill out a PDF form, read FORMS.md and follow its instructions.
+Este guia cobre as operações essenciais de processamento de PDF com bibliotecas Python e ferramentas de linha de comando. Para recursos avançados, bibliotecas JavaScript e exemplos detalhados, veja REFERENCE.md. Se precisar preencher um formulário em PDF, leia FORMS.md e siga as instruções.
 
-## Quick Start
+## Início rápido
 
 ```python
 from pypdf import PdfReader, PdfWriter
 
-# Read a PDF
+# Ler um PDF
 reader = PdfReader("document.pdf")
 print(f"Pages: {len(reader.pages)}")
 
-# Extract text
+# Extrair texto
 text = ""
 for page in reader.pages:
     text += page.extract_text()
 ```
 
-## Python Libraries
+## Bibliotecas Python
 
-### pypdf - Basic Operations
+### pypdf: operações básicas
 
-#### Merge PDFs
+#### Juntar PDFs
 ```python
 from pypdf import PdfWriter, PdfReader
 
@@ -43,7 +43,7 @@ with open("merged.pdf", "wb") as output:
     writer.write(output)
 ```
 
-#### Split PDF
+#### Dividir um PDF
 ```python
 reader = PdfReader("input.pdf")
 for i, page in enumerate(reader.pages):
@@ -53,7 +53,7 @@ for i, page in enumerate(reader.pages):
         writer.write(output)
 ```
 
-#### Extract Metadata
+#### Extrair metadados
 ```python
 reader = PdfReader("document.pdf")
 meta = reader.metadata
@@ -63,22 +63,22 @@ print(f"Subject: {meta.subject}")
 print(f"Creator: {meta.creator}")
 ```
 
-#### Rotate Pages
+#### Girar páginas
 ```python
 reader = PdfReader("input.pdf")
 writer = PdfWriter()
 
 page = reader.pages[0]
-page.rotate(90)  # Rotate 90 degrees clockwise
+page.rotate(90)  # Gira 90 graus no sentido horário
 writer.add_page(page)
 
 with open("rotated.pdf", "wb") as output:
     writer.write(output)
 ```
 
-### pdfplumber - Text and Table Extraction
+### pdfplumber: extração de texto e tabelas
 
-#### Extract Text with Layout
+#### Extrair texto com o layout
 ```python
 import pdfplumber
 
@@ -88,7 +88,7 @@ with pdfplumber.open("document.pdf") as pdf:
         print(text)
 ```
 
-#### Extract Tables
+#### Extrair tabelas
 ```python
 with pdfplumber.open("document.pdf") as pdf:
     for i, page in enumerate(pdf.pages):
@@ -99,7 +99,7 @@ with pdfplumber.open("document.pdf") as pdf:
                 print(row)
 ```
 
-#### Advanced Table Extraction
+#### Extração avançada de tabelas
 ```python
 import pandas as pd
 
@@ -108,19 +108,19 @@ with pdfplumber.open("document.pdf") as pdf:
     for page in pdf.pages:
         tables = page.extract_tables()
         for table in tables:
-            if table:  # Check if table is not empty
+            if table:  # Verifica se a tabela não está vazia
                 df = pd.DataFrame(table[1:], columns=table[0])
                 all_tables.append(df)
 
-# Combine all tables
+# Combina todas as tabelas
 if all_tables:
     combined_df = pd.concat(all_tables, ignore_index=True)
     combined_df.to_excel("extracted_tables.xlsx", index=False)
 ```
 
-### reportlab - Create PDFs
+### reportlab: criar PDFs
 
-#### Basic PDF Creation
+#### Criação básica de PDF
 ```python
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
@@ -128,18 +128,18 @@ from reportlab.pdfgen import canvas
 c = canvas.Canvas("hello.pdf", pagesize=letter)
 width, height = letter
 
-# Add text
+# Adiciona texto
 c.drawString(100, height - 100, "Hello World!")
 c.drawString(100, height - 120, "This is a PDF created with reportlab")
 
-# Add a line
+# Adiciona uma linha
 c.line(100, height - 140, 400, height - 140)
 
-# Save
+# Salva
 c.save()
 ```
 
-#### Create PDF with Multiple Pages
+#### Criar PDF com várias páginas
 ```python
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
@@ -149,7 +149,7 @@ doc = SimpleDocTemplate("report.pdf", pagesize=letter)
 styles = getSampleStyleSheet()
 story = []
 
-# Add content
+# Adiciona conteúdo
 title = Paragraph("Report Title", styles['Title'])
 story.append(title)
 story.append(Spacer(1, 12))
@@ -158,105 +158,105 @@ body = Paragraph("This is the body of the report. " * 20, styles['Normal'])
 story.append(body)
 story.append(PageBreak())
 
-# Page 2
+# Página 2
 story.append(Paragraph("Page 2", styles['Heading1']))
 story.append(Paragraph("Content for page 2", styles['Normal']))
 
-# Build PDF
+# Gera o PDF
 doc.build(story)
 ```
 
-#### Subscripts and Superscripts
+#### Subscritos e sobrescritos
 
-**IMPORTANT**: Never use Unicode subscript/superscript characters (₀₁₂₃₄₅₆₇₈₉, ⁰¹²³⁴⁵⁶⁷⁸⁹) in ReportLab PDFs. The built-in fonts do not include these glyphs, causing them to render as solid black boxes.
+**IMPORTANTE**: nunca use caracteres Unicode de subscrito/sobrescrito (₀₁₂₃₄₅₆₇₈₉, ⁰¹²³⁴⁵⁶⁷⁸⁹) em PDFs do ReportLab. As fontes embutidas não têm esses glifos, e eles aparecem como caixas pretas sólidas.
 
-Instead, use ReportLab's XML markup tags in Paragraph objects:
+Em vez disso, use as tags de marcação XML do ReportLab em objetos Paragraph:
 ```python
 from reportlab.platypus import Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
 
 styles = getSampleStyleSheet()
 
-# Subscripts: use <sub> tag
+# Subscritos: use a tag <sub>
 chemical = Paragraph("H<sub>2</sub>O", styles['Normal'])
 
-# Superscripts: use <super> tag
+# Sobrescritos: use a tag <super>
 squared = Paragraph("x<super>2</super> + y<super>2</super>", styles['Normal'])
 ```
 
-For canvas-drawn text (not Paragraph objects), manually adjust font the size and position rather than using Unicode subscripts/superscripts.
+Para texto desenhado no canvas (não em objetos Paragraph), ajuste manualmente o tamanho da fonte e a posição em vez de usar subscritos/sobrescritos Unicode.
 
-## Command-Line Tools
+## Ferramentas de linha de comando
 
 ### pdftotext (poppler-utils)
 ```bash
-# Extract text
+# Extrair texto
 pdftotext input.pdf output.txt
 
-# Extract text preserving layout
+# Extrair texto preservando o layout
 pdftotext -layout input.pdf output.txt
 
-# Extract specific pages
-pdftotext -f 1 -l 5 input.pdf output.txt  # Pages 1-5
+# Extrair páginas específicas
+pdftotext -f 1 -l 5 input.pdf output.txt  # Páginas 1 a 5
 ```
 
 ### qpdf
 ```bash
-# Merge PDFs
+# Juntar PDFs
 qpdf --empty --pages file1.pdf file2.pdf -- merged.pdf
 
-# Split pages
+# Dividir páginas
 qpdf input.pdf --pages . 1-5 -- pages1-5.pdf
 qpdf input.pdf --pages . 6-10 -- pages6-10.pdf
 
-# Rotate pages
-qpdf input.pdf output.pdf --rotate=+90:1  # Rotate page 1 by 90 degrees
+# Girar páginas
+qpdf input.pdf output.pdf --rotate=+90:1  # Gira a página 1 em 90 graus
 
-# Remove password
+# Remover senha
 qpdf --password=mypassword --decrypt encrypted.pdf decrypted.pdf
 ```
 
-### pdftk (if available)
+### pdftk (se disponível)
 ```bash
-# Merge
+# Juntar
 pdftk file1.pdf file2.pdf cat output merged.pdf
 
-# Split
+# Dividir
 pdftk input.pdf burst
 
-# Rotate
+# Girar
 pdftk input.pdf rotate 1east output rotated.pdf
 ```
 
-## Common Tasks
+## Tarefas comuns
 
-### Extract Text from Scanned PDFs
+### Extrair texto de PDFs escaneados
 ```python
-# Requires: pip install pytesseract pdf2image
+# Requer: pip install pytesseract pdf2image
 import pytesseract
 from pdf2image import convert_from_path
 
-# Convert PDF to images
+# Converte o PDF em imagens
 images = convert_from_path('scanned.pdf')
 
-# OCR each page
+# Faz OCR de cada página
 text = ""
 for i, image in enumerate(images):
-    text += f"Page {i+1}:\n"
+    text += f"Página {i+1}:\n"
     text += pytesseract.image_to_string(image)
     text += "\n\n"
 
 print(text)
 ```
 
-### Add Watermark
+### Adicionar marca d'água
 ```python
 from pypdf import PdfReader, PdfWriter
 
-# Create watermark (or load existing)
+# Cria a marca d'água (ou carrega uma existente)
 watermark = PdfReader("watermark.pdf").pages[0]
 
-# Apply to all pages
+# Aplica a todas as páginas
 reader = PdfReader("document.pdf")
 writer = PdfWriter()
 
@@ -268,15 +268,15 @@ with open("watermarked.pdf", "wb") as output:
     writer.write(output)
 ```
 
-### Extract Images
+### Extrair imagens
 ```bash
-# Using pdfimages (poppler-utils)
+# Usando pdfimages (poppler-utils)
 pdfimages -j input.pdf output_prefix
 
-# This extracts all images as output_prefix-000.jpg, output_prefix-001.jpg, etc.
+# Isso extrai todas as imagens como output_prefix-000.jpg, output_prefix-001.jpg etc.
 ```
 
-### Password Protection
+### Proteção por senha
 ```python
 from pypdf import PdfReader, PdfWriter
 
@@ -286,29 +286,29 @@ writer = PdfWriter()
 for page in reader.pages:
     writer.add_page(page)
 
-# Add password
+# Adiciona a senha
 writer.encrypt("userpassword", "ownerpassword")
 
 with open("encrypted.pdf", "wb") as output:
     writer.write(output)
 ```
 
-## Quick Reference
+## Referência rápida
 
-| Task | Best Tool | Command/Code |
-|------|-----------|--------------|
-| Merge PDFs | pypdf | `writer.add_page(page)` |
-| Split PDFs | pypdf | One page per file |
-| Extract text | pdfplumber | `page.extract_text()` |
-| Extract tables | pdfplumber | `page.extract_tables()` |
-| Create PDFs | reportlab | Canvas or Platypus |
-| Command line merge | qpdf | `qpdf --empty --pages ...` |
-| OCR scanned PDFs | pytesseract | Convert to image first |
-| Fill PDF forms | pdf-lib or pypdf (see FORMS.md) | See FORMS.md |
+| Tarefa | Melhor ferramenta | Comando/Código |
+|--------|-------------------|----------------|
+| Juntar PDFs | pypdf | `writer.add_page(page)` |
+| Dividir PDFs | pypdf | Uma página por arquivo |
+| Extrair texto | pdfplumber | `page.extract_text()` |
+| Extrair tabelas | pdfplumber | `page.extract_tables()` |
+| Criar PDFs | reportlab | Canvas ou Platypus |
+| Juntar pela linha de comando | qpdf | `qpdf --empty --pages ...` |
+| OCR de PDFs escaneados | pytesseract | Converta em imagem primeiro |
+| Preencher formulários PDF | pdf-lib ou pypdf (veja FORMS.md) | Veja FORMS.md |
 
-## Next Steps
+## Próximos passos
 
-- For advanced pypdfium2 usage, see REFERENCE.md
-- For JavaScript libraries (pdf-lib), see REFERENCE.md
-- If you need to fill out a PDF form, follow the instructions in FORMS.md
-- For troubleshooting guides, see REFERENCE.md
+- Para uso avançado do pypdfium2, veja REFERENCE.md
+- Para bibliotecas JavaScript (pdf-lib), veja REFERENCE.md
+- Se precisar preencher um formulário em PDF, siga as instruções do FORMS.md
+- Para guias de solução de problemas, veja REFERENCE.md

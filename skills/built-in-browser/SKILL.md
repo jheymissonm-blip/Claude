@@ -5,44 +5,44 @@ compatibility: "Cowork in the Claude desktop app, and Cowork Remote or upgraded 
 license: Proprietary. LICENSE.txt has complete terms
 ---
 
-# Built-in browser
+# Navegador embutido
 
-The built-in browser is a real browser pane inside the Claude desktop app, separate from the person's Chrome. Its tools are named `mcp__Claude_Browser__*` when the session itself runs inside the desktop app, and `mcp__remote-devices__Claude_Browser__*` when the session runs in the cloud (started from the web, a phone, or the desktop app) and is linked to the person's computer. The names after the prefix are the same either way, Claude uses whichever prefix is actually present, and this skill refers to the tools by the part after the prefix.
+O navegador embutido é um painel de navegador de verdade dentro do app Claude para desktop, separado do Chrome da pessoa. As ferramentas dele se chamam `mcp__Claude_Browser__*` quando a própria sessão roda dentro do app desktop e `mcp__remote-devices__Claude_Browser__*` quando a sessão roda na nuvem (iniciada pela web, pelo celular ou pelo app desktop) e está ligada ao computador da pessoa. Os nomes depois do prefixo são os mesmos nos dois casos, o Claude usa o prefixo que de fato estiver presente, e esta skill se refere às ferramentas pela parte depois do prefixo.
 
-If the only built-in browser tool present is `enable__mcp__remote-devices__Claude_Browser`, Claude calls it first: it turns the built-in browser on for this conversation, and the `mcp__remote-devices__Claude_Browser__*` tools appear once it has run.
+Se a única ferramenta do navegador embutido presente for `enable__mcp__remote-devices__Claude_Browser`, o Claude a chama primeiro: ela ativa o navegador embutido nesta conversa, e as ferramentas `mcp__remote-devices__Claude_Browser__*` aparecem depois que ela rodar.
 
-## What the person can see
+## O que a pessoa consegue ver
 
-The browser pane shares the desktop app's side panel with artifacts, documents, and file previews, and the panel shows one of them at a time. While the browser pane is showing, the person sees what Claude sees and can browse or take over at any time. While something else is open in the panel, or the panel is closed, the built-in browser keeps working. Claude does not tell the person that they missed it or could not see it, because Claude cannot tell what they were watching.
+O painel do navegador divide o painel lateral do app desktop com artefatos, documentos e prévias de arquivos, e o painel mostra um deles por vez. Enquanto o painel do navegador está visível, a pessoa vê o que o Claude vê e pode navegar ou assumir o controle a qualquer momento. Enquanto outra coisa está aberta no painel, ou o painel está fechado, o navegador embutido continua funcionando. O Claude não diz à pessoa que ela perdeu algo ou não pôde ver, porque o Claude não sabe o que ela estava acompanhando.
 
-Right before asking the person to do something in the built-in browser themselves (click a button, sign in, complete a verification step), Claude calls `tabs_context`, whose result ends by saying whether the Browser pane is displayed, hidden, or not open. If the pane is not open, Claude opens the page first and checks again. If the pane is hidden, Claude first asks the person to bring the browser back in the Claude desktop app: press Cmd+Shift+B on Mac or Ctrl+Shift+B on Windows, or close whatever else is open in the side panel and click the globe icon (the Browser button). When the tools carry the `mcp__remote-devices__Claude_Browser__` prefix, Claude usually cannot tell whether the person is reading this conversation in the desktop app, on the claude.ai website or on a phone, and the shortcut and the globe icon work only in the desktop app, so before those steps Claude says that if they are not in the Claude desktop app on the computer whose browser Claude is using, they need to open this conversation there first. Claude then says what to do in the browser. Claude asks because using the browser does not bring the pane back, and what the panel shows is the person's choice. Claude also says in the conversation what it found or did in the browser, without guessing at what the person saw.
+Logo antes de pedir que a pessoa faça algo ela mesma no navegador embutido (clicar em um botão, entrar em uma conta, concluir uma verificação), o Claude chama `tabs_context`, cujo resultado termina dizendo se o painel Browser está exibido, oculto ou não aberto. Se o painel não estiver aberto, o Claude abre a página primeiro e confere de novo. Se o painel estiver oculto, o Claude primeiro pede que a pessoa traga o navegador de volta no app Claude para desktop: pressionar Cmd+Shift+B no Mac ou Ctrl+Shift+B no Windows, ou fechar o que mais estiver aberto no painel lateral e clicar no ícone de globo (o botão Browser). Quando as ferramentas têm o prefixo `mcp__remote-devices__Claude_Browser__`, o Claude normalmente não sabe se a pessoa está lendo esta conversa no app desktop, no site claude.ai ou no celular, e o atalho e o ícone de globo só funcionam no app desktop; então, antes desses passos, o Claude avisa que, se ela não estiver no app Claude para desktop do computador cujo navegador o Claude está usando, precisa abrir esta conversa lá primeiro. Em seguida o Claude diz o que fazer no navegador. O Claude pergunta porque usar o navegador não traz o painel de volta, e o que o painel mostra é escolha da pessoa. O Claude também diz na conversa o que encontrou ou fez no navegador, sem presumir o que a pessoa viu.
 
-## Sign-ins persist, and they are the person's
+## Os logins persistem e pertencem à pessoa
 
-The built-in browser keeps its own persistent profile, shared across the desktop app's sessions. The person, or an earlier session, may already be signed in to sites there, and sign-ins Claude completes persist for later. Claude treats existing sessions as the person's: it never signs out, changes credentials, or acts on an account beyond what the task needs.
+O navegador embutido mantém um perfil persistente próprio, compartilhado entre as sessões do app desktop. A pessoa, ou uma sessão anterior, pode já estar logada em sites ali, e os logins que o Claude concluir persistem para depois. O Claude trata as sessões existentes como da pessoa: nunca sai de uma conta, nunca altera credenciais e nunca age em uma conta além do que a tarefa exige.
 
-## Tabs
+## Abas
 
-The built-in browser has tabs. `preview_start` with a `url` opens an additional tab at that URL in one call and returns a `tabId`, leaving existing tabs untouched, so Claude prefers it over `tabs_create` followed by `navigate` when the destination is already known. `navigate`, `read_page`, `get_page_text`, `find`, `computer`, `form_input`, and the console and network readers act on the tab named by `tabId`; omitting `tabId` targets the active tab, and `tabs_context` lists the open tabs.
+O navegador embutido tem abas. `preview_start` com um `url` abre uma aba adicional naquele endereço em uma única chamada e devolve um `tabId`, sem mexer nas abas existentes; por isso o Claude o prefere a `tabs_create` seguido de `navigate` quando o destino já é conhecido. `navigate`, `read_page`, `get_page_text`, `find`, `computer`, `form_input` e os leitores de console e de rede agem na aba indicada por `tabId`; omitir `tabId` mira a aba ativa, e `tabs_context` lista as abas abertas.
 
-## Loading via ToolSearch
+## Carregando pelo ToolSearch
 
-Claude loads the built-in browser tools in bulk, not one-by-one: if they are in the deferred list, Claude loads them all in a single ToolSearch call whose query is their full name prefix, for example `{ query: "mcp__remote-devices__Claude_Browser__", max_results: 64 }`.
+O Claude carrega as ferramentas do navegador embutido em bloco, não uma a uma: se elas estiverem na lista adiada, o Claude carrega todas em uma única chamada ao ToolSearch cuja consulta é o prefixo completo do nome, por exemplo `{ query: "mcp__remote-devices__Claude_Browser__", max_results: 64 }`.
 
-## Reading pages
+## Lendo páginas
 
-Claude prefers `get_page_text` and `read_page` over screenshots for reading, because they return the page's actual text and structure rather than pixels of the visible viewport. `computer` with action "screenshot" is for when the visual layout is the point or the person asks to see the page.
+O Claude prefere `get_page_text` e `read_page` a capturas de tela para ler, porque elas devolvem o texto e a estrutura reais da página, e não pixels da área visível. `computer` com a ação "screenshot" serve para quando o layout visual é o ponto ou a pessoa pede para ver a página.
 
-## Site approvals, blocked sites, and request_access
+## Aprovações de sites, sites bloqueados e request_access
 
-Depending on the person's approval settings, the person may be asked to approve a site before Claude acts on it, and some sites are blocked outright. Claude waits for a pending approval rather than working around it. If a page is refused or an approval is declined, Claude tells the person and moves on rather than retrying.
+Dependendo das configurações de aprovação da pessoa, ela pode ser chamada a aprovar um site antes de o Claude agir nele, e alguns sites são bloqueados de saída. O Claude espera uma aprovação pendente em vez de contorná-la. Se uma página for recusada ou uma aprovação for negada, o Claude avisa a pessoa e segue em frente, sem tentar de novo.
 
-When the tools carry the `mcp__remote-devices__Claude_Browser__` prefix, approvals can be answered from any of the person's devices and may take a moment to arrive, and the session may also have a `request_access` tool. If a browser tool answers that the site is not allowed yet and `request_access` is present, Claude calls it with that site's URL and scope "once" (or "site" when the task will keep using that site), waits for the person's answer, and then retries the original tool. Without `request_access`, a refused site is handled as above: Claude tells the person and moves on.
+Quando as ferramentas têm o prefixo `mcp__remote-devices__Claude_Browser__`, as aprovações podem ser respondidas de qualquer dispositivo da pessoa e podem levar um momento para chegar, e a sessão também pode ter uma ferramenta `request_access`. Se uma ferramenta do navegador responder que o site ainda não é permitido e `request_access` estiver presente, o Claude a chama com o URL desse site e o escopo "once" (ou "site", quando a tarefa continuar usando esse site), espera a resposta da pessoa e depois tenta de novo a ferramenta original. Sem `request_access`, um site recusado é tratado como acima: o Claude avisa a pessoa e segue em frente.
 
-## What the built-in browser cannot open
+## O que o navegador embutido não consegue abrir
 
-The built-in browser cannot open `file://` URLs or `localhost` servers that Claude starts itself, because those run where Claude's shell runs, which is not where the browser pane runs. To show the person HTML that Claude generated, Claude uses an artifact instead.
+O navegador embutido não abre URLs `file://` nem servidores `localhost` que o próprio Claude inicia, porque eles rodam onde o shell do Claude roda, que não é onde o painel do navegador roda. Para mostrar à pessoa um HTML gerado pelo Claude, o Claude usa um artefato.
 
-## When the built-in browser cannot be reached
+## Quando o navegador embutido não pode ser alcançado
 
-When the tools carry the `mcp__remote-devices__Claude_Browser__` prefix, the pane runs in the Claude desktop app on the person's computer while Claude runs elsewhere, so it is reachable only while that app is open and online. If those tool calls cannot reach the desktop app (connection errors or no response), Claude tells the person the built-in browser looks offline on their computer rather than retrying, and follows the session's browser guidance on whether to continue with the other browser or ask first.
+Quando as ferramentas têm o prefixo `mcp__remote-devices__Claude_Browser__`, o painel roda no app Claude para desktop no computador da pessoa enquanto o Claude roda em outro lugar, então só é alcançável enquanto esse app estiver aberto e online. Se essas chamadas de ferramenta não alcançarem o app desktop (erros de conexão ou sem resposta), o Claude avisa a pessoa que o navegador embutido parece estar offline no computador dela, em vez de tentar de novo, e segue a orientação de navegador da sessão sobre continuar com o outro navegador ou perguntar antes.
